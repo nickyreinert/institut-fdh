@@ -117,13 +117,13 @@ async function getSystemInfo() {
         `SessionStorage: ${window.sessionStorage ? 'Available' : 'Not Available'}`,
         
         // Clipboard content (if available)
-        `Clipboard: ${await getClipboardContent()}`,
+        // `Clipboard: ${await getClipboardContent()}`,
         
         // Installed browser extensions (Chrome)
         `Extensions: ${await getInstalledExtensions()}`,
         
         // Network info
-        `IP Address: ${await getIPAddress()}`,
+        // `IP Address: ${await getIPAddress()}`,
         `DNS Servers: ${await getDNSServers()}`,
         
         // System preferences
