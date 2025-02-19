@@ -1,0 +1,216 @@
+body {
+  margin: 0;
+  font-family: 'Courier New', Courier, monospace;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #0000AF;
+  color: #50FFFF;
+}
+
+.menu-bar {
+  background-color: #00A8AF;
+  color: #000000;
+  padding: 5px;
+  display: flex;
+}
+
+.menu-item {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.container {
+  display: flex;
+  flex-grow: 1; /* Allow container to grow and push bars to top/bottom */
+}
+
+.window {
+  width: 50%;
+  border: 2px solid #50FFFF;
+  border-left-style: double;
+  border-right-style: double;
+  display: flex;
+  flex-direction: column; 
+}
+
+.window:first-child {
+  border-left: 4px double #50FFFF;
+}
+
+.window:last-child {
+  border-right: 4px double #50FFFF;
+}
+
+.window-content { /* New class to hold lanes and take available space */
+  display: flex;
+  flex-grow: 1;
+}
+
+.lane {
+  width: 33.33%; 
+  border-right: 1px solid #50FFFF; 
+  display: flex;
+  flex-direction: column; 
+}
+
+.lane:last-child {
+  border-right: none; 
+}
+
+.lane-header {
+  display: flex; /* Enable flexbox for the header */
+  background-color: #0000AF;
+  color: #FFFF50;
+  padding: 3px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.name-header {
+  width: 80%; /* Adjust width as needed */
+}
+
+.file-list {
+  display: flex; /* Enable flexbox for sub-columns */
+  padding: 5px;
+  flex-grow: 1; 
+  overflow: auto; 
+}
+
+
+.file-list-left {
+  width: 80%; /* Adjust width as needed */
+}
+
+.file-list-right {
+  width: 20%; /* Adjust width as needed */
+  text-align: right; /* Align extension to the right */
+}
+
+.file {
+  cursor: pointer;
+}
+
+.file-details {
+  display: flex;
+  background-color: #0000AF;
+  padding: 3px;
+  color: #50FFFF;
+  font-size: 0.9em;
+  border-top: 1px solid #50FFFF;
+}
+
+.detail-column {
+  flex: 1;
+  text-align: left;
+}
+
+.input-area {
+  background-color: black;
+  color: white;
+  padding: 5px;
+  display: flex; 
+  align-items: center; 
+}
+
+.input-area input {
+  flex-grow: 1; 
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+}
+
+.button-bar-container {
+  background-color: #000000;
+  display: flex;
+  width: 100%;
+
+}
+.button-bar {
+  background-color: #000000;
+  display: flex;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.button {
+  flex: 1;
+  cursor: pointer;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: #00A8AF;
+  color: #000000;
+}
+
+.button span:first-child {
+  background-color: black;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 5px;
+  color: lightblue;
+  margin-right: 5px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #0000AF;
+  border: 2px double #50FFFF;
+  width: 60%;
+  max-width: 500px;
+}
+
+.modal-header {
+  background-color: #00A8AF;
+  color: #000000;
+  padding: 5px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.modal-body {
+  padding: 20px;
+  color: #50FFFF;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.modal-footer {
+  padding: 10px;
+  text-align: center;
+  border-top: 1px solid #50FFFF;
+}
+
+.modal-footer .button {
+  display: inline-block;
+  cursor: pointer;
+  padding: 5px 20px;
+  background-color: #00A8AF;
+  color: #000000;
+}
+
+.modal-footer .button span {
+  background-color: black;
+  padding: 2px 5px;
+  color: #50FFFF;
+  margin-right: 5px;
+}
+
+

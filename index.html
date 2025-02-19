@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Two-Window Layout</title>
+<link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+
+<div class="menu-bar">
+  <div class="menu-item">File</div>
+  <div class="menu-item">Edit</div>
+  <div class="menu-item">View</div>
+</div>
+
+<div class="container">
+  <div class="window" id="window1">
+    <div class="window-content"> 
+      <div class="lane">
+        <div class="lane-header">
+          <div class="name-header">Name</div>
+        </div>
+        <div class="file-list-1">
+          <div class="file-list-name"></div>
+          <div class="file-list-extension"></div>
+        </div>
+      </div>
+      <div class="lane">
+        <div class="lane-header">
+          <div class="name-header">Name</div>
+        </div>
+        <div class="file-list-2">
+          <div class="file-list-name"></div>
+          <div class="file-list-extension"></div>
+        </div>
+      </div>
+      <div class="lane">
+        <div class="lane-header">
+          <div class="name-header">Name</div>
+        </div>
+        <div class="file-list-3">
+          <div class="file-list-name"></div>
+          <div class="file-list-extension"></div>
+        </div>
+      </div>
+    </div> 
+    <div class="file-details">
+      <div class="detail-column">Name</div>
+      <div class="detail-column">Date</div>
+      <div class="detail-column">Time</div>
+      <div class="detail-column">Size</div>
+    </div>
+  </div>
+
+  <div class="window" id="window2">
+    <div class="window-content"> 
+      <div class="lane">
+        <div class="lane-header">
+          <div class="name-header">Name</div>
+        </div>
+        <div class="file-list-1">
+          <div class="file-list-name"></div>
+          <div class="file-list-extension"></div>
+        </div>
+      </div>
+      <div class="lane">
+        <div class="lane-header">
+          <div class="name-header">Name</div>
+        </div>
+        <div class="file-list-2">
+          <div class="file-list-name"></div>
+          <div class="file-list-extension"></div>
+        </div>
+      </div>
+      <div class="lane">
+        <div class="lane-header">
+          <div class="name-header">Name</div>
+        </div>
+        <div class="file-list-3">
+          <div class="file-list-name"></div>
+          <div class="file-list-extension"></div>
+        </div>
+      </div>
+    </div> 
+    <div class="file-details">
+      <div class="detail-column">Name</div>
+      <div class="detail-column">Date</div>
+      <div class="detail-column">Time</div>
+      <div class="detail-column">Size</div>
+    </div>
+  </div>
+
+</div>
+<div class="input-area">
+  C:\ <input type="text">
+</div>
+
+<div class="button-bar-container">
+  <div class="button-bar">
+    <div class="button"><span>1</span> Copy</div>
+    <div class="button"><span>2</span> Move</div>
+    <div class="button"><span>3</span> Delete</div>
+    <div class="button"><span>4</span> Make Dir</div>
+    <div class="button"><span>5</span> View</div>
+    <div class="button"><span>6</span> Edit</div>
+    <div class="button"><span>7</span> Rename</div>
+    <div class="button"><span>8</span> Attributes</div>
+    <div class="button"><span>9</span> Sort</div>
+    <div class="button"><span>10</span> Quit</div>
+  </div>
+</div>
+
+<div id="welcome-modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      Welcome to DOS File Manager
+    </div>
+    <div class="modal-body">
+      Aufgrund eines unvorhersehbaren Fehlers ist diese Webseite zur Zeit nicht verfügbar.
+      
+      Bitte kontaktieren Sie den technischen Support unter <a style="color: white;" target="_blank" href="https://nickyreinert.de">nickyreinert.de</a>
+
+      Wollen Sie die Seite trotzdem anzeigen?
+    </div>
+    <div class="modal-footer">
+      <div class="button">Abbrechen</div>
+      <div class="button">Nein</div>
+      <div class="button">Zurück</div>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script> 
+</body>
+</html>
