@@ -44,39 +44,193 @@ function isNameUnique(name, content) {
   return !content.some(item => item.name === name);
 }
 
-// Add this function to get system information
-function getSystemInfo() {
-  const info = [
-    "SYSTEM INFORMATION",
-    "==================",
-    "",
-    `User Agent: ${navigator.userAgent}`,
-    `Platform: ${navigator.platform}`,
-    `Language: ${navigator.language}`,
-    `Screen Resolution: ${window.screen.width}x${window.screen.height}`,
-    `Color Depth: ${window.screen.colorDepth} bits`,
-    `Time Zone: ${Intl.DateTimeFormat().resolvedOptions().timeZone}`,
-    `Current URL: ${window.location.href}`,
-    `Cookies Enabled: ${navigator.cookieEnabled}`,
-    `Online Status: ${navigator.onLine ? 'Connected' : 'Offline'}`,
-    `Browser Vendor: ${navigator.vendor || 'Unknown'}`,
-    `Memory: ${performance?.memory?.totalJSHeapSize ? Math.round(performance.memory.totalJSHeapSize / 1024 / 1024) + ' MB' : 'Unknown'}`,
-    "",
-    "CONNECTION INFO",
-    "===============",
-    "",
-    `Connection Type: ${navigator.connection ? navigator.connection.effectiveType : 'Unknown'}`,
-    `Downlink: ${navigator.connection ? navigator.connection.downlink + ' Mbps' : 'Unknown'}`,
-    "",
-    "HARDWARE INFO",
-    "=============",
-    "",
-    `Logical Processors: ${navigator.hardwareConcurrency || 'Unknown'}`,
-    `Device Memory: ${navigator.deviceMemory ? navigator.deviceMemory + ' GB' : 'Unknown'}`,
-    `Max Touch Points: ${navigator.maxTouchPoints}`,
-  ].join('\n');
+// Add these helper functions for system info
+function hasWebGL() {
+    try {
+        const canvas = document.createElement('canvas');
+        return !!(canvas.getContext('webgl') || canvas.getContext('experimental-webgl'));
+    } catch (e) {
+        return false;
+    }
+}
 
-  return info;
+function hasWebRTC() {
+    return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+}
+
+async function getDNSServers() {
+    return 'Not Available';
+}
+
+async function getInstalledExtensions() {
+    return 'Access Denied';
+}
+
+// Update getSystemInfo to be async
+async function getSystemInfo() {
+    const info = [
+        "SYSTEM INFORMATION",
+        "==================",
+        "",
+        // Basic browser info
+        `User Agent: ${navigator.userAgent}`,
+        `Platform: ${navigator.platform}`,
+        `Language: ${navigator.language}`,
+        `Languages: ${JSON.stringify(navigator.languages)}`,
+        `Do Not Track: ${navigator.doNotTrack}`,
+        `Cookies Enabled: ${navigator.cookieEnabled}`,
+        
+        // Screen and window info
+        `Screen: ${window.screen.width}x${window.screen.height}`,
+        `Window Inner: ${window.innerWidth}x${window.innerHeight}`,
+        `Color Depth: ${window.screen.colorDepth}`,
+        `Pixel Depth: ${window.screen.pixelDepth}`,
+        `Device Pixel Ratio: ${window.devicePixelRatio}`,
+        
+        // Location and network
+        `Protocol: ${window.location.protocol}`,
+        `Host: ${window.location.host}`,
+        `Pathname: ${window.location.pathname}`,
+        `Online Status: ${navigator.onLine}`,
+        `Connection Type: ${navigator.connection?.effectiveType || 'Unknown'}`,
+        `Connection Speed: ${navigator.connection?.downlink || 'Unknown'} Mbps`,
+        `RTT: ${navigator.connection?.rtt || 'Unknown'} ms`,
+        
+        // Hardware info
+        `CPU Cores: ${navigator.hardwareConcurrency || 'Unknown'}`,
+        `Max Touch Points: ${navigator.maxTouchPoints}`,
+        `Device Memory: ${navigator.deviceMemory || 'Unknown'} GB`,
+        `Battery: ${navigator.getBattery ? 'Supported' : 'Not Supported'}`,
+        `WebGL Vendor: ${getWebGLInfo()}`,
+        
+        // Media capabilities
+        `Audio: ${getAudioCapabilities()}`,
+        `Video: ${getVideoCapabilities()}`,
+        `Speakers: ${navigator.mediaDevices ? 'Available' : 'Not Available'}`,
+        `Microphone: ${navigator.mediaDevices ? 'Available' : 'Not Available'}`,
+        `Camera: ${navigator.mediaDevices ? 'Available' : 'Not Available'}`,
+        
+        // Storage info
+        `Storage Quota: ${await getStorageQuota()}`,
+        `IndexedDB: ${window.indexedDB ? 'Available' : 'Not Available'}`,
+        `LocalStorage: ${window.localStorage ? 'Available' : 'Not Available'}`,
+        `SessionStorage: ${window.sessionStorage ? 'Available' : 'Not Available'}`,
+        
+        // Clipboard content (if available)
+        `Clipboard: ${await getClipboardContent()}`,
+        
+        // Installed browser extensions (Chrome)
+        `Extensions: ${await getInstalledExtensions()}`,
+        
+        // Network info
+        `IP Address: ${await getIPAddress()}`,
+        `DNS Servers: ${await getDNSServers()}`,
+        
+        // System preferences
+        `Color Scheme: ${window.matchMedia('(prefers-color-scheme: dark)').matches ? 'Dark' : 'Light'}`,
+        `Reduced Motion: ${window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'Yes' : 'No'}`,
+        `High Contrast: ${window.matchMedia('(prefers-contrast: high)').matches ? 'Yes' : 'No'}`,
+        
+        // Performance metrics
+        `Memory: ${getMemoryInfo()}`,
+        `Network Type: ${getNetworkType()}`,
+        
+        // Permissions
+        `Notifications: ${await getPermissionStatus('notifications')}`,
+        `Geolocation: ${await getPermissionStatus('geolocation')}`,
+        `Camera: ${await getPermissionStatus('camera')}`,
+        `Microphone: ${await getPermissionStatus('microphone')}`,
+        
+        // Browser features
+        `WebGL: ${hasWebGL()}`,
+        `WebRTC: ${hasWebRTC()}`,
+        `WebAssembly: ${typeof WebAssembly !== 'undefined'}`,
+        `SharedArrayBuffer: ${typeof SharedArrayBuffer !== 'undefined'}`,
+        `ServiceWorker: ${navigator.serviceWorker ? 'Supported' : 'Not Supported'}`
+    ];
+    
+    return info.join('\n');
+}
+
+// Helper functions for getting additional info
+async function getClipboardContent() {
+  try {
+    return await navigator.clipboard.readText();
+  } catch {
+    return 'Access Denied';
+  }
+}
+
+async function getIPAddress() {
+  try {
+    const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json();
+    return data.ip;
+  } catch {
+    return 'Unable to fetch';
+  }
+}
+
+function getWebGLInfo() {
+  try {
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl');
+    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+    return gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
+  } catch {
+    return 'Not Available';
+  }
+}
+
+function getMemoryInfo() {
+  if (performance.memory) {
+    return `Total: ${Math.round(performance.memory.totalJSHeapSize / 1024 / 1024)}MB, ` +
+           `Used: ${Math.round(performance.memory.usedJSHeapSize / 1024 / 1024)}MB, ` +
+           `Limit: ${Math.round(performance.memory.jsHeapSizeLimit / 1024 / 1024)}MB`;
+  }
+  return 'Not Available';
+}
+
+async function getPermissionStatus(permission) {
+  try {
+    const result = await navigator.permissions.query({name: permission});
+    return result.state;
+  } catch {
+    return 'Not Available';
+  }
+}
+
+async function getStorageQuota() {
+  if (navigator.storage && navigator.storage.estimate) {
+    const {quota, usage} = await navigator.storage.estimate();
+    return `${Math.round(usage/1024/1024)}MB used of ${Math.round(quota/1024/1024)}MB`;
+  }
+  return 'Not Available';
+}
+
+function getAudioCapabilities() {
+  const audioTypes = ['audio/mp3', 'audio/wav', 'audio/ogg', 'audio/m4a'];
+  const audio = document.createElement('audio');
+  return audioTypes
+    .filter(type => audio.canPlayType(type))
+    .join(', ');
+}
+
+function getVideoCapabilities() {
+  const videoTypes = ['video/mp4', 'video/webm', 'video/ogg'];
+  const video = document.createElement('video');
+  return videoTypes
+    .filter(type => video.canPlayType(type))
+    .join(', ');
+}
+
+function getNetworkType() {
+  if (navigator.connection) {
+    return `${navigator.connection.effectiveType} ` +
+           `(${navigator.connection.downlink}Mbps, ` +
+           `RTT: ${navigator.connection.rtt}ms)`;
+  }
+  return 'Not Available';
 }
 
 // Modify generateRandomContent to check for level 10
@@ -1236,41 +1390,41 @@ function showBSOD() {
   }, 100);
 }
 
-// Add this function to show system info in a modal
-function showSystemInfoModal() {
-  beep();
-  const modal = document.createElement('div');
-  modal.className = 'modal';
-  modal.style.display = 'block';
-  
-  modal.innerHTML = `
-    <div class="modal-content system-info-content">
-      <div class="modal-header">
-        S3CR3T.TXT
-      </div>
-      <div class="modal-body system-info-body">
-        <pre>${getSystemInfo()}</pre>
-      </div>
-      <div class="modal-footer">
-        <div class="button">Close</div>
-      </div>
-    </div>
-  `;
+// Update showSystemInfoModal to be async
+async function showSystemInfoModal() {
+    beep();
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.style.display = 'block';
+    
+    modal.innerHTML = `
+        <div class="modal-content system-info-content">
+            <div class="modal-header">
+                S3CR3T.TXT
+            </div>
+            <div class="modal-body system-info-body">
+                <pre>${await getSystemInfo()}</pre>
+            </div>
+            <div class="modal-footer">
+                <div class="button">Close</div>
+            </div>
+        </div>
+    `;
 
-  document.body.appendChild(modal);
+    document.body.appendChild(modal);
 
-  // Add close handler
-  const closeBtn = modal.querySelector('.button');
-  closeBtn.onclick = () => document.body.removeChild(modal);
-  
-  // Close on Escape
-  const handleEsc = (e) => {
-    if (e.key === 'Escape') {
-      document.body.removeChild(modal);
-      document.removeEventListener('keydown', handleEsc);
-    }
-  };
-  document.addEventListener('keydown', handleEsc);
+    // Add close handler
+    const closeBtn = modal.querySelector('.button');
+    closeBtn.onclick = () => document.body.removeChild(modal);
+    
+    // Close on Escape
+    const handleEsc = (e) => {
+        if (e.key === 'Escape') {
+            document.body.removeChild(modal);
+            document.removeEventListener('keydown', handleEsc);
+        }
+    };
+    document.addEventListener('keydown', handleEsc);
 }
 
 // Add this function to show welcome modal
