@@ -59,12 +59,13 @@ body {
 }
 
 .lane-header {
-  display: flex; /* Enable flexbox for the header */
+  display: flex;
   background-color: #0000AF;
   color: #FFFF50;
   padding: 3px;
   font-weight: bold;
   text-align: center;
+  border-bottom: 1px solid #50FFFF;
 }
 
 .name-header {
@@ -117,10 +118,17 @@ body {
 .input-area input {
   flex-grow: 1; 
   background-color: black;
-  color: white;
+  color: #50FFFF;
   border: none;
   padding: 0;
+  margin-left: 5px;
   font-family: inherit;
+  font-size: inherit;
+  outline: none; /* Removes focus outline */
+}
+
+.input-area input:focus {
+  color: #FFFFFF; /* Brighter color when focused */
 }
 
 .button-bar-container {
@@ -211,6 +219,89 @@ body {
   padding: 2px 5px;
   color: #50FFFF;
   margin-right: 5px;
+}
+
+.game-modal-content {
+  width: 340px;
+  max-width: 340px;
+}
+
+#snake-game {
+  background-color: #000000;
+  border: 2px solid #50FFFF;
+}
+
+.game-modal-content .modal-body {
+  padding: 10px;
+}
+
+.image-modal-content {
+  width: 360px;
+  max-width: 360px;
+}
+
+#image-viewer {
+  background-color: #000000;
+  border: 2px solid #50FFFF;
+  image-rendering: pixelated;
+}
+
+.image-modal-content .modal-body {
+  padding: 10px;
+}
+
+.file.selected {
+  background-color: #FFFF50;
+  color: #0000AF;
+}
+
+.file:hover {
+  background-color: #50FFFF;
+  color: #0000AF;
+}
+
+.bsod-modal {
+  background-color: #0000AF !important;
+  transition: filter 0.05s;
+}
+
+.bsod-content {
+  background-color: #0000AF !important;
+  border: none !important;
+  width: 90% !important;
+  max-width: 900px !important;
+  padding: 40px !important;
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  line-height: 1.3;
+  color: #FFFFFF;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.bsod-text {
+  white-space: pre-line;
+  position: relative;
+  z-index: 1;
+}
+
+.system-info-content {
+  width: 80%;
+  max-width: 800px;
+}
+
+.system-info-body {
+  text-align: left;
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.system-info-body pre {
+  margin: 0;
+  color: #50FFFF;
 }
 
 
