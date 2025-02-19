@@ -326,9 +326,11 @@ function showWelcomeModal() {
   modal.style.display = 'block';
 
   // Add click handler for the OK button
-  const okButton = modal.querySelector('.button');
-  okButton.addEventListener('click', () => {
-    modal.style.display = 'none';
+  const buttons = modal.querySelectorAll('.button');
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
   });
 
   // Also close on Enter key
