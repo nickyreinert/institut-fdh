@@ -1,10 +1,7 @@
-<<<<<<< HEAD
-=======
 // import SystemInfo
 import SystemInfo, { showSystemInfoModal } from './system-info.js';
 import { gameInterval, initGame, endGame } from './games.js';
 
->>>>>>> 1865da6 (foobar)
 // Function to generate random file/folder names
 // Function to generate random file/folder names (DOS style)
 function generateRandomName(isFolder = false) {
@@ -51,200 +48,7 @@ function isNameUnique(name, content) {
   return !content.some(item => item.name === name);
 }
 
-<<<<<<< HEAD
-// Add these helper functions for system info
-function hasWebGL() {
-    try {
-        const canvas = document.createElement('canvas');
-        return !!(canvas.getContext('webgl') || canvas.getContext('experimental-webgl'));
-    } catch (e) {
-        return false;
-    }
-}
-
-function hasWebRTC() {
-    return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
-}
-
-async function getDNSServers() {
-    return 'Not Available';
-}
-
-async function getInstalledExtensions() {
-    return 'Access Denied';
-}
-
-// Update getSystemInfo to be async
-async function getSystemInfo() {
-    const info = [
-        "SYSTEM INFORMATION",
-        "==================",
-        "",
-        // Basic browser info
-        `User Agent: ${navigator.userAgent}`,
-        `Platform: ${navigator.platform}`,
-        `Language: ${navigator.language}`,
-        `Languages: ${JSON.stringify(navigator.languages)}`,
-        `Do Not Track: ${navigator.doNotTrack}`,
-        `Cookies Enabled: ${navigator.cookieEnabled}`,
-        
-        // Screen and window info
-        `Screen: ${window.screen.width}x${window.screen.height}`,
-        `Window Inner: ${window.innerWidth}x${window.innerHeight}`,
-        `Color Depth: ${window.screen.colorDepth}`,
-        `Pixel Depth: ${window.screen.pixelDepth}`,
-        `Device Pixel Ratio: ${window.devicePixelRatio}`,
-        
-        // Location and network
-        `Protocol: ${window.location.protocol}`,
-        `Host: ${window.location.host}`,
-        `Pathname: ${window.location.pathname}`,
-        `Online Status: ${navigator.onLine}`,
-        `Connection Type: ${navigator.connection?.effectiveType || 'Unknown'}`,
-        `Connection Speed: ${navigator.connection?.downlink || 'Unknown'} Mbps`,
-        `RTT: ${navigator.connection?.rtt || 'Unknown'} ms`,
-        
-        // Hardware info
-        `CPU Cores: ${navigator.hardwareConcurrency || 'Unknown'}`,
-        `Max Touch Points: ${navigator.maxTouchPoints}`,
-        `Device Memory: ${navigator.deviceMemory || 'Unknown'} GB`,
-        `Battery: ${navigator.getBattery ? 'Supported' : 'Not Supported'}`,
-        `WebGL Vendor: ${getWebGLInfo()}`,
-        
-        // Media capabilities
-        `Audio: ${getAudioCapabilities()}`,
-        `Video: ${getVideoCapabilities()}`,
-        `Speakers: ${navigator.mediaDevices ? 'Available' : 'Not Available'}`,
-        `Microphone: ${navigator.mediaDevices ? 'Available' : 'Not Available'}`,
-        `Camera: ${navigator.mediaDevices ? 'Available' : 'Not Available'}`,
-        
-        // Storage info
-        `Storage Quota: ${await getStorageQuota()}`,
-        `IndexedDB: ${window.indexedDB ? 'Available' : 'Not Available'}`,
-        `LocalStorage: ${window.localStorage ? 'Available' : 'Not Available'}`,
-        `SessionStorage: ${window.sessionStorage ? 'Available' : 'Not Available'}`,
-        
-        // Clipboard content (if available)
-        // `Clipboard: ${await getClipboardContent()}`,
-        
-        // Installed browser extensions (Chrome)
-        `Extensions: ${await getInstalledExtensions()}`,
-        
-        // Network info
-        // `IP Address: ${await getIPAddress()}`,
-        `DNS Servers: ${await getDNSServers()}`,
-        
-        // System preferences
-        `Color Scheme: ${window.matchMedia('(prefers-color-scheme: dark)').matches ? 'Dark' : 'Light'}`,
-        `Reduced Motion: ${window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'Yes' : 'No'}`,
-        `High Contrast: ${window.matchMedia('(prefers-contrast: high)').matches ? 'Yes' : 'No'}`,
-        
-        // Performance metrics
-        `Memory: ${getMemoryInfo()}`,
-        `Network Type: ${getNetworkType()}`,
-        
-        // Permissions
-        `Notifications: ${await getPermissionStatus('notifications')}`,
-        `Geolocation: ${await getPermissionStatus('geolocation')}`,
-        `Camera: ${await getPermissionStatus('camera')}`,
-        `Microphone: ${await getPermissionStatus('microphone')}`,
-        
-        // Browser features
-        `WebGL: ${hasWebGL()}`,
-        `WebRTC: ${hasWebRTC()}`,
-        `WebAssembly: ${typeof WebAssembly !== 'undefined'}`,
-        `SharedArrayBuffer: ${typeof SharedArrayBuffer !== 'undefined'}`,
-        `ServiceWorker: ${navigator.serviceWorker ? 'Supported' : 'Not Supported'}`
-    ];
-    
-    return info.join('\n');
-}
-
-// Helper functions for getting additional info
-async function getClipboardContent() {
-  try {
-    return await navigator.clipboard.readText();
-  } catch {
-    return 'Access Denied';
-  }
-}
-
-async function getIPAddress() {
-  try {
-    const response = await fetch('https://api.ipify.org?format=json');
-    const data = await response.json();
-    return data.ip;
-  } catch {
-    return 'Unable to fetch';
-  }
-}
-
-function getWebGLInfo() {
-  try {
-    const canvas = document.createElement('canvas');
-    const gl = canvas.getContext('webgl');
-    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-    return gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
-  } catch {
-    return 'Not Available';
-  }
-}
-
-function getMemoryInfo() {
-  if (performance.memory) {
-    return `Total: ${Math.round(performance.memory.totalJSHeapSize / 1024 / 1024)}MB, ` +
-           `Used: ${Math.round(performance.memory.usedJSHeapSize / 1024 / 1024)}MB, ` +
-           `Limit: ${Math.round(performance.memory.jsHeapSizeLimit / 1024 / 1024)}MB`;
-  }
-  return 'Not Available';
-}
-
-async function getPermissionStatus(permission) {
-  try {
-    const result = await navigator.permissions.query({name: permission});
-    return result.state;
-  } catch {
-    return 'Not Available';
-  }
-}
-
-async function getStorageQuota() {
-  if (navigator.storage && navigator.storage.estimate) {
-    const {quota, usage} = await navigator.storage.estimate();
-    return `${Math.round(usage/1024/1024)}MB used of ${Math.round(quota/1024/1024)}MB`;
-  }
-  return 'Not Available';
-}
-
-function getAudioCapabilities() {
-  const audioTypes = ['audio/mp3', 'audio/wav', 'audio/ogg', 'audio/m4a'];
-  const audio = document.createElement('audio');
-  return audioTypes
-    .filter(type => audio.canPlayType(type))
-    .join(', ');
-}
-
-function getVideoCapabilities() {
-  const videoTypes = ['video/mp4', 'video/webm', 'video/ogg'];
-  const video = document.createElement('video');
-  return videoTypes
-    .filter(type => video.canPlayType(type))
-    .join(', ');
-}
-
-function getNetworkType() {
-  if (navigator.connection) {
-    return `${navigator.connection.effectiveType} ` +
-           `(${navigator.connection.downlink}Mbps, ` +
-           `RTT: ${navigator.connection.rtt}ms)`;
-  }
-  return 'Not Available';
-}
-
-// Modify generateRandomContent to check for level 10
-=======
 // Modify generateRandomContent to include "_INHALTE" folder at the top
->>>>>>> 1865da6 (foobar)
 function generateRandomContent() {
   const windowId = activeWindow;
   
@@ -569,10 +373,7 @@ function renderContent(laneElement, content) {
     return a.name.localeCompare(b.name);
   });
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 1865da6 (foobar)
   let currentLaneIndex = 0;
   let remainingContent = [...content];
 
@@ -1002,88 +803,6 @@ window.addEventListener('resize', () => {
   }, 250); // Wait 250ms after last resize event before re-rendering
 });
 
-// Modify the window.onload function to handle Quit button differently
-window.onload = function() {
-  // Show welcome modal
-  showWelcomeModal();
-
-  // Add handlers for menu items
-  document.querySelectorAll('.menu-item').forEach(item => {
-    item.addEventListener('click', () => {
-      showErrorModal(generateGibberish());
-    });
-  });
-
-  // Add handlers for bottom buttons
-  document.querySelectorAll('.button-bar .button').forEach(button => {
-    button.addEventListener('click', () => {
-      if (button.textContent.includes('Quit')) {
-        showBSOD();
-      } else {
-        showErrorModal(generateGibberish());
-      }
-    });
-  });
-
-  // Existing window.onload code...
-  const windows = document.querySelectorAll('.window');
-  windows.forEach(windowElement => {
-    const windowLanes = windowElement.querySelectorAll('.lane');
-    const initialContent = generateRandomContent();
-    currentContent[windowElement.id] = initialContent;
-    const firstLane = windowLanes[0];
-    if (firstLane) {
-      renderContent(firstLane, initialContent);
-    }
-  });
-
-  document.querySelector('#game-modal .button').addEventListener('click', endGame);
-
-  // Add keyboard navigation
-  document.addEventListener('keydown', handleKeyboardNavigation);
-  
-  // Set initial selection in left window
-  const firstFile = document.querySelector('#window1 .file');
-  if (firstFile) {
-    selectFile(firstFile);
-  }
-  
-  // Add click handlers to windows to switch active window
-  ['window1', 'window2'].forEach(windowId => {
-    document.getElementById(windowId).addEventListener('click', () => {
-      activeWindow = windowId;
-    });
-  });
-
-  const inputField = document.querySelector('.input-area input');
-  
-  inputField.addEventListener('keydown', (e) => {
-    switch(e.key) {
-      case 'ArrowUp':
-        e.preventDefault();
-        if (historyIndex < 0) historyIndex = 0;
-        inputField.value = commandHistory[historyIndex];
-        break;
-        
-      case 'ArrowDown':
-        e.preventDefault();
-        if (historyIndex >= 0) {
-          historyIndex = -1;
-          inputField.value = commandHistory[0];
-        }
-        break;
-        
-      case 'Enter':
-        if (inputField.value.toUpperCase() === 'DOOM.EXE') {
-          showDoomScreen();
-        }
-        inputField.value = '';
-        historyIndex = -1;
-        break;
-    }
-  });
-};
-
 // Add these functions after the showWelcomeModal function
 
 function generateGibberish() {
@@ -1382,45 +1101,6 @@ function showBSOD() {
   }, 100);
 }
 
-<<<<<<< HEAD
-// Update showSystemInfoModal to be async
-async function showSystemInfoModal() {
-    beep();
-    const modal = document.createElement('div');
-    modal.className = 'modal';
-    modal.style.display = 'block';
-    
-    modal.innerHTML = `
-        <div class="modal-content system-info-content">
-            <div class="modal-header">
-                S3CR3T.TXT
-            </div>
-            <div class="modal-body system-info-body">
-                <pre>${await getSystemInfo()}</pre>
-            </div>
-            <div class="modal-footer">
-                <div class="button">Close</div>
-            </div>
-        </div>
-    `;
-
-    document.body.appendChild(modal);
-
-    // Add close handler
-    const closeBtn = modal.querySelector('.button');
-    closeBtn.onclick = () => document.body.removeChild(modal);
-    
-    // Close on Escape
-    const handleEsc = (e) => {
-        if (e.key === 'Escape') {
-            document.body.removeChild(modal);
-            document.removeEventListener('keydown', handleEsc);
-        }
-    };
-    document.addEventListener('keydown', handleEsc);
-}
-=======
->>>>>>> 1865da6 (foobar)
 
 // Add this function to show welcome modal
 function showWelcomeModal() {
@@ -1630,8 +1310,6 @@ function beep() {
     snd.play();
 }
 
-<<<<<<< HEAD
-=======
 // Modify the window.onload function to handle Quit button differently
 window.onload = function() {
 
@@ -1723,7 +1401,6 @@ window.onload = function() {
   });
 };
 
->>>>>>> 1865da6 (foobar)
 
 function setActionCookie(name) {
   const date = new Date();
