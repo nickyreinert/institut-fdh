@@ -90,7 +90,7 @@ function generateRandomContent() {
 // Add this function to generate fixed content for "_INHALTE" folder
 function generateInhalteContent() {
   return [
-    { name: 'PRIMES.HTML', target: '/docs/seiten/2023-primes.html', isFolder: false }
+    { name: 'PRIMES.HTML', target: '/seiten/2023-primes.html', isFolder: false }
     ];
 }
 
