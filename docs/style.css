@@ -79,7 +79,6 @@ body {
   overflow: auto; 
 }
 
-
 .file-list-left {
   width: 80%; /* Adjust width as needed */
 }
@@ -113,6 +112,7 @@ body {
   padding: 5px;
   display: flex; 
   align-items: center; 
+  font-family: monospace;
 }
 
 .input-area input {
@@ -135,8 +135,8 @@ body {
   background-color: #000000;
   display: flex;
   width: 100%;
-
 }
+
 .button-bar {
   background-color: #000000;
   display: flex;
@@ -200,6 +200,11 @@ body {
   line-height: 1.5;
 }
 
+.iframe-modal-content .modal-body {
+  padding: 0;
+  height: 80%;
+}
+
 .modal-footer {
   padding: 10px;
   text-align: center;
@@ -248,6 +253,18 @@ body {
 
 .image-modal-content .modal-body {
   padding: 10px;
+}
+
+.achievement {
+  color: #FFFF50; 
+  font-weight: bold;
+}
+
+.modal-body p {
+  text-align: left;
+  margin: 0 auto 0.5rem auto;
+  width: 80%;
+  padding: 0;
 }
 
 .file.selected {

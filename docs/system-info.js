@@ -8,6 +8,7 @@ function hasWebGL() {
     }
 }
 
+<<<<<<< HEAD
 function hasWebRTC() {
     return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
 }
@@ -186,3 +187,41 @@ function getNetworkType() {
   }
   return 'Not Available';
 } 
+=======
+export default SystemInfo;
+
+export async function showSystemInfoModal() {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.style.display = 'block';
+    
+    modal.innerHTML = `
+        <div class="modal-content system-info-content">
+            <div class="modal-header">
+                S3CR3T.TXT
+            </div>
+            <div class="modal-body system-info-body">
+                <pre>${await SystemInfo.getSystemInfo()}</pre>
+            </div>
+            <div class="modal-footer">
+                <div class="button">Close</div>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // Add close handler
+    const closeBtn = modal.querySelector('.button');
+    closeBtn.onclick = () => document.body.removeChild(modal);
+    
+    // Close on Escape
+    const handleEsc = (e) => {
+        if (e.key === 'Escape') {
+            document.body.removeChild(modal);
+            document.removeEventListener('keydown', handleEsc);
+        }
+    };
+    document.addEventListener('keydown', handleEsc);
+}
+>>>>>>> 1865da6 (foobar)

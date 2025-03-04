@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+// import SystemInfo
+import SystemInfo, { showSystemInfoModal } from './system-info.js';
+import { gameInterval, initGame, endGame } from './games.js';
+
+>>>>>>> 1865da6 (foobar)
 // Function to generate random file/folder names
 // Function to generate random file/folder names (DOS style)
 function generateRandomName(isFolder = false) {
@@ -28,7 +35,7 @@ function generateRandomName(isFolder = false) {
     '.DAT', '.DBF', '.IDX', '.BAK', '.OLD', '.TMP', '.DOC', '.WK1',
     '.WK3', '.XLS', '.DBF', '.MDB', '.BAS', '.PAS', '.C', '.CPP', 
     '.ASM', '.OBJ', '.LIB', '.DLL', '.DRV', '.386', '.VXD', '.FON',
-    '.BMP', '.PCX', '.GIF', '.ZIP', '.ARJ', '.PAK', '.SAV', '.WRI'
+    '.BMP', '.PCX', '.GIF', '.ZIP', '.ARJ', '.PAK', '.SAV', '.WRI', '.TAR'
   ];
 
   const names = isFolder ? dosFolderNames : dosFileNames;
@@ -44,6 +51,7 @@ function isNameUnique(name, content) {
   return !content.some(item => item.name === name);
 }
 
+<<<<<<< HEAD
 // Add these helper functions for system info
 function hasWebGL() {
     try {
@@ -234,11 +242,14 @@ function getNetworkType() {
 }
 
 // Modify generateRandomContent to check for level 10
+=======
+// Modify generateRandomContent to include "_INHALTE" folder at the top
+>>>>>>> 1865da6 (foobar)
 function generateRandomContent() {
   const windowId = activeWindow;
   
-  // Check if we're at level 10
-  if (currentLevel[windowId] === 10) {
+  // Check if we're at level 7
+  if (currentLevel[windowId] === 7) {
     return [{
       name: 'S3CR3T.TXT',
       isFolder: false
@@ -247,7 +258,10 @@ function generateRandomContent() {
 
   // Original content generation for other levels
   const numItems = Math.floor(Math.random() * 50) + 1;
-  const content = [];
+  const content = [{
+    name: '_INHALTE',
+    isFolder: true
+  }];
   let attempts = 0;
   const maxAttempts = 100;
 
@@ -268,6 +282,62 @@ function generateRandomContent() {
 
   return content;
 }
+
+// Add this function to generate fixed content for "_INHALTE" folder
+function generateInhalteContent() {
+  return [
+    { name: 'PRIMES.HTML', target: '/docs/seiten/2023-primes.html', isFolder: false }
+    ];
+}
+
+// Modify showIframeModal to use the target attribute
+function showIframeModal(item) {
+  beep();
+  const modal = document.createElement('div');
+  modal.className = 'modal';
+  modal.style.display = 'block';
+  
+  const target = item.target || '/default/path.html'; // Ensure target is defined
+
+  modal.innerHTML = `
+    <div class="modal-content iframe-modal-content">
+      <div class="modal-header">${item.name}</div>
+      <div class="modal-body">
+        <iframe src="${target}" width="100%" height="100%"></iframe>
+      </div>
+      <div class="modal-footer">
+        <div class="button">Close</div>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  // Add close handler
+  const closeBtn = modal.querySelector('.button');
+  closeBtn.onclick = () => document.body.removeChild(modal);
+  
+  // Close on Escape
+  const handleEsc = (e) => {
+    if (e.key === 'Escape') {
+      document.body.removeChild(modal);
+      document.removeEventListener('keydown', handleEsc);
+    }
+  };
+  document.addEventListener('keydown', handleEsc);
+}
+
+// Add CSS for the iframe modal to make it 60% of the screen size
+const iframeModalStyle = document.createElement('style');
+iframeModalStyle.textContent = `
+  .iframe-modal-content {
+    width: 60%;
+    height: 60%;
+    max-width: 60%;
+    max-height: 60%;
+  }
+`;
+document.head.appendChild(iframeModalStyle);
 
 let currentLevel = {}; // Keep track of current level for each lane
 let currentContent = {}; // Store current content for each window
@@ -424,41 +494,7 @@ function handleKeyboardNavigation(e) {
         break;
         
       case 'Enter':
-        if (selectedFile) {
-          const fileName = selectedFile.textContent;
-          const isFolder = !fileName.includes('.');
-          const laneElement = selectedFile.closest('.lane');
-          const windowId = selectedFile.closest('.window').id;
-          
-          // Special handling for S3CR3T.TXT
-          if (fileName === 'S3CR3T.TXT') {
-            showSystemInfoModal();
-            return;
-          }
-          
-          // Special handling for ".." navigation
-          if (fileName === '..') {
-            currentLevel[windowId]--;
-            const newContent = generateRandomContent();
-            renderContent(laneElement, newContent);
-            resetFileDetails();
-          } else if (isFolder) {
-            currentLevel[windowId]++;
-            const newContent = generateRandomContent();
-            renderContent(laneElement, newContent);
-            resetFileDetails();
-          } else if (archiveExtensions.some(ext => fileName.toUpperCase().endsWith(ext))) {
-            showArchiveExtraction(fileName);
-          } else if (['.EXE', '.COM', '.BAT'].some(ext => fileName.toUpperCase().endsWith(ext))) {
-            beep();
-            const modal = document.getElementById('game-modal');
-            modal.querySelector('.modal-header').textContent = fileName;
-            modal.style.display = 'block';
-            initGame();
-          } else if (imageExtensions.some(ext => fileName.toUpperCase().endsWith(ext))) {
-            showImageViewer(fileName);
-          }
-        }
+        handleEnterKeyPress();
         break;
     }
   }
@@ -533,6 +569,10 @@ function renderContent(laneElement, content) {
     return a.name.localeCompare(b.name);
   });
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1865da6 (foobar)
   let currentLaneIndex = 0;
   let remainingContent = [...content];
 
@@ -620,36 +660,12 @@ function renderContent(laneElement, content) {
 }
 
 // Add these new functions for the Snake game
-let gameInterval;
 let snake;
 let food;
 let direction;
 let score;
 let gameCanvas;
 let gameCtx;
-
-function initGame() {
-  gameCanvas = document.getElementById('snake-game');
-  gameCtx = gameCanvas.getContext('2d');
-  
-  snake = [
-    {x: 10, y: 10},
-    {x: 9, y: 10},
-    {x: 8, y: 10}
-  ];
-  
-  direction = 'right';
-  score = 0;
-  food = generateFood();
-  
-  if (gameInterval) {
-    clearInterval(gameInterval);
-  }
-  
-  gameInterval = setInterval(gameLoop, 100);
-  
-  document.addEventListener('keydown', handleGameInput);
-}
 
 function generateFood() {
   return {
@@ -735,21 +751,12 @@ function handleGameInput(e) {
   }
 }
 
-function endGame() {
-  if (!gameInterval) return; // Don't end if game is not running
-  
-  clearInterval(gameInterval);
-  gameInterval = null; // Clear the interval reference
-  const modal = document.getElementById('game-modal');
-  modal.style.display = 'none';
-}
-
 // Add this list of image extensions near the top with other constants
 const imageExtensions = ['.BMP', '.PCX', '.GIF', '.PNG', '.JPG'];
 let lastClickTime = 0; // Add this line to fix the reference error
 
 // Add archive extensions to the top with other constants
-const archiveExtensions = ['.ARJ', '.ZIP', '.RAR'];
+const archiveExtensions = ['.ARJ', '.ZIP', '.RAR', '.TAR'];
 
 // Add this function to generate increasingly long filenames
 function generateLongFilename(length) {
@@ -765,6 +772,7 @@ function generateLongFilename(length) {
 // Add this function to show the archive extraction modal
 function showArchiveExtraction(fileName) {
   beep();
+  setActionCookie('TAR-BOMB');
   const modal = document.createElement('div');
   modal.className = 'modal';
   modal.style.display = 'block';
@@ -902,33 +910,16 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Modify handleFileClick to handle archive files
+// Modify handleFileClick to handle "_INHALTE" folder and open iframe modal
 function handleFileClick(item, laneId, laneElement, event) {
   const currentTime = new Date().getTime();
   const isDoubleClick = (currentTime - lastClickTime) < 300;
   lastClickTime = currentTime;
 
   if (isDoubleClick) {
-    if (item.name === 'S3CR3T.TXT') {
-      showSystemInfoModal();
-      return;
-    }
-    if (item.isFolder) {
-      currentLevel[laneId]++;
-      const newContent = generateRandomContent();
-      renderContent(laneElement, newContent);
-      resetFileDetails();
-    } else if (archiveExtensions.some(ext => item.name.toUpperCase().endsWith(ext))) {
-      showArchiveExtraction(item.name);
-    } else if (['.EXE', '.COM', '.BAT'].some(ext => item.name.toUpperCase().endsWith(ext))) {
-      beep();
-      const modal = document.getElementById('game-modal');
-      modal.querySelector('.modal-header').textContent = item.name;
-      modal.style.display = 'block';
-      initGame();
-    } else if (imageExtensions.some(ext => item.name.toUpperCase().endsWith(ext))) {
-      showImageViewer(item.name);
-    }
+    const fileElements = laneElement.querySelectorAll('.file');
+    selectedFile = Array.from(fileElements).find(file => file.textContent === item.name);
+    handleEnterKeyPress();
   } else {
     showFileDetails(item.name, event);
   }
@@ -1312,6 +1303,7 @@ function generateRetroImage(canvas, fileName) {
 // Add this function to create BSOD
 function showBSOD() {
   beep();
+  setActionCookie('BSOD');
   // Prevent tab closing/reloading
   window.onbeforeunload = function() {
     return "System is unresponsive";
@@ -1390,6 +1382,7 @@ function showBSOD() {
   }, 100);
 }
 
+<<<<<<< HEAD
 // Update showSystemInfoModal to be async
 async function showSystemInfoModal() {
     beep();
@@ -1426,6 +1419,8 @@ async function showSystemInfoModal() {
     };
     document.addEventListener('keydown', handleEsc);
 }
+=======
+>>>>>>> 1865da6 (foobar)
 
 // Add this function to show welcome modal
 function showWelcomeModal() {
@@ -1457,6 +1452,7 @@ let historyIndex = -1;
 // Add DOOM viewer function
 function showDoomScreen() {
   beep();
+  setActionCookie('DOOM.EXE');
   const modal = document.createElement('div');
   modal.className = 'modal doom-modal';
   modal.style.display = 'block';
@@ -1633,5 +1629,167 @@ function beep() {
     var snd = new Audio("data:audio/wav;base64,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qJrx4KOQjahZxWbcZgztj2c49nKmkId44S71j0c8eV9yDK6uPRzx5X18eDvjvQ6yKo9ZSS6l//8elePK/Lf//IInrOF/FvDoADYAGBMGb7FtErm5MXMlmPAJQVgWta7Zx2go+8xJ0UiCb8LHHdftWyLJE0QIAIsI+UbXu67dZMjmgDGCGl1H+vpF4NSDckSIkk7Vd+sxEhBQMRU8j/12UIRhzSaUdQ+rQU5kGeFxm+hb1oh6pWWmv3uvmReDl0UnvtapVaIzo1jZbf/pD6ElLqSX+rUmOQNpJFa/r+sa4e/pBlAABoAAAAA3CUgShLdGIxsY7AUABPRrgCABdDuQ5GC7DqPQCgbbJUAoRSUj+NIEig0YfyWUho1VBBBA//uQZB4ABZx5zfMakeAAAAmwAAAAF5F3P0w9GtAAACfAAAAAwLhMDmAYWMgVEG1U0FIGCBgXBXAtfMH10000EEEEEECUBYln03TTTdNBDZopopYvrTTdNa325mImNg3TTPV9q3pmY0xoO6bv3r00y+IDGid/9aaaZTGMuj9mpu9Mpio1dXrr5HERTZSmqU36A3CumzN/9Robv/Xx4v9ijkSRSNLQhAWumap82WRSBUqXStV/YcS+XVLnSS+WLDroqArFkMEsAS+eWmrUzrO0oEmE40RlMZ5+ODIkAyKAGUwZ3mVKmcamcJnMW26MRPgUw6j+LkhyHGVGYjSUUKNpuJUQoOIAyDvEyG8S5yfK6dhZc0Tx1KI/gviKL6qvvFs1+bWtaz58uUNnryq6kt5RzOCkPWlVqVX2a/EEBUdU1KrXLf40GoiiFXK///qpoiDXrOgqDR38JB0bw7SoL+ZB9o1RCkQjQ2CBYZKd/+VJxZRRZlqSkKiws0WFxUyCwsKiMy7hUVFhIaCrNQsKkTIsLivwKKigsj8XYlwt/WKi2N4d//uQRCSAAjURNIHpMZBGYiaQPSYyAAABLAAAAAAAACWAAAAApUF/Mg+0aohSIRobBAsMlO//Kk4soosy1JSFRYWaLC4qZBYWFRGZdwqKiwkNBVmoWFSJkWFxX4FFRQWR+LsS4W/rFRb/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////VEFHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAU291bmRib3kuZGUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMjAwNGh0dHA6Ly93d3cuc291bmRib3kuZGUAAAAAAAAAACU=");  
     snd.play();
 }
+
+<<<<<<< HEAD
+=======
+// Modify the window.onload function to handle Quit button differently
+window.onload = function() {
+
+  // Show welcome modal
+  showWelcomeModal();
+
+  document.getElementById('menu-item-help').addEventListener('click', () => {
+    showWelcomeModal();
+  });
+  
+  // Add handlers for menu items
+  document.querySelectorAll('.menu-item').forEach(item => {
+    // prevent if menu-item-help is clicked
+    if (item.id === 'menu-item-help') {
+      return; 
+    }
+    item.addEventListener('click', () => {
+      showErrorModal(generateGibberish());
+    });
+  });
+
+  // Add handlers for bottom buttons
+  document.querySelectorAll('.button-bar .button').forEach(button => {
+    button.addEventListener('click', () => {
+      if (button.textContent.includes('Quit')) {
+        showBSOD();
+      } else {
+        showErrorModal(generateGibberish());
+      }
+    });
+  });
+
+  // render initial content
+  const windows = document.querySelectorAll('.window');
+  windows.forEach(windowElement => {
+    const windowLanes = windowElement.querySelectorAll('.lane');
+    const initialContent = generateRandomContent();
+    currentContent[windowElement.id] = initialContent;
+    const firstLane = windowLanes[0];
+    if (firstLane) {
+      renderContent(firstLane, initialContent);
+    }
+  });
+
+  document.querySelector('#game-modal .button').addEventListener('click', endGame);
+
+  // Add keyboard navigation
+  document.addEventListener('keydown', handleKeyboardNavigation);
+  
+  // Set initial selection in left window
+  const firstFile = document.querySelector('#window1 .file');
+  if (firstFile) {
+    selectFile(firstFile);
+  }
+  
+  // Add click handlers to windows to switch active window
+  ['window1', 'window2'].forEach(windowId => {
+    document.getElementById(windowId).addEventListener('click', () => {
+      activeWindow = windowId;
+    });
+  });
+
+  const inputField = document.querySelector('.input-area input');
+  
+  inputField.addEventListener('keydown', (e) => {
+    switch(e.key) {
+      case 'ArrowUp':
+        e.preventDefault();
+        if (historyIndex < 0) historyIndex = 0;
+        inputField.value = commandHistory[historyIndex];
+        break;
+        
+      case 'ArrowDown':
+        e.preventDefault();
+        if (historyIndex >= 0) {
+          historyIndex = -1;
+          inputField.value = commandHistory[0];
+        }
+        break;
+        
+      case 'Enter':
+        if (inputField.value.toUpperCase() === 'DOOM.EXE') {
+          showDoomScreen();
+        }
+        inputField.value = '';
+        historyIndex = -1;
+        break;
+    }
+  });
+};
+
+>>>>>>> 1865da6 (foobar)
+
+function setActionCookie(name) {
+  const date = new Date();
+  date.setTime(date.getTime() + (365*24*60*60*1000)); // 1 year expiration
+  const expires = "expires=" + date.toUTCString();
+  document.cookie = 'IFDH_' + name + "=true;" + expires + ";path=/";
+}
+
+
+function handleEnterKeyPress() {
+  if (selectedFile) {
+    const fileName = selectedFile.textContent;
+    const isFolder = !fileName.includes('.');
+    const laneElement = selectedFile.closest('.lane');
+    const windowId = selectedFile.closest('.window').id;
+
+      // Special handling for S3CR3T.TXT
+    if (fileName === 'S3CR3T.TXT') {
+      beep();
+      showSystemInfoModal();
+
+      setActionCookie('S3CR3T.TXT');
+  
+      return;
+    }
+
+    // Special handling for ".." navigation
+    if (fileName === '..') {
+      currentLevel[windowId]--;
+      const newContent = generateRandomContent();
+      renderContent(laneElement, newContent);
+      resetFileDetails();
+    } else if (isFolder) {
+      currentLevel[windowId]++;
+      const newContent = fileName === '_INHALTE' ? generateInhalteContent() : generateRandomContent();
+      renderContent(laneElement, newContent);
+      resetFileDetails();
+    } else if (archiveExtensions.some(ext => fileName.toUpperCase().endsWith(ext))) {
+      showArchiveExtraction(fileName);
+    } else if (['.EXE', '.COM', '.BAT'].some(ext => fileName.toUpperCase().endsWith(ext))) {
+      beep();
+      const modal = document.getElementById('game-modal');
+      modal.querySelector('.modal-header').textContent = fileName;
+      modal.style.display = 'block';
+      setActionCookie('SNAKE');
+      initGame();
+    } else if (imageExtensions.some(ext => fileName.toUpperCase().endsWith(ext))) {
+      setActionCookie('IMG-TROJANER');
+      showImageViewer(fileName);
+    } else {
+      const item = currentContent[windowId].find(i => i.name === fileName);
+      showIframeModal(item);
+    }
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.cookie.split('; ').forEach(cookie => {
+        const [name, value] = cookie.split('=');
+        if (name.startsWith('IFDH_')) {
+            const flag = name.replace('IFDH_', '');
+            if (value === 'true') {
+                document.getElementById(flag).innerText = "[X]";
+            }
+        }
+    });
+});
 
 

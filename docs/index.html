@@ -7,9 +7,9 @@
 <body>
 
 <div class="menu-bar">
-  <div class="menu-item">File</div>
-  <div class="menu-item">Edit</div>
-  <div class="menu-item">View</div>
+  <div class="menu-item" id="menu-item-file">File</div>
+  <div class="menu-item" id="menu-item-edit">Edit</div>
+  <div class="menu-item" id="menu-item-help">Help</div>
 </div>
 
 <div class="container">
@@ -91,20 +91,20 @@
 
 </div>
 <div class="input-area">
-  C:\ <input type="text">
+  C:\> <input type="text">
 </div>
 
 <div class="button-bar-container">
   <div class="button-bar">
-    <div class="button"><span>1</span> Copy</div>
-    <div class="button"><span>2</span> Move</div>
-    <div class="button"><span>3</span> Delete</div>
-    <div class="button"><span>4</span> Make Dir</div>
-    <div class="button"><span>5</span> View</div>
-    <div class="button"><span>6</span> Edit</div>
-    <div class="button"><span>7</span> Rename</div>
-    <div class="button"><span>8</span> Attributes</div>
-    <div class="button"><span>9</span> Sort</div>
+    <div class="button"><span>1</span> Help</div>
+    <div class="button"><span>2</span> Menu</div>
+    <div class="button"><span>3</span> View</div>
+    <div class="button"><span>4</span> Edit</div>
+    <div class="button"><span>5</span> Copy</div>
+    <div class="button"><span>6</span> RenMov</div>
+    <div class="button"><span>7</span> Mkdir</div>
+    <div class="button"><span>8</span> Delete</div>
+    <div class="button"><span>9</span> PullDn</div>
     <div class="button"><span>10</span> Quit</div>
   </div>
 </div>
@@ -117,11 +117,17 @@
     <div class="modal-body">
       Willkommen beim Institut für Digitale Herausforderungen
       
-      Aufgrund eines unvorhersehbaren Fehlers ist diese Webseite zur Zeit nicht verfügbar.
-      
-      Bitte kontaktieren Sie den technischen Support unter <a style="color: white;" target="_blank" href="https://nickyreinert.de">nickyreinert.de</a>
+      Abgeschlossene Herausforderungen:
 
-      Wollen Sie die Seite trotzdem anzeigen?
+      <p><span class="achievement" id="S3CR3T.TXT">[ ]</span> S3CR3T.TXT</p>
+      <p><span class="achievement" id="TAR-BOMB">[ ]</span> TAR-BOMB</p>
+      <p><span class="achievement" id="DOOM.EXE">[ ]</span> DOOM</p>
+      <p><span class="achievement" id="SNAKE">[ ]</span> SNAKE</p>
+      <p><span class="achievement" id="BSOD">[ ]</span> BSOD</p>
+      <p><span class="achievement" id="IMG-TROJANER">[ ]</span> IMAGE TROJANER</p>
+
+      
+      Bei Fragen kontaktieren Sie bitte den Institutsleiter auf <a style="color: white;" target="_blank" href="https://nickyreinert.de">nickyreinert.de</a>
     </div>
     <div class="modal-footer">
       <div class="button">Abbrechen</div>
