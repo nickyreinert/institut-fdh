@@ -92,7 +92,14 @@ function generateInhalteContent() {
   return [
     { name: 'PRIMES.HTML', target: 'seiten/2023-primes.html', isFolder: false },
     { name: 'DUMAN.HTML', target: 'seiten/2026-duman.html', isFolder: false },
-    { name: 'VERBOTSPARTEI.HTML', target: 'seiten/2025-verbotspartei.html', isFolder: false }
+    { name: 'VERBOTSPARTEI.HTML', target: 'seiten/2025-verbotspartei.html', isFolder: false },
+    { name: 'NERDENZ.HTML', target: 'seiten/2025-nerdenz.html', isFolder: false },
+    { name: 'MIRROR.HTML', target: 'seiten/2025-mirror.html', isFolder: false },
+    { name: 'BOFH.HTML', target: 'seiten/2025-bofh.html', isFolder: false },
+    { name: 'DBORAKEL.HTML', target: 'seiten/2026-dborakel.html', isFolder: false },
+    { name: 'FACES.HTML', target: 'seiten/2026-faces.html', isFolder: false },
+    { name: 'TEXT.HTML', target: 'seiten/2026-text.html', isFolder: false },
+    { name: 'OSINT.HTML', target: 'seiten/2026-osint.html', isFolder: false }
     ];
 }
 
@@ -131,6 +138,62 @@ function showIframeModal(item) {
     }
   };
   document.addEventListener('keydown', handleEsc);
+}
+
+function getDeepLinkTargetFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const preferredKeys = ['page', 'open', 'file', 'target'];
+
+  let rawValue = '';
+
+  for (const key of preferredKeys) {
+    const value = params.get(key);
+    if (value) {
+      rawValue = value;
+      break;
+    }
+  }
+
+  // Fallback: allow URLs like ?2025-mirror or ?2025-mirror.html
+  if (!rawValue) {
+    for (const key of params.keys()) {
+      if (key) {
+        rawValue = key;
+        break;
+      }
+    }
+  }
+
+  if (!rawValue) {
+    return null;
+  }
+
+  let normalized = rawValue.trim().toLowerCase();
+  normalized = normalized.replace(/^seiten\//, '');
+
+  if (/\.html$/i.test(normalized) === false) {
+    normalized += '.html';
+  }
+
+  // Only allow local page slugs like 2025-mirror.html
+  if (!/^[a-z0-9][a-z0-9-]*\.html$/.test(normalized)) {
+    return null;
+  }
+
+  return {
+    name: normalized.toUpperCase(),
+    target: `seiten/${normalized}`,
+    isFolder: false
+  };
+}
+
+function applyDeepLinkIfPresent() {
+  const item = getDeepLinkTargetFromUrl();
+  if (!item) {
+    return;
+  }
+
+  showIframeModal(item);
 }
 
 // Add CSS for the iframe modal to make it 60% of the screen size
@@ -1104,26 +1167,42 @@ function showBSOD() {
 }
 
 
+let welcomeModalKeyHandler = null;
+
 // Add this function to show welcome modal
 function showWelcomeModal() {
   beep();
   const modal = document.getElementById('welcome-modal');
   modal.style.display = 'block';
 
+  const closeWelcomeModal = () => {
+    modal.style.display = 'none';
+    document.removeEventListener('keydown', handleModalKeys);
+  };
+
+  const handleModalKeys = (e) => {
+    if (modal.style.display !== 'block') {
+      return;
+    }
+
+    if (e.key === 'Enter' || e.key === 'Escape') {
+      closeWelcomeModal();
+    }
+  };
+
+  // Make sure we never accumulate duplicate key handlers.
+  if (welcomeModalKeyHandler) {
+    document.removeEventListener('keydown', welcomeModalKeyHandler);
+  }
+  welcomeModalKeyHandler = handleModalKeys;
+  document.addEventListener('keydown', welcomeModalKeyHandler);
+
   // Add click handler for the OK button
   const buttons = modal.querySelectorAll('.button');
   buttons.forEach(button => {
     button.addEventListener('click', () => {
-      modal.style.display = 'none';
+      closeWelcomeModal();
     });
-  });
-
-  // Also close on Enter key
-  document.addEventListener('keydown', function handleEnter(e) {
-    if (e.key === 'Enter' && modal.style.display === 'block') {
-      modal.style.display = 'none';
-      document.removeEventListener('keydown', handleEnter);
-    }
   });
 }
 
@@ -1355,6 +1434,8 @@ window.onload = function() {
       renderContent(firstLane, initialContent);
     }
   });
+
+  applyDeepLinkIfPresent();
 
   document.querySelector('#game-modal .button').addEventListener('click', endGame);
 

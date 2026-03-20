@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faces of Joy</title>
+    <link rel="stylesheet" href="iframes.css">
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            margin-bottom: 1rem;
+        }
+
+        td {
+            border: 1px solid #ddd;
+            padding: 0.85rem 0.75rem;
+            height: 5rem;
+            vertical-align: middle;
+            word-break: break-word;
+            white-space: normal;
+            text-align: center;
+            font-size: 1.05rem;
+            line-height: 1.45;
+            font-family: "Helvetica Neue", "Segoe UI", Arial, sans-serif;
+        }
+
+        .faces-container {
+            height: 100%;
+            overflow: auto;
+            border: 1px solid #d7d7d7;
+            border-radius: 8px;
+            background: transparent;
+        }
+
+        .sticky-top {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: #0000af;
+            padding: 0.9rem 0.9rem 0.7rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .sticky-top h1 {
+            margin: 0 0 0.5rem;
+        }
+
+        .sticky-top p {
+            margin: 0 0 0.75rem;
+        }
+
+        .tables-wrap {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .table-block h2 {
+            margin: 0 0 0.4rem;
+            font-size: 1rem;
+        }
+
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0;
+            flex-wrap: wrap;
+        }
+
+        .font-controls label {
+            font-size: 0.95rem;
+        }
+
+        .font-buttons {
+            display: flex;
+            gap: 0.35rem;
+            flex-wrap: wrap;
+        }
+
+        .font-btn {
+            padding: 0.35rem 0.45rem;
+            border: 1px solid #bbb;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .font-btn[aria-pressed="true"] {
+            border-color: #111;
+            background: #111;
+            color: #fff;
+        }
+
+        .face-entry {
+            position: relative;
+            display: block;
+            width: 100%;
+            padding-left: 2.1rem;
+            padding-right: 2.1rem;
+            box-sizing: border-box;
+        }
+
+        .fav-btn {
+            position: absolute;
+            left: 0.15rem;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 1px solid #bbb;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            width: 1.4rem;
+            height: 1.4rem;
+            padding: 0;
+            line-height: 1;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .fav-btn[aria-pressed="true"] {
+            border-color: #111;
+            background: #111;
+            color: #ffd44d;
+        }
+
+        .face-text {
+            display: block;
+            width: 100%;
+            min-width: 0;
+            margin: 0;
+            white-space: pre;
+            line-height: 1.2;
+            letter-spacing: 0;
+            font-weight: 400;
+            font-family: var(--face-font-family, "Apple Symbols", "Segoe UI Symbol", "Arial Unicode MS", "Noto Sans Symbols 2", "Noto Sans Symbols", "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", sans-serif);
+        }
+
+        .copy-btn {
+            position: absolute;
+            right: 0.15rem;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 1px solid #bbb;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            width: 1.4rem;
+            height: 1.4rem;
+            padding: 0;
+            line-height: 1;
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+
+        .placeholder-cell {
+            background: transparent;
+        }
+
+        #favorites-block {
+            display: none;
+        }
+
+        .tables-wrap {
+            padding: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="faces-container">
+    <div class="sticky-top">
+        <h1>Faces of Joy</h1>
+
+        <p>
+            Ich empfehle Espanso und eine angepasste
+            <a href="https://gist.github.com/nickyreinert/91e67a7d054878338d1f1dc9fc592ae5" target="_blank" rel="noopener noreferrer">base.yaml</a>
+            - damit kannst du zeigen, dass du ein wahrer Leet-Hacker bist und hast die Faces of Joy immer griffbereit.
+        </p>
+
+        <div class="font-controls" aria-label="Face Font Auswahl">
+            <label>Face Font:</label>
+            <div class="font-buttons" id="face-font-buttons">
+                <button type="button" class="font-btn" data-font="symbols" aria-pressed="false">Symbols</button>
+                <button type="button" class="font-btn" data-font="mono" aria-pressed="false">Mono</button>
+                <button type="button" class="font-btn" data-font="system" aria-pressed="false">System UI</button>
+                <button type="button" class="font-btn" data-font="noto" aria-pressed="false">Noto Sans</button>
+                <button type="button" class="font-btn" data-font="emoji" aria-pressed="false">Emoji First</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="tables-wrap">
+    <section class="table-block" id="favorites-block">
+        <h2>Favoriten</h2>
+        <table aria-label="Favoriten Faces">
+            <tbody id="favorites-body"></tbody>
+        </table>
+    </section>
+
+    <section class="table-block">
+        <h2>Alle Faces</h2>
+        <table id="all-faces-table" aria-label="Faces of Joy">
+        <tbody id="all-faces-body">
+        <tr>
+            <td>( ͡° ͜ʖ ͡°)</td>
+            <td>¯\_(ツ)_/¯</td>
+
+        </tr>
+        <tr>
+            <td>( ͡°( ͡° ͜ʖ( ͡° ͜ʖ ͡°)ʖ ͡°) ͡°)</td>
+            <td>ʕ•ᴥ•ʔ</td>
+        </tr>
+        <tr>
+            <td>(▀̿Ĺ̯▀̿ ̿)</td>
+            <td>(ง ͠° ͟ل͜ ͡°)ง</td>
+            <td>༼ つ ◕_◕ ༽つ</td>
+        </tr>
+        <tr>
+            <td>ಠ_ಠ</td>
+            <td>(づ｡◕‿‿◕｡)づ</td>
+        </tr>
+        <tr>
+            <td>(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ✧ﾟ･: *ヽ(◕ヮ◕ヽ)</td>
+            <td>[̲̅$̲̅(̲̅5̲̅)̲̅$̲̅]</td>
+            <td>┬┴┬┴┤ ͜ʖ ͡°) ├┬┴┬┴</td>
+        </tr>
+        <tr>
+            <td>( ͡°╭͜ʖ╮͡° )</td>
+            <td>(͡ ͡° ͜ つ ͡͡°)</td>
+            <td>(• ε •)</td>
+        </tr>
+        <tr>
+            <td>(ง'̀-'́)ง</td>
+            <td>(ಥ﹏ಥ)</td>
+            <td>﴾͡๏̯͡๏﴿ O'RLY?</td>
+        </tr>
+        <tr>
+            <td>(ノಠ益ಠ)ノ彡┻━┻</td>
+            <td>[̲̅$̲̅(̲̅ ͡° ͜ʖ ͡°̲̅)̲̅$̲̅]</td>
+            <td>(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧</td>
+        </tr>
+        <tr>
+            <td>(☞ﾟ∀ﾟ)☞</td>
+            <td>| (• ◡•)| (❍ᴥ❍ʋ)</td>
+            <td>(◕‿◕✿)</td>
+        </tr>
+        <tr>
+            <td>(ᵔᴥᵔ)</td>
+            <td>(╯°□°)╯︵ ʞooqǝɔɐɟ</td>
+            <td>(¬‿¬)</td>
+        </tr>
+        <tr>
+            <td>(☞ﾟヮﾟ)☞ ☜(ﾟヮﾟ☜)</td>
+            <td>(づ￣ ³￣)づ</td>
+            <td>ლ(ಠ益ಠლ)</td>
+        </tr>
+        <tr>
+            <td>ಠ╭╮ಠ</td>
+            <td>/╲/\╭( ͡° ͡° ͜ʖ ͡° ͡°)╮/\╱\</td>
+        </tr>
+        <tr>
+            <td>(;´༎ຶД༎ຶ`)</td>
+            <td>♪~ ᕕ(ᐛ)ᕗ</td>
+            <td>♥‿♥</td>
+        </tr>
+        <tr>
+            <td>༼ つ  ͡° ͜ʖ ͡° ༽つ</td>
+            <td>༼ つ ಥ_ಥ ༽つ</td>
+            <td>(╯°□°）╯︵ ┻━┻</td>
+        </tr>
+        <tr>
+            <td>( ͡ᵔ ͜ʖ ͡ᵔ )</td>
+            <td>ヾ(⌐■_■)ノ♪</td>
+            <td>~(˘▾˘~)</td>
+        </tr>
+        <tr>
+            <td>◉_◉</td>
+            <td>\ (•◡•) /</td>
+            <td>(~˘▾˘)~</td>
+        </tr>
+        <tr>
+            <td>(._.) ( l: ) ( .-. ) ( :l ) (._.)</td>
+            <td>༼ʘ̚ل͜ʘ̚༽</td>
+            <td>༼ ºل͟º ༼ ºل͟º ༼ ºل͟º ༽ ºل͟º ༽ ºل͟º ༽</td>
+        </tr>
+        <tr>
+            <td>┬┴┬┴┤(･_├┬┴┬┴</td>
+            <td>ᕙ(⇀‸↼‶)ᕗ</td>
+            <td>ᕦ(ò_óˇ)ᕤ</td>
+        </tr>
+        <tr>
+            <td>┻━┻ ︵ヽ(`Д´)ﾉ︵ ┻━┻</td>
+            <td>⚆ _ ⚆</td>
+            <td>(•_•) ( •_•)&gt;⌐■-■ (⌐■_■)</td>
+        </tr>
+        <tr>
+            <td>(｡◕‿‿◕｡)</td>
+            <td>ಥ_ಥ</td>
+            <td>ヽ༼ຈل͜ຈ༽ﾉ</td>
+        </tr>
+        <tr>
+            <td>(☞ຈل͜ຈ)☞</td>
+            <td>˙ ͜ʟ˙</td>
+        </tr>
+        <tr>
+            <td>☜(˚▽˚)☞</td>
+            <td>(•ω•)</td>
+            <td>(ง°ل͜°)ง</td>
+        </tr>
+        <tr>
+            <td>(｡◕‿◕｡)</td>
+            <td>（╯°□°）╯︵( .o.)</td>
+            <td>:')</td>
+        </tr>
+        <tr>
+            <td>┬──┬ ノ( ゜-゜ノ)</td>
+            <td>(っ˘ڡ˘ς)</td>
+            <td>ಠ⌣ಠ</td>
+        </tr>
+        <tr>
+            <td>ლ(´ڡ`ლ)</td>
+            <td>(°ロ°)☝</td>
+            <td>｡◕‿‿◕｡</td>
+        </tr>
+        <tr>
+            <td>( ಠ ͜ʖರೃ)</td>
+            <td>╚(ಠ_ಠ)=┐</td>
+            <td>(─‿‿─)</td>
+        </tr>
+        <tr>
+            <td>ƪ(˘⌣˘)ʃ</td>
+            <td>(；一_一)</td>
+            <td>(¬_¬)</td>
+        </tr>
+        <tr>
+            <td>( ⚆ _ ⚆ )</td>
+            <td>(ʘᗩʘ')</td>
+            <td>☜(⌒▽⌒)☞</td>
+        </tr>
+        <tr>
+            <td>｡◕‿◕｡</td>
+            <td>¯\(°_o)/¯</td>
+            <td>(ʘ‿ʘ)</td>
+        </tr>
+        <tr>
+            <td>ლ,ᔑ•ﺪ͟͠•ᔐ.ლ</td>
+            <td>(´・ω・`)</td>
+            <td>ಠ~ಠ</td>
+        </tr>
+        <tr>
+            <td>(° ͡ ͜ ͡ʖ ͡ °)</td>
+            <td>┬─┬ノ( º _ ºノ)</td>
+            <td>(´・ω・)っ由</td>
+        </tr>
+        <tr>
+            <td>ಠ_ಥ</td>
+            <td>Ƹ̵̡Ӝ̵̨̄Ʒ</td>
+            <td>(&gt;ლ)</td>
+        </tr>
+        <tr>
+            <td>ಠ‿↼</td>
+            <td>ʘ‿ʘ</td>
+            <td>(ღ˘⌣˘ღ)</td>
+        </tr>
+        <tr>
+            <td>ಠoಠ</td>
+            <td>ರ_ರ</td>
+            <td>(▰˘◡˘▰)</td>
+        </tr>
+        <tr>
+            <td>◔̯◔</td>
+            <td>◔ ⌣ ◔</td>
+            <td>(✿´‿`)</td>
+        </tr>
+        <tr>
+            <td>¬_¬</td>
+            <td>ب_ب</td>
+            <td>｡゜(｀Д´)゜｡</td>
+        </tr>
+        <tr>
+            <td>(ó ì_í)=óò=(ì_í ò)</td>
+            <td>°Д°</td>
+            <td>( ﾟヮﾟ)</td>
+        </tr>
+        <tr>
+            <td>┬─┬﻿ ︵ /(.□. ）</td>
+            <td>٩◔̯◔۶</td>
+            <td>≧☉_☉≦</td>
+        </tr>
+        <tr>
+            <td>☼.☼</td>
+            <td>(&gt;人&lt;)</td>
+        </tr>
+        <tr>
+            <td>〆(・∀・＠)</td>
+            <td>(~_^)</td>
+        </tr>
+        <tr>
+            <td>&gt;_&gt;</td>
+            
+        </tr>
+        <tr>
+            <td>(/) (°,,°) (/)</td>
+            
+            <td>^̮^</td>
+        </tr>
+        <tr>
+            <td>=U</td>
+            <td>(･.◤)</td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+    </section>
+    </div>
+    </div>
+
+    <script>
+        (function () {
+            const STORAGE_KEY = "facesFavorites";
+            const FONT_STORAGE_KEY = "facesFontPreference";
+            const COLS = 3;
+            const FACE_FONT_STACKS = {
+                mono: '"Noto Sans Mono", "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace',
+                symbols: '"Apple Symbols", "Segoe UI Symbol", "Arial Unicode MS", "Noto Sans Symbols 2", "Noto Sans Symbols", "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", sans-serif',
+                system: '"Helvetica Neue", "Segoe UI", Arial, sans-serif',
+                noto: '"Noto Sans", "Noto Sans Symbols 2", "Noto Sans Symbols", sans-serif',
+                emoji: '"Apple Color Emoji", "Segoe UI Emoji", "Noto Emoji", "Apple Symbols", "Segoe UI Symbol", sans-serif'
+            };
+
+            const favoritesBlock = document.getElementById("favorites-block");
+            const favoritesBody = document.getElementById("favorites-body");
+            const allFacesBody = document.getElementById("all-faces-body");
+            const faceFontButtons = Array.from(document.querySelectorAll(".font-btn"));
+
+            function loadFavorites() {
+                try {
+                    const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+                    return Array.isArray(parsed) ? new Set(parsed) : new Set();
+                } catch (_err) {
+                    return new Set();
+                }
+            }
+
+            function saveFavorites(favorites) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(favorites)));
+            }
+
+            function extractFaces() {
+                const cells = Array.from(allFacesBody.querySelectorAll("td"));
+                const faces = [];
+
+                cells.forEach((cell) => {
+                    const text = cell.textContent.trim();
+                    if (text) {
+                        faces.push(text);
+                    }
+                });
+
+                const seen = new Set();
+                return faces.filter((face) => {
+                    if (seen.has(face)) {
+                        return false;
+                    }
+                    seen.add(face);
+                    return true;
+                });
+            }
+
+            function buildRows(items, favorites, onToggle, onCopy) {
+                const rows = [];
+                for (let i = 0; i < items.length; i += COLS) {
+                    const rowItems = items.slice(i, i + COLS);
+                    const row = document.createElement("tr");
+
+                    rowItems.forEach((face) => {
+                        const td = document.createElement("td");
+                        const wrapper = document.createElement("div");
+                        wrapper.className = "face-entry";
+
+                        const btn = document.createElement("button");
+                        const isFav = favorites.has(face);
+                        btn.type = "button";
+                        btn.className = "fav-btn";
+                        btn.setAttribute("aria-label", isFav ? "Favorit entfernen" : "Als Favorit markieren");
+                        btn.setAttribute("aria-pressed", isFav ? "true" : "false");
+                        btn.textContent = isFav ? "★" : "☆";
+                        btn.addEventListener("click", () => onToggle(face));
+
+                        const span = document.createElement("pre");
+                        span.className = "face-text";
+                        span.textContent = face;
+
+                        const copyBtn = document.createElement("button");
+                        copyBtn.type = "button";
+                        copyBtn.className = "copy-btn";
+                        copyBtn.setAttribute("aria-label", "Face kopieren");
+                        copyBtn.textContent = "⧉";
+                        copyBtn.addEventListener("click", () => onCopy(face, copyBtn));
+
+                        wrapper.appendChild(btn);
+                        wrapper.appendChild(span);
+                        wrapper.appendChild(copyBtn);
+                        td.appendChild(wrapper);
+                        row.appendChild(td);
+                    });
+
+                    while (row.children.length < COLS) {
+                        const emptyCell = document.createElement("td");
+                        emptyCell.className = "placeholder-cell";
+                        row.appendChild(emptyCell);
+                    }
+
+                    rows.push(row);
+                }
+                return rows;
+            }
+
+            const allFaces = extractFaces();
+            const favorites = loadFavorites();
+
+            function applyFaceFont(fontKey) {
+                const key = FACE_FONT_STACKS[fontKey] ? fontKey : "symbols";
+                document.documentElement.style.setProperty("--face-font-family", FACE_FONT_STACKS[key]);
+                faceFontButtons.forEach((button) => {
+                    button.setAttribute("aria-pressed", button.dataset.font === key ? "true" : "false");
+                });
+                localStorage.setItem(FONT_STORAGE_KEY, key);
+            }
+
+            function render() {
+                const favoriteFaces = allFaces.filter((face) => favorites.has(face));
+                const regularFaces = allFaces.filter((face) => !favorites.has(face));
+
+                favoritesBody.innerHTML = "";
+                allFacesBody.innerHTML = "";
+
+                buildRows(favoriteFaces, favorites, toggleFavorite, copyFace).forEach((row) => favoritesBody.appendChild(row));
+                buildRows(regularFaces, favorites, toggleFavorite, copyFace).forEach((row) => allFacesBody.appendChild(row));
+
+                favoritesBlock.style.display = favoriteFaces.length ? "block" : "none";
+            }
+
+            function toggleFavorite(face) {
+                if (favorites.has(face)) {
+                    favorites.delete(face);
+                } else {
+                    favorites.add(face);
+                }
+                saveFavorites(favorites);
+                render();
+            }
+
+            faceFontButtons.forEach((button) => {
+                button.addEventListener("click", () => {
+                    applyFaceFont(button.dataset.font);
+                });
+            });
+
+            async function copyFace(face, buttonEl) {
+                const oldText = buttonEl.textContent;
+                try {
+                    await navigator.clipboard.writeText(face);
+                    buttonEl.textContent = "✓";
+                } catch (_err) {
+                    buttonEl.textContent = "!";
+                }
+
+                setTimeout(() => {
+                    buttonEl.textContent = oldText;
+                }, 900);
+            }
+
+            applyFaceFont(localStorage.getItem(FONT_STORAGE_KEY) || "symbols");
+            render();
+        })();
+    </script>
+</body>
+</html>

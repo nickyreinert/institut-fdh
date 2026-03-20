@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nerd Enzyklopädie</title>
+    <link rel="stylesheet" href="iframes.css">
+    <style>
+        .search-wrap {
+            margin: 1rem 0 1.25rem;
+        }
+
+        #nerdenz-search {
+            width: 100%;
+            max-width: 42rem;
+            padding: 0.6rem 0.8rem;
+            border: 1px solid #bbb;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        #search-result {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        #article-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        #article-list li {
+            padding: 0.45rem 0;
+            border-bottom: 1px solid #ececec;
+        }
+
+        #article-list a {
+            text-decoration: none;
+        }
+
+        #article-list a:hover,
+        #article-list a:focus {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Nerd Enzyklopädie</h1>
+
+    <div class="search-wrap">
+        <label for="nerdenz-search">Suche in den Artikeln:</label>
+        <input id="nerdenz-search" type="search" placeholder="Titel eingeben..." autocomplete="off">
+        <div id="search-result" aria-live="polite"></div>
+    </div>
+
+    <ul id="article-list">
+        <li><a href="https://nickyreinert.de/2025/2025-04-20-nerd-enzyklop%C3%A4die-48---alte-software/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 48 - Die dienstälteste Software</a></li>
+        <li><a href="https://nickyreinert.de/2025/2025-03-10-nerd-enzyklop%C3%A4die-47---die-500-meilen-e-mail/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 47 - Die 500-Meilen-E-Mail</a></li>
+        <li><a href="https://nickyreinert.de/2025/2025-03-10-nerd-enzyklop%C3%A4die-46---bastard-operator-from-hell/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 46 - Bastard Operator From Hell</a></li>
+        <li><a href="https://nickyreinert.de/2024/2024-01-15-nerd-enzyklop%C3%A4die-45---80-spalten-und-die-legende-vom-pferdehintern/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 45 - 80 Spalten und die Legende vom Pferdehintern</a></li>
+        <li><a href="https://nickyreinert.de/2024/2024-01-10-nerd-enzyklop%C3%A4die-44---von-fliegenklatschen-und-h%C3%A4keldeckchen/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 44 - Von Fliegenklatschen und Häkeldeckchen</a></li>
+        <li><a href="https://nickyreinert.de/2024/2024-01-01-nerd-enzyklop%C3%A4die-43---0x5f3759df/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 43 - 0x5f3759df</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-10-05-nerd-enzyklop%C3%A4die-42---mit-einem-nassen-seil-ins-internet/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 42 - Mit einem nassen Seil ins Internet</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-10-03-nerd-enzyklop%C3%A4die-41---welche-farbe-hat-chuck-norris/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 41 - Welche Farbe hat Chuck Norris?</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-06-22-nerd-enzyklop%C3%A4die-40---isuseramonkey/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 40 - isUserAMonkey</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-06-19-nerd-enzyklop%C3%A4die-39---der-kerzen-controller/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 39 - Der Kerzen-Controller</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-06-16-nerd-enzyklop%C3%A4die-38---du-idiot/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 38 - Du Idiot</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-06-13-nerd-enzyklop%C3%A4die-37---mehrdeutige-bilder/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 37 - Mehrdeutige Bilder</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-06-10-nerd-enzyklop%C3%A4die-36---das-kik--left-pad-drama/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 36 - Das kik &amp; left-pad Drama</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-06-07-nerd-enzyklop%C3%A4die-35---javascript-bananas/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 35 - JavaScript Bananas</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-06-04-nerd-enzyklop%C3%A4die-34---javascript-wurde-innerhalb-von-10-tagen-entwickelt/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 34 - JavaScript wurde innerhalb von 10 Tagen entwickelt</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-06-01-nerd-enzyklop%C3%A4die-33---gcj-02/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 33 - GCJ-02</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-05-28-nerd-enzyklop%C3%A4die-32---was-haben-php-visa-und-mandelbrot-gemeinsam/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 32 - Was haben PHP, Visa und Mandelbrot gemeinsam?</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-05-25-nerd-enzyklop%C3%A4die-31---der-allererste-bug/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 31 - Der allererste Bug</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-05-22-nerd-enzyklop%C3%A4die-30---die-falsche-fehlermeldung/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 30 - Die falsche Fehlermeldung</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-05-19-nerd-enzyklop%C3%A4die-29---programmieren-mit-emojis/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 29 - Programmieren mit Emojis</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-05-16-nerd-enzyklop%C3%A4die-28---dam%C3%B6nen-aus-der-nase/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 28 - Damönen aus der Nase</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-05-13-nerd-enzyklop%C3%A4die-27---die-geschichte-von-mel/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 27 - Die Geschichte von Mel</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-05-10-nerd-enzyklop%C3%A4die-26---focal/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 26 - FOCAL</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-05-07-nerd-enzyklop%C3%A4die-25---bare-metal-programming/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 25 - Bare Metal Programming</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-05-04-nerd-enzyklop%C3%A4die-24---zeichenketten-braten/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 24 - Zeichenketten braten</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-05-01-nerd-enzyklop%C3%A4die-23---30-x-10--1.000/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 23 - 30 x 10 = 1.000</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-04-28nerd-enzyklop%C3%A4die-22---l%C3%A4uft-darauf-doom/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 22 - Läuft darauf Doom?</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-04-25-nerd-enzyklop%C3%A4die-21---00000000000000000021e800c1e8df51b22c1588e5a624bea17e9faa34b2dc4a/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 21 - 00000000000000000021e800c1e8df51b22c1588e5a624bea17e9faa34b2dc4a</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-04-22-nerd-enzyklop%C3%A4die-20---elvis-und-raumschiffe/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 20 - Elvis und Raumschiffe</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-04-19-nerd-enzyklop%C3%A4die-19---das-brieftauben-protokoll/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 19 - Das Brieftauben-Protokoll</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-04-16-nerd-enzyklop%C3%A4die-18---willkommen-auf-null-island/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 18 - Willkommen auf Null Island</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-04-13-nerd-enzyklop%C3%A4die-17---fuenf--in-your-face/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 17 - Fuenf — In your Face</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-04-10-nerd-enzyklop%C3%A4die-16---userseeuserdo/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 16 - USERSEEUSERDO</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-04-07-nerd-enzyklop%C3%A4die-15---der-oreilly-zoo/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 15 - Der O’Reilly Zoo</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-04-04-nerd-enzyklop%C3%A4die-14---fckgw-rhqq2-yxrkt-8tg6w-2b7q8/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 14 - FCKGW-RHQQ2-YXRKT-8TG6W-2B7Q8</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-04-01-nerd-enzyklop%C3%A4die-13---total-hours-wasted-here-42/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 13 - Total hours wasted here = 42</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-03-28-nerd-enzyklop%C3%A4die-12---a-cpu-is-literally-a-rock-that-we-tricked-into-thinking/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 12 - A CPU is literally a rock that we tricked into thinking</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-03-25-nerd-enzyklop%C3%A4die-11---der-kleine-bobby-tables/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 11 - Der kleine Bobby Tables</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-03-22-nerd-enzyklop%C3%A4die-10---brainfuck/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 10 - Brainfuck</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-03-19-nerd-enzyklop%C3%A4die-9---der-streisand-effekt/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 9 - Der Streisand-Effekt</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-03-16-nerd-enzyklop%C3%A4die-8---hello-world-hat-einen-bug/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 8 - Hello World hat einen&nbsp;Bug</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-03-13-nerd-enzyklop%C3%A4die-7---das-allererste-easter-egg/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 7 - Das allererste Easter-Egg</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-03-10-nerd-enzyklop%C3%A4die-6---die-entstehungsgeschichte-von-activision/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 6 - Die Entstehungsgeschichte von&nbsp;Activision</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-03-07-nerd-enzyklop%C3%A4die-5---gesehen-gelacht-f8/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 5 - Gesehen, gelacht, F8</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-03-04-nerd-enzyklop%C3%A4die-4---regexen--jetzt-hast-du-zwei-probleme/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie 4 - RegExen — Jetzt hast du zwei Probleme</a></li>
+        <li><a href="https://nickyreinert.de/2023/2023-03-01-die-nerd-enzyklop%C3%A4die---640k-speicher-sind-genug/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie - 640K Speicher sind genug</a></li>
+        <li><a href="https://nickyreinert.de/2022/2022-01-30-die-nerd-enzyklop%C3%A4die/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie - Computer sind nicht pünktlich</a></li>
+        <li><a href="https://nickyreinert.de/2022/2022-01-15-die-nerd-enzyklop%C3%A4die---warum-ist-1-byte-8-bit-gro%C3%9F/" target="_blank" rel="noopener noreferrer">Die Nerd Enzyklopädie - Warum ist 1 Byte 8 Bit groß?</a></li>
+    </ul>
+
+    <script>
+        const searchInput = document.getElementById("nerdenz-search");
+        const items = Array.from(document.querySelectorAll("#article-list li"));
+        const resultLabel = document.getElementById("search-result");
+
+        function updateResultLabel(visible, total) {
+            resultLabel.textContent = `${visible} von ${total} Artikeln sichtbar`;
+        }
+
+        function filterItems() {
+            const query = searchInput.value.trim().toLowerCase();
+            let visibleCount = 0;
+
+            items.forEach((item) => {
+                const matches = item.textContent.toLowerCase().includes(query);
+                item.style.display = matches ? "" : "none";
+                if (matches) {
+                    visibleCount += 1;
+                }
+            });
+
+            updateResultLabel(visibleCount, items.length);
+        }
+
+        searchInput.addEventListener("input", filterItems);
+        updateResultLabel(items.length, items.length);
+    </script>
+</body>
+</html>

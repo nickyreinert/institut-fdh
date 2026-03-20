@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>OSINT Tools Directory</title>
+	<link rel="stylesheet" href="iframes.css">
+	<style>
+		.search-wrap {
+			margin: 1rem 0;
+		}
+
+		#osint-search {
+			width: 100%;
+			max-width: 42rem;
+			padding: 0.6rem 0.8rem;
+			border: 1px solid #bbb;
+			border-radius: 6px;
+			font-size: 1rem;
+		}
+
+		#search-result {
+			margin-top: 0.5rem;
+			font-size: 0.9rem;
+			color: #555;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+		}
+
+		th,
+		td {
+			border: 1px solid #ddd;
+			padding: 0.6rem;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		thead th {
+			background: #f7f7f7;
+		}
+	</style>
+</head>
+<body>
+	<h1>OSINT Tools Directory</h1>
+
+	<div class="search-wrap">
+		<label for="osint-search">Search tools, categories, or descriptions:</label>
+		<input id="osint-search" type="search" placeholder="Type to filter..." autocomplete="off">
+		<div id="search-result" aria-live="polite"></div>
+	</div>
+
+	<table id="osint-table">
+		<thead>
+			<tr>
+				<th scope="col">Category</th>
+				<th scope="col">Tool</th>
+				<th scope="col">Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Internet-Wide Scanners</td>
+				<td><a href="https://platform.censys.io" target="_blank" rel="noopener noreferrer">Censys</a></td>
+				<td>A search engine for hosts and networks that provides deep metadata on every public IP and service.</td>
+			</tr>
+			<tr>
+				<td>Internet-Wide Scanners</td>
+				<td><a href="https://www.shodan.io" target="_blank" rel="noopener noreferrer">Shodan</a></td>
+				<td>The "search engine for the Internet of Things." Finds servers, webcams, industrial systems, and more.</td>
+			</tr>
+			<tr>
+				<td>Internet-Wide Scanners</td>
+				<td><a href="https://en.fofa.info/" target="_blank" rel="noopener noreferrer">FOFA</a></td>
+				<td>A cyberspace mapping engine similar to Shodan, widely used for finding specific asset fingerprints.</td>
+			</tr>
+			<tr>
+				<td>Internet-Wide Scanners</td>
+				<td><a href="https://netlas.io/" target="_blank" rel="noopener noreferrer">Netlas.io</a></td>
+				<td>A global internet scanner for discovering and monitoring assets, including apps, IoT, and certificates.</td>
+			</tr>
+			<tr>
+				<td>Internet-Wide Scanners</td>
+				<td><a href="https://www.zoomeye.org/" target="_blank" rel="noopener noreferrer">ZoomEye</a></td>
+				<td>Often called the "Chinese Shodan," a powerful cyberspace search engine that frequently indexes vulnerable devices others miss.</td>
+			</tr>
+			<tr>
+				<td>Internet-Wide Scanners</td>
+				<td><a href="https://github.com/jakejarvis/awesome-shodan-queries" target="_blank" rel="noopener noreferrer">Awesome Shodan Queries</a></td>
+				<td>A curated collection of advanced Shodan search filters for finding specific (and often vulnerable) hardware.</td>
+			</tr>
+
+			<tr>
+				<td>DNS &amp; IP Intelligence</td>
+				<td><a href="https://securitytrails.com" target="_blank" rel="noopener noreferrer">SecurityTrails</a></td>
+				<td>The industry standard for historical DNS records, subdomains, and IP address history.</td>
+			</tr>
+			<tr>
+				<td>DNS &amp; IP Intelligence</td>
+				<td><a href="https://www.domaintools.com/" target="_blank" rel="noopener noreferrer">DomainTools</a></td>
+				<td>The premier enterprise-grade platform for WHOIS history, reverse IP lookups, and infrastructure pivoting.</td>
+			</tr>
+			<tr>
+				<td>DNS &amp; IP Intelligence</td>
+				<td><a href="https://bgpview.io/" target="_blank" rel="noopener noreferrer">BGPView</a></td>
+				<td>Essential for investigating ASN (Autonomous System Number) routing, IP block ownership, and network peers.</td>
+			</tr>
+			<tr>
+				<td>DNS &amp; IP Intelligence</td>
+				<td><a href="https://dnshistory.org" target="_blank" rel="noopener noreferrer">DNSHistory.org</a></td>
+				<td>A straightforward archive for looking up historical A, NS, and MX records for any domain.</td>
+			</tr>
+			<tr>
+				<td>DNS &amp; IP Intelligence</td>
+				<td><a href="https://whoisfreaks.com" target="_blank" rel="noopener noreferrer">WhoisFreaks</a></td>
+				<td>Provides a massive database for WHOIS lookups, historical records, and domain monitoring.</td>
+			</tr>
+			<tr>
+				<td>DNS &amp; IP Intelligence</td>
+				<td><a href="https://viewdns.info" target="_blank" rel="noopener noreferrer">ViewDNS.info</a></td>
+				<td>A "Swiss Army Knife" for DNS; includes reverse IP lookups, port scanners, and DNS propagation checks.</td>
+			</tr>
+			<tr>
+				<td>DNS &amp; IP Intelligence</td>
+				<td><a href="https://dnschecker.org" target="_blank" rel="noopener noreferrer">DNS Checker</a></td>
+				<td>Quickly verifies DNS propagation across global servers and provides IP/WHOIS lookups.</td>
+			</tr>
+			<tr>
+				<td>DNS &amp; IP Intelligence</td>
+				<td><a href="https://ipinfo.io" target="_blank" rel="noopener noreferrer">IPinfo.io</a></td>
+				<td>Specialized in precise IP geolocation, ASN data, and identifying the organization owning an IP.</td>
+			</tr>
+			<tr>
+				<td>DNS &amp; IP Intelligence</td>
+				<td><a href="https://whoisrequest.com/" target="_blank" rel="noopener noreferrer">WhoISrequest</a></td>
+				<td>Excellent for tracking NameServer history and reverse WHOIS lookups back to 2002.</td>
+			</tr>
+			<tr>
+				<td>DNS &amp; IP Intelligence</td>
+				<td><a href="https://dnslytics.com/" target="_blank" rel="noopener noreferrer">DNSlytics</a></td>
+				<td>Maps infrastructure by connecting domains via IPs, Mail servers, and Analytics/AdSense IDs.</td>
+			</tr>
+			<tr>
+				<td>DNS &amp; IP Intelligence</td>
+				<td><a href="https://completedns.com/" target="_blank" rel="noopener noreferrer">Complete DNS</a></td>
+				<td>A massive repository for DNS history and monitoring changes in a domain's technical setup.</td>
+			</tr>
+			<tr>
+				<td>DNS &amp; IP Intelligence</td>
+				<td><a href="https://dnsdumpster.com/" target="_blank" rel="noopener noreferrer">DNSDumpster</a></td>
+				<td>A domain research tool that maps out subdomains and visualizes the target's attack surface.</td>
+			</tr>
+
+			<tr>
+				<td>Website, Tech &amp; OSINT Analysis</td>
+				<td><a href="https://builtwith.com/" target="_blank" rel="noopener noreferrer">BuiltWith</a></td>
+				<td>Identifies the entire tech stack of a site (CMS, tracking scripts, CDNs, and ecommerce tools).</td>
+			</tr>
+			<tr>
+				<td>Website, Tech &amp; OSINT Analysis</td>
+				<td><a href="https://www.wappalyzer.com/" target="_blank" rel="noopener noreferrer">Wappalyzer</a></td>
+				<td>A popular browser extension and web tool for identifying web technologies and software versions.</td>
+			</tr>
+			<tr>
+				<td>Website, Tech &amp; OSINT Analysis</td>
+				<td><a href="https://nerdydata.com" target="_blank" rel="noopener noreferrer">NerdyData</a></td>
+				<td>A source code search engine. Search for specific HTML/JS snippets or Analytics IDs across the web.</td>
+			</tr>
+			<tr>
+				<td>Website, Tech &amp; OSINT Analysis</td>
+				<td><a href="https://competitortools.io/spyonweb" target="_blank" rel="noopener noreferrer">SpyOnWeb</a></td>
+				<td>Finds related websites by searching for shared Google Analytics, AdSense, or IP addresses.</td>
+			</tr>
+			<tr>
+				<td>Website, Tech &amp; OSINT Analysis</td>
+				<td><a href="https://www.maltego.com/" target="_blank" rel="noopener noreferrer">Maltego</a></td>
+				<td>A powerful visual link-analysis tool that maps relationships between domains, IPs, organizations, and people.</td>
+			</tr>
+			<tr>
+				<td>Website, Tech &amp; OSINT Analysis</td>
+				<td><a href="https://www.spiderfoot.net/" target="_blank" rel="noopener noreferrer">SpiderFoot</a></td>
+				<td>Automates OSINT collection by querying over 100 public sources to profile domains, IPs, and emails.</td>
+			</tr>
+			<tr>
+				<td>Website, Tech &amp; OSINT Analysis</td>
+				<td><a href="https://github.com/laramies/theHarvester" target="_blank" rel="noopener noreferrer">theHarvester</a></td>
+				<td>A classic reconnaissance tool used to gather emails, subdomains, and employee names from public sources.</td>
+			</tr>
+			<tr>
+				<td>Website, Tech &amp; OSINT Analysis</td>
+				<td><a href="https://osintframework.com/" target="_blank" rel="noopener noreferrer">OSINT Framework</a></td>
+				<td>A massive, interactive web directory that organizes hundreds of OSINT resources by data type.</td>
+			</tr>
+			<tr>
+				<td>Website, Tech &amp; OSINT Analysis</td>
+				<td><a href="https://urlscan.io" target="_blank" rel="noopener noreferrer">Urlscan.io</a></td>
+				<td>A "sandbox" for websites. It browses a URL and records every request, script, and DOM change.</td>
+			</tr>
+			<tr>
+				<td>Website, Tech &amp; OSINT Analysis</td>
+				<td><a href="https://hackertarget.com/" target="_blank" rel="noopener noreferrer">HackerTarget</a></td>
+				<td>Offers a suite of "IP Tools" including port scanners, reverse IP lookups, and web tech identification.</td>
+			</tr>
+
+			<tr>
+				<td>Security &amp; Archives</td>
+				<td><a href="https://www.virustotal.com" target="_blank" rel="noopener noreferrer">VirusTotal</a></td>
+				<td>Analyzes files, domains, and IPs to detect malware and see how multiple security vendors rate them.</td>
+			</tr>
+			<tr>
+				<td>Security &amp; Archives</td>
+				<td><a href="https://haveibeenpwned.com/" target="_blank" rel="noopener noreferrer">Have I Been Pwned</a></td>
+				<td>The gold standard for checking if email addresses, phone numbers, or domains appear in leaked data breaches.</td>
+			</tr>
+			<tr>
+				<td>Security &amp; Archives</td>
+				<td><a href="https://otx.alienvault.com/" target="_blank" rel="noopener noreferrer">AlienVault OTX</a></td>
+				<td>A community-driven threat intelligence platform excellent for checking IP and domain reputation.</td>
+			</tr>
+			<tr>
+				<td>Security &amp; Archives</td>
+				<td><a href="https://crt.sh" target="_blank" rel="noopener noreferrer">Crt.sh</a></td>
+				<td>A search engine for Certificate Transparency logs; used to find historical SSL/TLS certificates.</td>
+			</tr>
+			<tr>
+				<td>Security &amp; Archives</td>
+				<td><a href="https://web.archive.org" target="_blank" rel="noopener noreferrer">Wayback Machine</a></td>
+				<td>The Internet Archive's tool for viewing "snapshots" of how a website looked in the past.</td>
+			</tr>
+			<tr>
+				<td>Security &amp; Archives</td>
+				<td><a href="https://archive.is" target="_blank" rel="noopener noreferrer">Archive.is</a></td>
+				<td>A personal "time capsule" for web pages; takes a snapshot of a URL that remains even if the site dies.</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<script>
+		const searchInput = document.getElementById("osint-search");
+		const rows = Array.from(document.querySelectorAll("#osint-table tbody tr"));
+		const resultLabel = document.getElementById("search-result");
+
+		function updateResultLabel(visible, total) {
+			resultLabel.textContent = `${visible} of ${total} entries shown`;
+		}
+
+		function filterRows() {
+			const query = searchInput.value.trim().toLowerCase();
+			let visibleCount = 0;
+
+			rows.forEach((row) => {
+				const matches = row.textContent.toLowerCase().includes(query);
+				row.style.display = matches ? "" : "none";
+				if (matches) {
+					visibleCount += 1;
+				}
+			});
+
+			updateResultLabel(visibleCount, rows.length);
+		}
+
+		searchInput.addEventListener("input", filterRows);
+		updateResultLabel(rows.length, rows.length);
+	</script>
+</body>
+</html>

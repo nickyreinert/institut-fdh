@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Transformer</title>
+    <link rel="stylesheet" href="iframes.css">
+    <style>
+        .panel {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .field {
+            display: grid;
+            gap: 0.4rem;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 8rem;
+            border: 1px solid #cfcfcf;
+            border-radius: 8px;
+            padding: 0.7rem;
+            resize: vertical;
+            font-size: 1rem;
+            line-height: 1.35;
+        }
+
+        #output-text {
+            font-family: monospace;
+            background: #fafafa;
+        }
+
+        .mode-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .mode-btn {
+            border: 1px solid #cfcfcf;
+            background: #fff;
+            border-radius: 8px;
+            padding: 0.55rem 0.65rem;
+            font-size: 0.95rem;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .mode-btn[aria-pressed="true"] {
+            border-color: #222;
+            background: #222;
+            color: #fff;
+        }
+
+        .toolbar {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        #zalgo-wrap {
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Text Transformer</h1>
+
+    <div class="panel" id="text-transformer">
+        <div class="field">
+            <label for="source-text">Eingabe</label>
+            <textarea id="source-text" placeholder="Text eingeben...">das Institut ist sehr gut</textarea>
+        </div>
+
+        <div class="field">
+            <span>Modus</span>
+            <div class="mode-grid" id="mode-buttons" role="radiogroup" aria-label="Textmodus">
+                <button type="button" class="mode-btn" data-mode="normal" aria-pressed="true">Normal</button>
+                <button type="button" class="mode-btn" data-mode="strikethrough" aria-pressed="false">Strikethrough</button>
+                <button type="button" class="mode-btn" data-mode="fullwidth" aria-pressed="false">Fullwidth</button>
+                <button type="button" class="mode-btn" data-mode="flip" aria-pressed="false">Flip</button>
+                <button type="button" class="mode-btn" data-mode="smallcaps" aria-pressed="false">Small Caps</button>
+                <button type="button" class="mode-btn" data-mode="zalgo" aria-pressed="false">Zalgo</button>
+                <button type="button" class="mode-btn" data-mode="checkbox" aria-pressed="false">Checkbox ☑</button>
+                <button type="button" class="mode-btn" data-mode="uncheckbox" aria-pressed="false">Checkbox ☐</button>
+            </div>
+        </div>
+
+        <div class="toolbar">
+            <div id="zalgo-wrap">
+                <label for="zalgo-strength">Zalgo-Stufe</label>
+                <input type="range" id="zalgo-strength" min="1" max="10" value="3">
+                <span id="zalgo-strength-value">3</span>
+            </div>
+            <button type="button" id="copy-output">Ausgabe kopieren</button>
+        </div>
+
+        <div class="field">
+            <label for="output-text">Ausgabe (Live)</label>
+            <textarea id="output-text" readonly></textarea>
+        </div>
+    </div>
+
+    <script>
+        const smallCapsMap = {
+            a: "ᴀ", b: "ʙ", c: "ᴄ", d: "ᴅ", e: "ᴇ", f: "ꜰ", g: "ɢ", h: "ʜ", i: "ɪ", j: "ᴊ", k: "ᴋ",
+            l: "ʟ", m: "ᴍ", n: "ɴ", o: "ᴏ", p: "ᴘ", q: "ǫ", r: "ʀ", s: "s", t: "ᴛ", u: "ᴜ", v: "ᴠ",
+            w: "ᴡ", x: "x", y: "ʏ", z: "ᴢ"
+        };
+
+        const flipMap = {
+            a: "ɐ", b: "q", c: "ɔ", d: "p", e: "ǝ", f: "ɟ", g: "ƃ", h: "ɥ", i: "ᴉ", j: "ɾ", k: "ʞ",
+            l: "ʃ", m: "ɯ", n: "u", o: "o", p: "d", q: "b", r: "ɹ", s: "s", t: "ʇ", u: "n", v: "ʌ",
+            w: "ʍ", x: "x", y: "ʎ", z: "z", A: "∀", B: "𐐒", C: "Ɔ", D: "◖", E: "Ǝ", F: "Ⅎ", G: "⅁",
+            H: "H", I: "I", J: "ſ", K: "⋊", L: "˥", M: "W", N: "N", O: "O", P: "Ԁ", Q: "Ό", R: "ᴚ",
+            S: "S", T: "┴", U: "∩", V: "Λ", W: "M", X: "X", Y: "⅄", Z: "Z", "?": "¿", "!": "¡",
+            ".": "˙", ",": "'", "(": ")", ")": "(", "[": "]", "]": "[", "{": "}", "}": "{"
+        };
+
+        const zalgoUp = ["̍", "̎", "̄", "̅", "̿", "̑", "̆", "̐", "͒", "͗", "͑", "̇", "̈", "̊", "͂", "̓", "̈", "͊", "͋", "͌", "̃", "̂", "̌", "͐", "̀", "́", "̋", "̏", "̒", "̓", "̔", "̽", "̉", "ͣ", "ͤ", "ͥ", "ͦ", "ͧ", "ͨ", "ͩ", "ͪ", "ͫ", "ͬ", "ͭ", "ͮ", "ͯ", "̾", "͛", "͆", "̚"];
+        const zalgoMid = ["̕", "̛", "̀", "́", "͘", "̡", "̢", "̧", "̨", "̴", "̵", "̶", "͜", "͝", "͞", "͟", "͠", "͢", "̸", "̷", "͡"];
+        const zalgoDown = ["̖", "̗", "̘", "̙", "̜", "̝", "̞", "̟", "̠", "̤", "̥", "̦", "̩", "̪", "̫", "̬", "̭", "̮", "̯", "̰", "̱", "̲", "̳", "̹", "̺", "̻", "̼", "ͅ", "͇", "͈", "͉", "͍", "͎", "͓", "͔", "͕", "͖", "͙", "͚", "̣"];
+        const allZalgo = [...zalgoUp, ...zalgoMid, ...zalgoDown];
+
+        const sourceText = document.getElementById("source-text");
+        const outputText = document.getElementById("output-text");
+        const modeButtons = Array.from(document.querySelectorAll(".mode-btn"));
+        const zalgoWrap = document.getElementById("zalgo-wrap");
+        const zalgoStrength = document.getElementById("zalgo-strength");
+        const zalgoStrengthValue = document.getElementById("zalgo-strength-value");
+        const copyOutput = document.getElementById("copy-output");
+
+        let selectedMode = "normal";
+
+        function clamp(value, min, max) {
+            return Math.min(max, Math.max(min, value));
+        }
+
+        function deterministicRand(seed) {
+            let x = Math.sin(seed) * 10000;
+            return x - Math.floor(x);
+        }
+
+        function toSmallCaps(text) {
+            return Array.from(text, (char) => smallCapsMap[char.toLowerCase()] || char).join("");
+        }
+
+        function toStrikethrough(text) {
+            return Array.from(text, (char) => char + "\u0336").join("");
+        }
+
+        function toFullwidth(text) {
+            return Array.from(text, (char) => {
+                const code = char.charCodeAt(0);
+                if (code === 32) {
+                    return "\u3000";
+                }
+                if (code >= 33 && code <= 126) {
+                    return String.fromCharCode(code + 65248);
+                }
+                return char;
+            }).join("");
+        }
+
+        function flipText(text) {
+            return Array.from(text)
+                .reverse()
+                .map((char) => flipMap[char] || char)
+                .join("");
+        }
+
+        function applyChecklist(text, symbol) {
+            return text
+                .split("\n")
+                .map((line) => (line.length ? `${symbol} ${line}` : symbol))
+                .join("\n");
+        }
+
+        function toZalgo(text, strength) {
+            const level = clamp(Number(strength) || 1, 1, 10);
+            return Array.from(text).map((char, index) => {
+                if (/\s/.test(char)) {
+                    return char;
+                }
+
+                const baseSeed = char.charCodeAt(0) * 97 + index * 131;
+                const count = Math.floor(deterministicRand(baseSeed) * (level + 1));
+                let result = char;
+                for (let i = 0; i < count; i += 1) {
+                    const pickSeed = baseSeed + i * 17;
+                    const pickIndex = Math.floor(deterministicRand(pickSeed) * allZalgo.length);
+                    result += allZalgo[pickIndex];
+                }
+                return result;
+            }).join("");
+        }
+
+        function transform(text) {
+            switch (selectedMode) {
+                case "strikethrough":
+                    return toStrikethrough(text);
+                case "fullwidth":
+                    return toFullwidth(text);
+                case "flip":
+                    return flipText(text);
+                case "smallcaps":
+                    return toSmallCaps(text);
+                case "checkbox":
+                    return applyChecklist(text, "☑");
+                case "uncheckbox":
+                    return applyChecklist(text, "☐");
+                case "zalgo":
+                    return toZalgo(text, zalgoStrength.value);
+                case "normal":
+                default:
+                    return text;
+            }
+        }
+
+        function render() {
+            outputText.value = transform(sourceText.value);
+        }
+
+        function setMode(mode) {
+            selectedMode = mode;
+            modeButtons.forEach((button) => {
+                button.setAttribute("aria-pressed", button.dataset.mode === mode ? "true" : "false");
+            });
+
+            zalgoWrap.style.display = mode === "zalgo" ? "inline-flex" : "none";
+            render();
+        }
+
+        sourceText.addEventListener("input", render);
+        zalgoStrength.addEventListener("input", () => {
+            zalgoStrengthValue.textContent = zalgoStrength.value;
+            render();
+        });
+
+        modeButtons.forEach((button) => {
+            button.addEventListener("click", () => setMode(button.dataset.mode));
+        });
+
+        copyOutput.addEventListener("click", async () => {
+            try {
+                await navigator.clipboard.writeText(outputText.value);
+                const original = copyOutput.textContent;
+                copyOutput.textContent = "Kopiert";
+                setTimeout(() => {
+                    copyOutput.textContent = original;
+                }, 1200);
+            } catch (_error) {
+                copyOutput.textContent = "Copy fehlgeschlagen";
+                setTimeout(() => {
+                    copyOutput.textContent = "Ausgabe kopieren";
+                }, 1200);
+            }
+        });
+
+        setMode("normal");
+    </script>
+</body>
+</html>
