@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://institut-fdh.de/sitemap.xml

@@ -1,0 +1,17 @@
+{
+  "name": "Institut für digitale Herausforderungen",
+  "short_name": "FdH",
+  "description": "Digitale Experimente, Tools und Projekte rund um Programmierung, KI und Netzkultur.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0000AF",
+  "theme_color": "#0000AF",
+  "lang": "de",
+  "icons": [
+    {
+      "src": "/gfx/favicon.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    }
+  ]
+}

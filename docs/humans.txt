@@ -1,0 +1,13 @@
+/* TEAM */
+
+Creator: Nicky Reinert
+Site: https://nickyreinert.de
+Location: Deutschland
+
+/* SITE */
+
+Last update: 2026/05/05
+Language: Deutsch
+Doctype: HTML5
+Standards: HTML5, CSS3, ES Modules
+Components: Vanilla JavaScript, GitHub Pages

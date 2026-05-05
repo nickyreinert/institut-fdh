@@ -1,0 +1,70 @@
+# Institut für digitale Herausforderungen
+
+> Eine deutschsprachige Sammlung digitaler Experimente, Tools und Projekte rund um Programmierung, KI, Netzkultur und Datenanalyse.
+
+Website: https://institut-fdh.de
+Sprache: Deutsch
+Betreiber: Nicky Reinert
+
+## Über diese Website
+
+Das Institut für digitale Herausforderungen (FdH) ist eine persönliche Plattform für digitale Experimente und Projekte. Die Oberfläche ist bewusst im Stil von DOS-Dateimanagern der 1990er Jahre gehalten (blauer Hintergrund, Monospace-Schrift, Doppelrahmen-Fenster).
+
+## Projekte
+
+### Primes Web-App (2023)
+URL: https://institut-fdh.de/seiten/2023-primes.html
+Visualisierung von Primzahlen auf spiralförmigen Anordnungen, implementiert in JavaScript. Konfigurierbare Parameter für Skalierung, Farbkodierung und Animationen.
+Externe URL: https://primes.nickyreinert.de
+
+### Nerd Enzyklopädie (2024)
+URL: https://institut-fdh.de/seiten/2024-nerdenz.html
+Durchsuchbare Enzyklopädie für Nerd-Kultur, Technik und Internet-Geschichte.
+
+### Header Mirror (2025)
+URL: https://institut-fdh.de/seiten/2025-mirror.html
+Spiegelt HTTP-Request-Header zurück an den Browser. Nützlich zur Diagnose von Proxy- und CDN-Konfigurationen.
+Externe URL: https://9000.1-1-1.de/
+
+### Verbotspartei (2025)
+URL: https://institut-fdh.de/seiten/2025-verbotspartei.html
+KI-gestützte Analyse der Wahlprogramme deutscher Parteien. Untersucht die These, ob Bündnis 90/Die Grünen eine "Verbotspartei" sind. Datenbasis: Wahlprogramme von 8 Parteien, analysiert durch verschiedene KI-Chatbots.
+Externes Dashboard: https://verbote.nickyreinert.de
+
+### AI Honeypot – BOFH (2026)
+URL: https://institut-fdh.de/seiten/2026-bofh.html
+Honeypot für KI-Crawler. Zeichnet Zugriffe von KI-Bots auf und testet Anfälligkeit für Prompt-Injection-Angriffe.
+Externe URL: https://bofh.1-1-1.de/
+
+### DB Orakel (2026)
+URL: https://institut-fdh.de/seiten/2026-dborakel.html
+Vorhersage von Zugpünktlichkeit der Deutschen Bahn. Modell basiert auf historischen Verspätungsdaten, Spritpreisen, Wetterdaten und Feriendaten.
+Externe URL: https://db-orakel.de
+
+### Manifest für das Duzen (2026)
+URL: https://institut-fdh.de/seiten/2026-duman.html
+Ein Internet-Manifest für die Verwendung des informellen "Du" im digitalen Raum als Ausdruck von Gleichheit und Offenheit – in Anlehnung an die Netzkultur der 1990er.
+
+### Faces of Joy (2026)
+URL: https://institut-fdh.de/seiten/2026-faces.html
+Visualisierungsprojekt.
+
+### OSINT Tools Directory (2026)
+URL: https://institut-fdh.de/seiten/2026-osint.html
+Durchsuchbares Verzeichnis von OSINT-Tools (Open Source Intelligence) mit Beschreibungen und Kategorisierungen.
+
+### Text Transformer (2026)
+URL: https://institut-fdh.de/seiten/2026-text.html
+Browser-basiertes Tool zur Textverarbeitung und -transformation ohne Server-Backend.
+
+## Technische Details
+
+- Statische Website, gehostet auf GitHub Pages
+- Kein serverseitiges Rendering, kein Framework
+- Vanilla JavaScript (ES-Module)
+- Sprache: Deutsch
+- Lizenz: nicht angegeben
+
+## Kontakt
+
+Über den Betreiber: https://nickyreinert.de
