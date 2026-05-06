@@ -20,6 +20,39 @@ body {
   cursor: pointer;
 }
 
+.menu-item-has-sub {
+  position: relative;
+}
+
+.menu-item-has-sub:hover .submenu,
+.menu-item-has-sub.open .submenu {
+  display: block;
+}
+
+.submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #00A8AF;
+  color: #000000;
+  border: 1px solid #000000;
+  z-index: 200;
+  min-width: 160px;
+  white-space: nowrap;
+}
+
+.submenu-item {
+  padding: 3px 10px;
+  cursor: pointer;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.submenu-item:hover {
+  background-color: #000000;
+  color: #50FFFF;
+}
+
 .container {
   display: flex;
   flex-grow: 1; /* Allow container to grow and push bars to top/bottom */

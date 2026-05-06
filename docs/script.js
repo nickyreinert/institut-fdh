@@ -93,13 +93,14 @@ function generateInhalteContent() {
     { name: 'PRIMES.HTML', target: 'seiten/2023-primes.html', isFolder: false },
     { name: 'DUMAN.HTML', target: 'seiten/2026-duman.html', isFolder: false },
     { name: 'VERBOTSPARTEI.HTML', target: 'seiten/2025-verbotspartei.html', isFolder: false },
-    { name: 'NERDENZ.HTML', target: 'seiten/2025-nerdenz.html', isFolder: false },
-    { name: 'MIRROR.HTML', target: 'seiten/2025-mirror.html', isFolder: false },
-    { name: 'BOFH.HTML', target: 'seiten/2025-bofh.html', isFolder: false },
+    { name: 'NERDENZ.HTML', target: 'seiten/2024-nerdenz.html', isFolder: false },
+    { name: 'MIRROR.HTML', target: 'seiten/2025-mirror.html', isFolder: false, isTool: true },
+    { name: 'BOFH.HTML', target: 'seiten/2026-bofh.html', isFolder: false },
     { name: 'DBORAKEL.HTML', target: 'seiten/2026-dborakel.html', isFolder: false },
-    { name: 'FACES.HTML', target: 'seiten/2026-faces.html', isFolder: false },
-    { name: 'TEXT.HTML', target: 'seiten/2026-text.html', isFolder: false },
-    { name: 'OSINT.HTML', target: 'seiten/2026-osint.html', isFolder: false }
+    { name: 'FACES.HTML', target: 'seiten/2026-faces.html', isFolder: false, isTool: true },
+    { name: 'TEXT.HTML', target: 'seiten/2026-text.html', isFolder: false, isTool: true },
+    { name: 'OSINT.HTML', target: 'seiten/2026-osint.html', isFolder: false, isTool: true },
+    { name: 'AYA.HTML', target: 'seiten/2026-aya.html', isFolder: false, isTool: true },
     ];
 }
 
@@ -1400,12 +1401,44 @@ window.onload = function() {
   document.getElementById('menu-item-help').addEventListener('click', () => {
     showWelcomeModal();
   });
-  
+
+  // Populate Tools submenu
+  const toolsSubmenu = document.getElementById('submenu-tools');
+  const toolsMenuItem = document.getElementById('menu-item-tools');
+  generateInhalteContent()
+    .filter(item => item.isTool)
+    .forEach(item => {
+      const el = document.createElement('div');
+      el.className = 'submenu-item';
+      el.textContent = item.name;
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toolsMenuItem.classList.remove('open');
+        showIframeModal(item);
+      });
+      toolsSubmenu.appendChild(el);
+    });
+
+  // Toggle submenu on click (for touch / keyboard users)
+  toolsMenuItem.addEventListener('click', (e) => {
+    // Only toggle if the click was directly on the menu item, not a submenu child
+    if (e.target === toolsMenuItem || e.target.textContent.trim() === 'Tools') {
+      toolsMenuItem.classList.toggle('open');
+    }
+  });
+
+  // Close submenu when clicking elsewhere
+  document.addEventListener('click', (e) => {
+    if (!toolsMenuItem.contains(e.target)) {
+      toolsMenuItem.classList.remove('open');
+    }
+  });
+
   // Add handlers for menu items
   document.querySelectorAll('.menu-item').forEach(item => {
-    // prevent if menu-item-help is clicked
-    if (item.id === 'menu-item-help') {
-      return; 
+    // prevent if menu-item-help or menu-item-tools is clicked
+    if (item.id === 'menu-item-help' || item.id === 'menu-item-tools') {
+      return;
     }
     item.addEventListener('click', () => {
       showErrorModal(generateGibberish());

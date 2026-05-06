@@ -1,0 +1,2388 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AYA - Are you Anonymous?</title>
+    <meta name="description" content="Browser fingerprinting & privacy leak overview – everything your browser reveals about you.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://institut-fdh.de/seiten/2026-anonymous.html">
+    <link rel="icon" type="image/png" href="../gfx/favicon.png">
+    <link rel="stylesheet" href="iframes.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+
+        /* Layout */
+        #header { padding: 6px 8px; border-bottom: 1px solid #50FFFF; margin-bottom: 8px; }
+        #header h1 { margin: 0 0 4px; font-size: 1rem; }
+        #search-bar { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+        #match-count { opacity: .6; font-size: 0.75rem; }
+        #main { padding: 0 8px 20px; }
+        #no-results { display: none; padding: 20px; opacity: .5; }
+
+        /* Search input & buttons – inherit site font/color */
+        #search-input {
+            background: transparent;
+            border: 1px solid #50FFFF;
+            color: inherit;
+            padding: 2px 6px;
+            font-family: inherit;
+            font-size: 0.8rem;
+            outline: none;
+            width: 220px;
+        }
+        #search-input::placeholder { color: #50FFFF; opacity: .4; }
+        .ctrl-btn {
+            background: transparent;
+            border: 1px solid #50FFFF;
+            color: inherit;
+            padding: 2px 8px;
+            font-family: inherit;
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+        .ctrl-btn:hover { color: #FFFF50; border-color: #FFFF50; }
+
+        /* Category */
+        .category { margin-bottom: 10px; border: 1px solid #50FFFF; }
+        .category.hidden { display: none; }
+        .cat-header {
+            display: flex; align-items: center; gap: 8px;
+            padding: 4px 8px; cursor: pointer; user-select: none;
+            border-bottom: 1px solid #50FFFF;
+        }
+        .cat-header:hover { color: #FFFF50; }
+        .cat-icon { min-width: 18px; }
+        .cat-title { font-weight: bold; font-size: 0.85rem; flex: 1; text-transform: uppercase; }
+        .cat-desc { font-size: 0.65rem; opacity: .6; flex: 2; }
+        .chevron { font-size: 0.6rem; transition: transform .15s; }
+        .cat-header.collapsed .chevron { transform: rotate(-90deg); }
+        .cat-body {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1px;
+            background: #50FFFF;
+        }
+        .cat-body.collapsed { display: none; }
+
+        /* Card */
+        .data-card { background: #0000AF; overflow: hidden; }
+        .data-card.hidden { display: none; }
+        .card-header {
+            display: flex; align-items: center; gap: 6px;
+            padding: 4px 8px; cursor: pointer; user-select: none;
+            border-bottom: 1px solid #50FFFF;
+        }
+        .card-header:hover { color: #FFFF50; }
+        .card-label { font-size: 0.75rem; flex: 1; }
+        .card-value {
+            font-size: 0.7rem; opacity: .7;
+            max-width: 160px; overflow: hidden;
+            text-overflow: ellipsis; white-space: nowrap; text-align: right;
+        }
+        .card-value.loading { opacity: .3; font-style: italic; }
+        .card-chevron { font-size: 0.55rem; opacity: .5; transition: transform .15s; }
+        .card-header.expanded .card-chevron { transform: rotate(90deg); opacity: 1; color: #FFFF50; }
+
+        .card-detail { display: none; padding: 4px 8px 8px; border-top: 1px solid #50FFFF; font-size: 0.68rem; }
+        .card-detail.expanded { display: block; }
+        .detail-row {
+            display: flex; justify-content: space-between; gap: 6px;
+            padding: 1px 0; border-bottom: 1px dotted rgba(80,255,255,.2);
+        }
+        .detail-row:last-child { border-bottom: none; }
+        .detail-key { opacity: .6; min-width: 100px; }
+        .detail-val { text-align: right; word-break: break-all; color: #FFFF50; }
+
+        /* Risk badges */
+        .risk { font-size: 0.55rem; padding: 1px 4px; border: 1px solid; white-space: nowrap; }
+        .risk-high  { color: #FF5050; border-color: #FF5050; }
+        .risk-med   { color: #FFFF50; border-color: #FFFF50; }
+        .risk-low   { color: #50FFFF; border-color: #50FFFF; }
+        .risk-info  { color: #50FFFF; border-color: #50FFFF; opacity: .5; }
+
+        #canvas-fp { display: none; }
+    </style>
+</head>
+<body>
+
+<div id="header">
+    <div id="search-bar">
+        <input id="search-input" type="search" placeholder="Filter…" autocomplete="off" spellcheck="false">
+        <span id="match-count"></span>
+        <button class="ctrl-btn" id="btn-expand-all">[+] all</button>
+        <button class="ctrl-btn" id="btn-collapse-all">[-] all</button>
+        <button class="ctrl-btn" id="btn-run-all">&#9654; run</button>
+    </div>
+</div>
+
+<div id="main">
+    <div id="no-results">No matching data points found.</div>
+</div>
+
+<canvas id="canvas-fp" width="240" height="60"></canvas>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// DATA SCHEMA
+// Each category has: id, icon, title, desc, items[]
+// Each item has: id, label, risk, collect()→string|obj, detail()→{k:v}
+// ═══════════════════════════════════════════════════════════════
+
+const CATEGORIES = [
+
+  // ────────────────────────────────────────────────
+  {
+    id: 'network', icon: '🌐', title: 'Network & IP',
+    desc: 'IP addresses, DNS, WebRTC leaks, connection info',
+    items: [
+      {
+        id: 'webrtc-local',
+        label: 'WebRTC Local IP Leak',
+        risk: 'high',
+        collect: async () => {
+          return new Promise(resolve => {
+            const ips = new Set();
+            try {
+              const pc = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
+              pc.createDataChannel('');
+              pc.createOffer().then(o => pc.setLocalDescription(o));
+              pc.onicecandidate = e => {
+                if (!e.candidate) {
+                  pc.close();
+                  resolve(ips.size ? [...ips].join(', ') : 'No leak detected');
+                  return;
+                }
+                const m = e.candidate.candidate.match(/(\d{1,3}\.){3}\d{1,3}/g) || [];
+                m.forEach(ip => ips.add(ip));
+              };
+              setTimeout(() => { pc.close(); resolve(ips.size ? [...ips].join(', ') : 'Timed out'); }, 4000);
+            } catch(e) { resolve('API unavailable'); }
+          });
+        },
+        detail: async () => {
+          return { 'Note': 'RTCPeerConnection STUN leak reveals local network IPs even behind VPN' };
+        }
+      },
+      {
+        id: 'connection-type',
+        label: 'Connection Type',
+        risk: 'med',
+        collect: () => {
+          const c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+          return c ? (c.effectiveType || c.type || 'unknown') : 'API unavailable';
+        },
+        detail: () => {
+          const c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+          if (!c) return { Status: 'Network Information API not supported' };
+          return {
+            'Effective Type': c.effectiveType || '—',
+            'Type': c.type || '—',
+            'Downlink (Mbps)': c.downlink || '—',
+            'Downlink Max': c.downlinkMax || '—',
+            'RTT (ms)': c.rtt || '—',
+            'Save Data': String(c.saveData),
+          };
+        }
+      },
+      {
+        id: 'online-status',
+        label: 'Online Status',
+        risk: 'info',
+        collect: () => navigator.onLine ? 'Online' : 'Offline',
+        detail: () => ({ 'navigator.onLine': String(navigator.onLine) })
+      },
+      {
+        id: 'dns-prefetch',
+        label: 'DNS Prefetch',
+        risk: 'info',
+        collect: () => {
+          const el = document.createElement('link');
+          return el.relList.supports('dns-prefetch') ? 'Supported' : 'Not supported';
+        },
+        detail: () => ({ 'dns-prefetch': document.createElement('link').relList.supports('dns-prefetch') ? 'supported' : 'not supported' })
+      },
+      {
+        id: 'ipv6-webrtc',
+        label: 'IPv6 Leak (WebRTC)',
+        risk: 'high',
+        collect: async () => {
+          return new Promise(resolve => {
+            const ips = { v4: [], v6: [] };
+            try {
+              const pc = new RTCPeerConnection({ iceServers: [
+                { urls: 'stun:stun.l.google.com:19302' },
+                { urls: 'stun:stun1.l.google.com:19302' },
+              ]});
+              pc.createDataChannel('');
+              pc.createOffer().then(o => pc.setLocalDescription(o));
+              pc.onicecandidate = e => {
+                if (!e.candidate) {
+                  pc.close();
+                  const v6 = ips.v6.join(', ');
+                  const v4 = ips.v4.join(', ');
+                  resolve(v6 ? `IPv6 LEAK: ${v6}` : (v4 ? `IPv4 only: ${v4}` : 'No addresses gathered'));
+                  return;
+                }
+                const cand = e.candidate.candidate;
+                (cand.match(/(\d{1,3}\.){3}\d{1,3}/g) || []).forEach(ip => ips.v4.push(ip));
+                (cand.match(/([a-f0-9:]{6,})/gi) || [])
+                  .filter(ip => ip.includes(':') && !ip.startsWith('::ffff'))
+                  .forEach(ip => ips.v6.push(ip));
+              };
+              setTimeout(() => { pc.close(); resolve(ips.v6.length ? `IPv6: ${ips.v6.join(', ')}` : ips.v4.length ? `IPv4 only` : 'Timed out'); }, 4000);
+            } catch(e) { resolve('WebRTC unavailable'); }
+          });
+        },
+        detail: async () => ({
+          'Note': 'IPv6 WebRTC leak reveals real IPv6 address even behind IPv4 VPN',
+          'STUN servers used': 'stun.l.google.com:19302, stun1.l.google.com:19302',
+        })
+      },
+      {
+        id: 'http-headers-visible',
+        label: 'JS-Visible Request Context',
+        risk: 'med',
+        collect: () => {
+          const perf = performance?.getEntriesByType?.('navigation')?.[0];
+          return perf?.nextHopProtocol
+            ? `${perf.nextHopProtocol.toUpperCase()} | TTFB: ${perf.responseStart.toFixed(0)}ms`
+            : location.origin;
+        },
+        detail: () => ({
+          'Origin': location.origin,
+          'Host': location.host,
+          'Pathname': location.pathname,
+          'Accept-Language (navigator)': navigator.language,
+          'Note': 'HTTP request headers (Accept, Accept-Encoding, Accept-Language) are server-readable, not JS-readable',
+        })
+      },
+    ]
+  },
+
+  // ────────────────────────────────────────────────
+  {
+    id: 'browser', icon: '🌍', title: 'Browser Identity',
+    desc: 'User-Agent, headers, vendor, build info, language',
+    items: [
+      {
+        id: 'user-agent',
+        label: 'User-Agent String',
+        risk: 'high',
+        collect: () => navigator.userAgent,
+        detail: () => {
+          const ua = navigator.userAgent;
+          const browser = ua.match(/(Chrome|Firefox|Safari|Edge|OPR)\/[\d.]+/g) || [];
+          return {
+            'Full UA': ua,
+            'Detected Browser(s)': browser.join(', ') || '—',
+            'Platform (UA)': navigator.platform || '—',
+            'Vendor': navigator.vendor || '—',
+            'Product': navigator.product || '—',
+            'App Name': navigator.appName || '—',
+            'App Version': navigator.appVersion ? navigator.appVersion.substring(0,60)+'…' : '—',
+          };
+        }
+      },
+      {
+        id: 'client-hints',
+        label: 'Client Hints (UA-CH)',
+        risk: 'high',
+        collect: async () => {
+          if (!navigator.userAgentData) return 'API unavailable';
+          try {
+            const h = await navigator.userAgentData.getHighEntropyValues([
+              'architecture','bitness','model','platform','platformVersion','fullVersionList','uaFullVersion'
+            ]);
+            return h.platform + ' / ' + (h.architecture || '?');
+          } catch(e) { return 'Permission denied'; }
+        },
+        detail: async () => {
+          if (!navigator.userAgentData) return { Status: 'navigator.userAgentData not available' };
+          try {
+            const h = await navigator.userAgentData.getHighEntropyValues([
+              'architecture','bitness','model','platform','platformVersion','fullVersionList','uaFullVersion'
+            ]);
+            const result = {
+              'Brands': (navigator.userAgentData.brands || []).map(b=>b.brand+'/'+b.version).join(', '),
+              'Mobile': String(navigator.userAgentData.mobile),
+              'Platform': h.platform,
+              'Platform Version': h.platformVersion,
+              'Architecture': h.architecture,
+              'Bitness': h.bitness,
+              'Model': h.model || '—',
+              'UA Full Version': h.uaFullVersion,
+            };
+            if (h.fullVersionList) result['Full Version List'] = h.fullVersionList.map(b=>b.brand+'/'+b.version).join(', ');
+            return result;
+          } catch(e) { return { Error: e.message }; }
+        }
+      },
+      {
+        id: 'language',
+        label: 'Language & Locale',
+        risk: 'med',
+        collect: () => navigator.language || 'unknown',
+        detail: () => ({
+          'navigator.language': navigator.language || '—',
+          'navigator.languages': (navigator.languages || []).join(', ') || '—',
+          'Intl locale': Intl ? new Intl.DateTimeFormat().resolvedOptions().locale : '—',
+          'Intl timezone': Intl ? new Intl.DateTimeFormat().resolvedOptions().timeZone : '—',
+          'Intl calendar': Intl ? new Intl.DateTimeFormat().resolvedOptions().calendar : '—',
+        })
+      },
+      {
+        id: 'do-not-track',
+        label: 'Do Not Track / GPC',
+        risk: 'info',
+        collect: () => {
+          const dnt = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+          const gpc = navigator.globalPrivacyControl;
+          return `DNT: ${dnt ?? 'unset'} | GPC: ${gpc ?? 'unset'}`;
+        },
+        detail: () => ({
+          'navigator.doNotTrack': navigator.doNotTrack ?? 'unset',
+          'window.doNotTrack': window.doNotTrack ?? 'unset',
+          'navigator.globalPrivacyControl': navigator.globalPrivacyControl ?? 'unset',
+        })
+      },
+      {
+        id: 'referrer',
+        label: 'Document Referrer',
+        risk: 'med',
+        collect: () => document.referrer || '(empty)',
+        detail: () => ({
+          'document.referrer': document.referrer || '(empty)',
+          'document.URL': document.URL,
+        })
+      },
+      {
+        id: 'navigator-extra',
+        label: 'Navigator Extended Properties',
+        risk: 'med',
+        collect: () => {
+          const parts = [];
+          if (navigator.buildID) parts.push('buildID: ' + navigator.buildID);
+          if (navigator.oscpu) parts.push('oscpu: ' + navigator.oscpu);
+          if (navigator.productSub) parts.push('productSub: ' + navigator.productSub);
+          return parts.join(' | ') || 'No extra properties exposed';
+        },
+        detail: () => ({
+          'navigator.buildID': navigator.buildID || '— (Firefox only)',
+          'navigator.oscpu': navigator.oscpu || '— (Firefox only)',
+          'navigator.productSub': navigator.productSub || '—',
+          'navigator.vendorSub': navigator.vendorSub || '—',
+          'navigator.product': navigator.product || '—',
+          'navigator.appCodeName': navigator.appCodeName || '—',
+          'navigator.appName': navigator.appName || '—',
+          'navigator.taintEnabled': typeof navigator.taintEnabled === 'function' ? String(navigator.taintEnabled()) : '—',
+        })
+      },
+      {
+        id: 'accept-headers',
+        label: 'Accept Headers (server-visible)',
+        risk: 'high',
+        collect: () => 'Server-readable – not exposed to JS',
+        detail: () => ({
+          'Accept': 'e.g. text/html,application/xhtml+xml,…',
+          'Accept-Encoding': 'e.g. gzip, deflate, br, zstd',
+          'Accept-Language': navigator.language + (navigator.languages?.length > 1 ? ', …' : ''),
+          'Note': 'These headers are sent on every request. Accept-Encoding reveals browser engine. Combined with UA = strong fingerprint.',
+        })
+      },
+    ]
+  },
+
+  // ────────────────────────────────────────────────
+  {
+    id: 'system', icon: '💻', title: 'System & Hardware',
+    desc: 'CPU, memory, screen, OS, device capabilities',
+    items: [
+      {
+        id: 'screen',
+        label: 'Screen Resolution',
+        risk: 'high',
+        collect: () => `${screen.width}×${screen.height} @ ${screen.colorDepth}bit`,
+        detail: () => ({
+          'screen.width': screen.width,
+          'screen.height': screen.height,
+          'screen.availWidth': screen.availWidth,
+          'screen.availHeight': screen.availHeight,
+          'window.innerWidth': window.innerWidth,
+          'window.innerHeight': window.innerHeight,
+          'devicePixelRatio': window.devicePixelRatio,
+          'colorDepth': screen.colorDepth,
+          'pixelDepth': screen.pixelDepth,
+          'screen.orientation': screen.orientation?.type || '—',
+        })
+      },
+      {
+        id: 'cpu',
+        label: 'CPU / Logical Cores',
+        risk: 'med',
+        collect: () => navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency} cores` : 'unavailable',
+        detail: () => ({
+          'navigator.hardwareConcurrency': navigator.hardwareConcurrency ?? '—',
+          'navigator.deviceMemory (GB)': navigator.deviceMemory ?? '—',
+          'navigator.platform': navigator.platform ?? '—',
+        })
+      },
+      {
+        id: 'memory',
+        label: 'Device Memory',
+        risk: 'med',
+        collect: () => navigator.deviceMemory ? `${navigator.deviceMemory} GB (hint)` : 'unavailable',
+        detail: () => ({
+          'navigator.deviceMemory': navigator.deviceMemory ? navigator.deviceMemory + ' GB' : 'not reported',
+          'Note': 'Rounded to nearest 0.25/0.5/1/2/4/8 GB bucket for privacy',
+        })
+      },
+      {
+        id: 'touch',
+        label: 'Touch / Pointer Support',
+        risk: 'med',
+        collect: () => {
+          const pts = navigator.maxTouchPoints;
+          const mt = window.matchMedia('(pointer: coarse)').matches;
+          return pts > 0 ? `Touch (${pts} pts)` : 'No touch';
+        },
+        detail: () => ({
+          'maxTouchPoints': navigator.maxTouchPoints,
+          'pointer: coarse': window.matchMedia('(pointer: coarse)').matches,
+          'pointer: fine': window.matchMedia('(pointer: fine)').matches,
+          'hover: hover': window.matchMedia('(hover: hover)').matches,
+          'any-pointer: coarse': window.matchMedia('(any-pointer: coarse)').matches,
+        })
+      },
+      {
+        id: 'battery',
+        label: 'Battery Status API',
+        risk: 'med',
+        collect: async () => {
+          if (!navigator.getBattery) return 'API unavailable';
+          try {
+            const b = await navigator.getBattery();
+            return b.charging ? `Charging ${Math.round(b.level*100)}%` : `${Math.round(b.level*100)}% (discharging)`;
+          } catch(e) { return 'Permission denied'; }
+        },
+        detail: async () => {
+          if (!navigator.getBattery) return { Status: 'Battery Status API not supported' };
+          try {
+            const b = await navigator.getBattery();
+            return {
+              'Charging': String(b.charging),
+              'Level': Math.round(b.level * 100) + '%',
+              'Charging Time (s)': b.chargingTime === Infinity ? '∞' : b.chargingTime,
+              'Discharging Time (s)': b.dischargingTime === Infinity ? '∞' : b.dischargingTime,
+            };
+          } catch(e) { return { Error: e.message }; }
+        }
+      },
+      {
+        id: 'timezone',
+        label: 'Timezone',
+        risk: 'high',
+        collect: () => Intl.DateTimeFormat().resolvedOptions().timeZone || new Date().getTimezoneOffset() + ' min offset',
+        detail: () => {
+          const opts = Intl.DateTimeFormat().resolvedOptions();
+          return {
+            'Timezone': opts.timeZone,
+            'UTC Offset (min)': new Date().getTimezoneOffset(),
+            'Locale': opts.locale,
+            'Local time': new Date().toLocaleString(),
+          };
+        }
+      },
+      {
+        id: 'media-devices',
+        label: 'Media Devices',
+        risk: 'high',
+        collect: async () => {
+          if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) return 'API unavailable';
+          try {
+            const devs = await navigator.mediaDevices.enumerateDevices();
+            const counts = {};
+            devs.forEach(d => counts[d.kind] = (counts[d.kind] || 0) + 1);
+            return Object.entries(counts).map(([k,v])=>`${k}:${v}`).join(', ') || 'none listed';
+          } catch(e) { return 'Error: ' + e.message; }
+        },
+        detail: async () => {
+          if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) return { Status: 'Not supported' };
+          try {
+            const devs = await navigator.mediaDevices.enumerateDevices();
+            const result = {};
+            devs.forEach((d, i) => {
+              result[`Device ${i+1} (${d.kind})`] = d.label || `(label hidden – needs permission)`;
+            });
+            return Object.keys(result).length ? result : { Note: 'No devices found' };
+          } catch(e) { return { Error: e.message }; }
+        }
+      },
+    ]
+  },
+
+  // ────────────────────────────────────────────────
+  {
+    id: 'fingerprint', icon: '🔍', title: 'Browser Fingerprinting',
+    desc: 'Canvas, WebGL, Audio, Font – unique identifiers',
+    items: [
+      {
+        id: 'canvas-fp',
+        label: 'Canvas Fingerprint',
+        risk: 'high',
+        collect: () => {
+          try {
+            const c = document.getElementById('canvas-fp');
+            const ctx = c.getContext('2d');
+            ctx.textBaseline = 'top';
+            ctx.font = '14px Arial';
+            ctx.fillStyle = '#f60';
+            ctx.fillRect(125, 1, 62, 20);
+            ctx.fillStyle = '#069';
+            ctx.fillText('BrowserLeaks,AYA!', 2, 15);
+            ctx.fillStyle = 'rgba(102,204,0,0.7)';
+            ctx.fillText('BrowserLeaks,AYA!', 4, 17);
+            const hash = hashString(c.toDataURL());
+            return '0x' + hash.toString(16).toUpperCase().padStart(8,'0');
+          } catch(e) { return 'Blocked'; }
+        },
+        detail: () => {
+          try {
+            const c = document.getElementById('canvas-fp');
+            const data = c.toDataURL();
+            return {
+              'Hash': '0x' + hashString(data).toString(16).toUpperCase().padStart(8,'0'),
+              'Data URL length': data.length + ' chars',
+              'Note': 'Pixel-level rendering differences between GPU/OS/font combos create unique IDs',
+            };
+          } catch(e) { return { Error: 'Canvas blocked or unavailable' }; }
+        }
+      },
+      {
+        id: 'webgl-fp',
+        label: 'WebGL Fingerprint',
+        risk: 'high',
+        collect: () => {
+          try {
+            const c = document.createElement('canvas');
+            const gl = c.getContext('webgl') || c.getContext('experimental-webgl');
+            if (!gl) return 'WebGL unavailable';
+            const info = gl.getExtension('WEBGL_debug_renderer_info');
+            const renderer = info ? gl.getParameter(info.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER);
+            return renderer || 'unavailable';
+          } catch(e) { return 'Blocked'; }
+        },
+        detail: () => {
+          try {
+            const c = document.createElement('canvas');
+            const gl = c.getContext('webgl') || c.getContext('experimental-webgl');
+            if (!gl) return { Status: 'WebGL not supported or disabled' };
+            const info = gl.getExtension('WEBGL_debug_renderer_info');
+            return {
+              'Version': gl.getParameter(gl.VERSION),
+              'Shading Language': gl.getParameter(gl.SHADING_LANGUAGE_VERSION),
+              'Vendor': gl.getParameter(gl.VENDOR),
+              'Renderer': gl.getParameter(gl.RENDERER),
+              'Unmasked Vendor': info ? gl.getParameter(info.UNMASKED_VENDOR_WEBGL) : '—',
+              'Unmasked Renderer': info ? gl.getParameter(info.UNMASKED_RENDERER_WEBGL) : '—',
+              'Max Texture Size': gl.getParameter(gl.MAX_TEXTURE_SIZE),
+              'Max Viewport': gl.getParameter(gl.MAX_VIEWPORT_DIMS)?.join('×') || '—',
+              'Anti-Aliasing': String(gl.getContextAttributes()?.antialias),
+              'Extensions count': gl.getSupportedExtensions()?.length || 0,
+            };
+          } catch(e) { return { Error: e.message }; }
+        }
+      },
+      {
+        id: 'audio-fp',
+        label: 'Audio Fingerprint',
+        risk: 'high',
+        collect: async () => {
+          try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 44100 });
+            const osc = ctx.createOscillator();
+            const analyser = ctx.createAnalyser();
+            const gain = ctx.createGain();
+            gain.gain.value = 0;
+            osc.connect(analyser);
+            analyser.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(0);
+            const buf = new Float32Array(analyser.frequencyBinCount);
+            analyser.getFloatFrequencyData(buf);
+            osc.stop();
+            await ctx.close();
+            const sum = buf.slice(0, 30).reduce((a,b) => a + Math.abs(b), 0);
+            return '0x' + hashString(String(sum)).toString(16).toUpperCase().padStart(8,'0');
+          } catch(e) { return 'Blocked / unavailable'; }
+        },
+        detail: async () => {
+          try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 44100 });
+            return {
+              'Sample Rate': ctx.sampleRate,
+              'State': ctx.state,
+              'Base Latency (s)': ctx.baseLatency ?? '—',
+              'Output Latency (s)': ctx.outputLatency ?? '—',
+              'Note': 'Oscillator output varies per OS/hardware, creating a unique audio fingerprint',
+            };
+          } catch(e) { return { Error: e.message }; }
+        }
+      },
+      {
+        id: 'font-fp',
+        label: 'Font Fingerprinting',
+        risk: 'high',
+        collect: () => {
+          const testFonts = [
+            'Arial','Verdana','Georgia','Times New Roman','Courier New','Impact',
+            'Comic Sans MS','Trebuchet MS','Arial Black','Palatino Linotype',
+            'Lucida Console','Tahoma','Century Gothic','Calibri','Cambria',
+            'Segoe UI','Candara','Franklin Gothic Medium','Optima','Futura',
+            'Helvetica','Geneva','Monaco','Menlo','Consolas','Roboto','Ubuntu',
+          ];
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          const baseFont = 'monospace';
+          ctx.font = '72px ' + baseFont;
+          const baseW = ctx.measureText('mmmmmmmmmmlli').width;
+          const found = testFonts.filter(f => {
+            ctx.font = `72px '${f}', ${baseFont}`;
+            return ctx.measureText('mmmmmmmmmmlli').width !== baseW;
+          });
+          return `${found.length}/${testFonts.length} detected`;
+        },
+        detail: () => {
+          const testFonts = [
+            'Arial','Verdana','Georgia','Times New Roman','Courier New','Impact',
+            'Comic Sans MS','Trebuchet MS','Arial Black','Palatino Linotype',
+            'Lucida Console','Tahoma','Century Gothic','Calibri','Cambria',
+            'Segoe UI','Candara','Franklin Gothic Medium','Optima','Futura',
+            'Helvetica','Geneva','Monaco','Menlo','Consolas','Roboto','Ubuntu',
+          ];
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          ctx.font = '72px monospace';
+          const baseW = ctx.measureText('mmmmmmmmmmlli').width;
+          const result = {};
+          testFonts.forEach(f => {
+            ctx.font = `72px '${f}', monospace`;
+            result[f] = ctx.measureText('mmmmmmmmmmlli').width !== baseW ? '✔ present' : '✖ absent';
+          });
+          return result;
+        }
+      },
+      {
+        id: 'client-rects',
+        label: 'ClientRects Fingerprint',
+        risk: 'med',
+        collect: () => {
+          try {
+            const el = document.createElement('div');
+            el.style.cssText = 'position:fixed;left:-9999px;font:14px Arial;';
+            el.innerHTML = 'AYA fingerprint test &#x00e9;&#x00e0;&#x20ac;';
+            document.body.appendChild(el);
+            const r = el.getBoundingClientRect();
+            document.body.removeChild(el);
+            return `w:${r.width.toFixed(2)} h:${r.height.toFixed(2)}`;
+          } catch(e) { return 'Error'; }
+        },
+        detail: () => {
+          try {
+            const el = document.createElement('div');
+            el.style.cssText = 'position:fixed;left:-9999px;font:14px Arial;';
+            el.innerHTML = 'AYA fingerprint test &#x00e9;&#x00e0;&#x20ac;';
+            document.body.appendChild(el);
+            const r = el.getBoundingClientRect();
+            document.body.removeChild(el);
+            return {
+              'Width': r.width,
+              'Height': r.height,
+              'Top': r.top,
+              'Left': r.left,
+              'Note': 'Sub-pixel rendering differences reveal OS/font/GPU combos',
+            };
+          } catch(e) { return { Error: e.message }; }
+        }
+      },
+    ]
+  },
+
+  // ────────────────────────────────────────────────
+  {
+    id: 'privacy', icon: '🛡️', title: 'Privacy & Tracking',
+    desc: 'Cookies, storage, permissions, ad-blocker detection',
+    items: [
+      {
+        id: 'cookies',
+        label: 'Cookies Enabled',
+        risk: 'high',
+        collect: () => navigator.cookieEnabled ? 'Enabled' : 'Disabled',
+        detail: () => ({
+          'navigator.cookieEnabled': String(navigator.cookieEnabled),
+          'document.cookie length': document.cookie.length + ' chars',
+        })
+      },
+      {
+        id: 'localstorage',
+        label: 'LocalStorage',
+        risk: 'high',
+        collect: () => {
+          try { localStorage.setItem('_aya_test','1'); localStorage.removeItem('_aya_test'); return 'Available'; }
+          catch(e) { return 'Blocked'; }
+        },
+        detail: () => {
+          try {
+            return {
+              'Available': 'yes',
+              'Items stored': localStorage.length,
+              'Storage quota': 'typically ~5-10 MB',
+            };
+          } catch(e) { return { Status: 'Blocked / Private mode' }; }
+        }
+      },
+      {
+        id: 'sessionstorage',
+        label: 'SessionStorage',
+        risk: 'med',
+        collect: () => {
+          try { sessionStorage.setItem('_aya_test','1'); sessionStorage.removeItem('_aya_test'); return 'Available'; }
+          catch(e) { return 'Blocked'; }
+        },
+        detail: () => ({
+          'Available': (() => { try { sessionStorage.setItem('x','1'); sessionStorage.removeItem('x'); return 'yes'; } catch(e) { return 'no'; } })(),
+        })
+      },
+      {
+        id: 'indexeddb',
+        label: 'IndexedDB',
+        risk: 'med',
+        collect: () => typeof indexedDB !== 'undefined' ? 'Available' : 'Unavailable',
+        detail: () => ({
+          'Available': typeof indexedDB !== 'undefined' ? 'yes' : 'no',
+          'Note': 'Can store large amounts of data persistently',
+        })
+      },
+      {
+        id: 'adblock',
+        label: 'Ad Blocker Detection',
+        risk: 'info',
+        collect: async () => {
+          try {
+            const ad = document.createElement('div');
+            ad.innerHTML = '&nbsp;';
+            ad.className = 'adsbox ad-banner advertisement';
+            ad.style.cssText = 'position:absolute;left:-9999px;height:1px;';
+            document.body.appendChild(ad);
+            await new Promise(r => setTimeout(r, 100));
+            const blocked = ad.offsetHeight === 0 || getComputedStyle(ad).display === 'none';
+            document.body.removeChild(ad);
+            return blocked ? 'Likely active' : 'Not detected';
+          } catch(e) { return 'Unknown'; }
+        },
+        detail: async () => {
+          try {
+            const ad = document.createElement('div');
+            ad.className = 'adsbox';
+            ad.style.cssText = 'position:absolute;left:-9999px;height:1px;';
+            document.body.appendChild(ad);
+            await new Promise(r => setTimeout(r, 100));
+            const h = ad.offsetHeight;
+            document.body.removeChild(ad);
+            return {
+              'Ad element height': h,
+              'Likely blocked': h === 0 ? 'yes' : 'no',
+            };
+          } catch(e) { return { Error: e.message }; }
+        }
+      },
+      {
+        id: 'permissions',
+        label: 'Browser Permissions',
+        risk: 'high',
+        collect: async () => {
+          if (!navigator.permissions) return 'Permissions API unavailable';
+          const perms = ['geolocation','notifications','camera','microphone','clipboard-read'];
+          const results = await Promise.all(perms.map(async p => {
+            try { const s = await navigator.permissions.query({name:p}); return s.state[0].toUpperCase(); }
+            catch(e) { return '?'; }
+          }));
+          return perms.map((p,i)=>`${p.replace('clipboard-read','clipboard')}:${results[i]}`).join(' ');
+        },
+        detail: async () => {
+          if (!navigator.permissions) return { Status: 'Permissions API not available' };
+          const perms = ['geolocation','notifications','camera','microphone','clipboard-read','persistent-storage','payment-handler','background-sync'];
+          const result = {};
+          await Promise.all(perms.map(async p => {
+            try { const s = await navigator.permissions.query({name:p}); result[p] = s.state; }
+            catch(e) { result[p] = 'error/unavailable'; }
+          }));
+          return result;
+        }
+      },
+      {
+        id: 'service-worker',
+        label: 'Service Worker',
+        risk: 'med',
+        collect: () => 'serviceWorker' in navigator ? 'Supported' : 'Not supported',
+        detail: () => ({
+          'Support': 'serviceWorker' in navigator ? 'yes' : 'no',
+          'Note': 'Service Workers can be abused for supercookies and persistent tracking',
+        })
+      },
+      {
+        id: 'storage-quota',
+        label: 'Storage Quota',
+        risk: 'med',
+        collect: async () => {
+          if (!navigator.storage || !navigator.storage.estimate) return 'API unavailable';
+          try {
+            const est = await navigator.storage.estimate();
+            const used = (est.usage / 1048576).toFixed(2);
+            const quota = (est.quota / 1048576).toFixed(0);
+            return `${used} MB used / ${quota} MB quota`;
+          } catch(e) { return 'Error'; }
+        },
+        detail: async () => {
+          if (!navigator.storage || !navigator.storage.estimate) return { Status: 'Not available' };
+          try {
+            const est = await navigator.storage.estimate();
+            return {
+              'Quota (bytes)': est.quota,
+              'Used (bytes)': est.usage,
+              'Usage %': ((est.usage / est.quota) * 100).toFixed(3) + '%',
+            };
+          } catch(e) { return { Error: e.message }; }
+        }
+      },
+    ]
+  },
+
+  // ────────────────────────────────────────────────
+  {
+    id: 'graphics', icon: '🎮', title: 'Graphics & Media',
+    desc: 'WebGL, WebGPU, CSS media queries, display info',
+    items: [
+      {
+        id: 'webgl2',
+        label: 'WebGL 2 Support',
+        risk: 'med',
+        collect: () => {
+          const c = document.createElement('canvas');
+          return c.getContext('webgl2') ? 'Supported' : 'Not supported';
+        },
+        detail: () => {
+          const c = document.createElement('canvas');
+          const gl2 = c.getContext('webgl2');
+          if (!gl2) return { Status: 'WebGL 2 not supported' };
+          return {
+            'Version': gl2.getParameter(gl2.VERSION),
+            'Max Draw Buffers': gl2.getParameter(gl2.MAX_DRAW_BUFFERS),
+            'Max Color Attachments': gl2.getParameter(gl2.MAX_COLOR_ATTACHMENTS),
+            'Max Samples': gl2.getParameter(gl2.MAX_SAMPLES),
+            'Max 3D Texture Size': gl2.getParameter(gl2.MAX_3D_TEXTURE_SIZE),
+          };
+        }
+      },
+      {
+        id: 'webgpu',
+        label: 'WebGPU Support',
+        risk: 'high',
+        collect: async () => {
+          if (!navigator.gpu) return 'Not supported';
+          try {
+            const adapter = await navigator.gpu.requestAdapter();
+            if (!adapter) return 'No adapter found';
+            return adapter.name || 'Supported (adapter found)';
+          } catch(e) { return 'Error: ' + e.message; }
+        },
+        detail: async () => {
+          if (!navigator.gpu) return { Status: 'WebGPU not supported in this browser' };
+          try {
+            const adapter = await navigator.gpu.requestAdapter();
+            if (!adapter) return { Status: 'No GPU adapter found' };
+            const info = await adapter.requestAdapterInfo?.() || {};
+            return {
+              'Vendor': info.vendor || '—',
+              'Architecture': info.architecture || '—',
+              'Device': info.device || '—',
+              'Description': info.description || '—',
+            };
+          } catch(e) { return { Error: e.message }; }
+        }
+      },
+      {
+        id: 'color-scheme',
+        label: 'Color Scheme / Dark Mode',
+        risk: 'info',
+        collect: () => {
+          if (window.matchMedia('(prefers-color-scheme: dark)').matches) return 'Dark mode';
+          if (window.matchMedia('(prefers-color-scheme: light)').matches) return 'Light mode';
+          return 'No preference';
+        },
+        detail: () => ({
+          'prefers-color-scheme: dark': String(window.matchMedia('(prefers-color-scheme: dark)').matches),
+          'prefers-color-scheme: light': String(window.matchMedia('(prefers-color-scheme: light)').matches),
+          'prefers-reduced-motion': String(window.matchMedia('(prefers-reduced-motion: reduce)').matches),
+          'prefers-contrast: more': String(window.matchMedia('(prefers-contrast: more)').matches),
+          'forced-colors': String(window.matchMedia('(forced-colors: active)').matches),
+          'prefers-reduced-data': String(window.matchMedia('(prefers-reduced-data: reduce)').matches),
+          'HDR display (dynamic-range: high)': String(window.matchMedia('(dynamic-range: high)').matches),
+        })
+      },
+      {
+        id: 'video-formats',
+        label: 'Video Format Support',
+        risk: 'med',
+        collect: () => {
+          const v = document.createElement('video');
+          const formats = ['video/mp4','video/webm','video/ogg'];
+          const supported = formats.filter(f => v.canPlayType(f) !== '');
+          return supported.length + '/' + formats.length + ' formats';
+        },
+        detail: () => {
+          const v = document.createElement('video');
+          const a = document.createElement('audio');
+          return {
+            'video/mp4': v.canPlayType('video/mp4') || 'no',
+            'video/webm': v.canPlayType('video/webm') || 'no',
+            'video/ogg': v.canPlayType('video/ogg') || 'no',
+            'video/mp4;codecs=h264': v.canPlayType('video/mp4;codecs="avc1.42E01E"') || 'no',
+            'video/webm;codecs=vp9': v.canPlayType('video/webm;codecs=vp9') || 'no',
+            'video/webm;codecs=av1': v.canPlayType('video/webm;codecs=av01.0.05M.08') || 'no',
+            'audio/mpeg': a.canPlayType('audio/mpeg') || 'no',
+            'audio/ogg': a.canPlayType('audio/ogg') || 'no',
+            'audio/wav': a.canPlayType('audio/wav') || 'no',
+            'audio/aac': a.canPlayType('audio/aac') || 'no',
+          };
+        }
+      },
+    ]
+  },
+
+  // ────────────────────────────────────────────────
+  {
+    id: 'protocols', icon: '🔐', title: 'Protocols & Security',
+    desc: 'TLS, HTTP/2, QUIC, Mixed Content, HTTPS',
+    items: [
+      {
+        id: 'https',
+        label: 'HTTPS / Protocol',
+        risk: 'info',
+        collect: () => location.protocol + '//' + location.host,
+        detail: () => ({
+          'protocol': location.protocol,
+          'host': location.host,
+          'origin': location.origin,
+          'Secure context': String(window.isSecureContext),
+          'crossOriginIsolated': String(window.crossOriginIsolated),
+        })
+      },
+      {
+        id: 'service-worker-support',
+        label: 'Secure Context APIs',
+        risk: 'info',
+        collect: () => window.isSecureContext ? 'Secure context' : '⚠ Insecure context',
+        detail: () => ({
+          'isSecureContext': String(window.isSecureContext),
+          'crypto.subtle': typeof window.crypto?.subtle,
+          'CredentialsContainer': typeof navigator.credentials,
+          'crossOriginIsolated': String(window.crossOriginIsolated),
+        })
+      },
+      {
+        id: 'webrtc-support',
+        label: 'WebRTC Support',
+        risk: 'high',
+        collect: () => typeof RTCPeerConnection !== 'undefined' ? 'Supported' : 'Not supported',
+        detail: () => ({
+          'RTCPeerConnection': typeof RTCPeerConnection,
+          'RTCDataChannel': typeof RTCDataChannel,
+          'MediaStream': typeof MediaStream,
+          'Note': 'WebRTC is a major source of IP leaks even through VPNs',
+        })
+      },
+      {
+        id: 'content-security',
+        label: 'Security Headers (JS-visible)',
+        risk: 'info',
+        collect: () => {
+          const checks = [
+            window.crossOriginIsolated ? 'COOP/COEP' : null,
+            document.featurePolicy ? 'FeaturePolicy' : null,
+          ].filter(Boolean);
+          return checks.length ? checks.join(', ') : 'Limited JS visibility';
+        },
+        detail: () => ({
+          'crossOriginIsolated': String(window.crossOriginIsolated),
+          'document.featurePolicy': typeof document.featurePolicy,
+          'Note': 'Most security headers are not directly readable by JS (intentional)',
+        })
+      },
+    ]
+  },
+
+  // ────────────────────────────────────────────────
+  {
+    id: 'features', icon: '⚡', title: 'Browser Features',
+    desc: 'HTML5, APIs, JavaScript engine capabilities',
+    items: [
+      {
+        id: 'plugins',
+        label: 'Browser Plugins',
+        risk: 'med',
+        collect: () => {
+          const p = navigator.plugins;
+          if (!p || p.length === 0) return 'None / hidden';
+          return p.length + ' plugin(s)';
+        },
+        detail: () => {
+          const p = navigator.plugins;
+          if (!p || p.length === 0) return { Status: 'No plugins exposed (modern browsers hide these)' };
+          const result = {};
+          for (let i = 0; i < Math.min(p.length, 20); i++) {
+            result[`Plugin ${i+1}`] = p[i].name;
+          }
+          return result;
+        }
+      },
+      {
+        id: 'speech-synthesis',
+        label: 'Speech Synthesis Voices',
+        risk: 'med',
+        collect: () => {
+          if (!window.speechSynthesis) return 'API unavailable';
+          const voices = speechSynthesis.getVoices();
+          return voices.length ? voices.length + ' voices' : 'Loading…';
+        },
+        detail: () => {
+          if (!window.speechSynthesis) return { Status: 'SpeechSynthesis API not available' };
+          const voices = speechSynthesis.getVoices();
+          const result = { 'Total voices': voices.length };
+          const langs = [...new Set(voices.map(v => v.lang))];
+          result['Languages'] = langs.slice(0,15).join(', ') + (langs.length > 15 ? '…' : '');
+          voices.slice(0,10).forEach((v,i) => { result[`Voice ${i+1}`] = `${v.name} (${v.lang})`; });
+          return result;
+        }
+      },
+      {
+        id: 'js-features',
+        label: 'JavaScript Engine',
+        risk: 'med',
+        collect: () => {
+          const features = [];
+          if (typeof BigInt !== 'undefined') features.push('BigInt');
+          if (typeof SharedArrayBuffer !== 'undefined') features.push('SAB');
+          if (typeof Atomics !== 'undefined') features.push('Atomics');
+          if (typeof WeakRef !== 'undefined') features.push('WeakRef');
+          if (typeof FinalizationRegistry !== 'undefined') features.push('FinalizationRegistry');
+          return features.join(', ') || 'basic only';
+        },
+        detail: () => ({
+          'BigInt': typeof BigInt,
+          'SharedArrayBuffer': typeof SharedArrayBuffer,
+          'Atomics': typeof Atomics,
+          'WeakRef': typeof WeakRef,
+          'FinalizationRegistry': typeof FinalizationRegistry,
+          'globalThis': typeof globalThis,
+          'structuredClone': typeof structuredClone,
+          'Proxy': typeof Proxy,
+          'Reflect': typeof Reflect,
+          'Symbol': typeof Symbol,
+          'Promise.allSettled': typeof Promise.allSettled,
+          'Optional chaining support': (() => { try { eval('({})?.x'); return 'yes'; } catch(e) { return 'no'; } })(),
+        })
+      },
+      {
+        id: 'geolocation',
+        label: 'Geolocation API',
+        risk: 'high',
+        collect: () => 'geolocation' in navigator ? 'Available (requires permission)' : 'Not available',
+        detail: () => ({
+          'Available': 'geolocation' in navigator ? 'yes' : 'no',
+          'Note': 'Requires explicit user permission, but availability itself is fingerprintable',
+        })
+      },
+      {
+        id: 'web-workers',
+        label: 'Web Workers / WASM',
+        risk: 'med',
+        collect: () => {
+          const w = typeof Worker !== 'undefined' ? 'Workers' : null;
+          const sw = 'serviceWorker' in navigator ? 'ServiceWorker' : null;
+          const wasm = typeof WebAssembly !== 'undefined' ? 'WASM' : null;
+          return [w, sw, wasm].filter(Boolean).join(', ') || 'none';
+        },
+        detail: () => ({
+          'Worker': typeof Worker,
+          'SharedWorker': typeof SharedWorker,
+          'ServiceWorker': 'serviceWorker' in navigator ? 'yes' : 'no',
+          'WebAssembly': typeof WebAssembly,
+          'WebAssembly.compile': typeof WebAssembly?.compile,
+        })
+      },
+      {
+        id: 'notifications',
+        label: 'Notifications API',
+        risk: 'med',
+        collect: () => {
+          if (!('Notification' in window)) return 'Not supported';
+          return 'Supported (permission: ' + Notification.permission + ')';
+        },
+        detail: () => {
+          if (!('Notification' in window)) return { Status: 'Not supported' };
+          return {
+            'Support': 'yes',
+            'Permission': Notification.permission,
+            'maxActions': Notification.maxActions ?? '—',
+          };
+        }
+      },
+    ]
+  },
+
+  // ────────────────────────────────────────────────
+  {
+    id: 'content-filters', icon: '🚧', title: 'Content Filters & Proxies',
+    desc: 'Tor, VPN, proxy detection signals',
+    items: [
+      {
+        id: 'tor-check',
+        label: 'Tor Browser Signals',
+        risk: 'info',
+        collect: () => {
+          const signals = [];
+          if (navigator.userAgent.includes('Firefox') && !navigator.plugins.length) signals.push('no plugins (Tor-like)');
+          if (screen.width === 1000 && screen.height === 900) signals.push('Tor default resolution');
+          if (navigator.languages?.length === 1 && navigator.language === 'en-US') signals.push('single en-US lang');
+          return signals.length ? signals.join('; ') : 'No obvious Tor signals';
+        },
+        detail: () => ({
+          'Plugin count': navigator.plugins.length,
+          'Screen size': screen.width + '×' + screen.height,
+          'Languages': (navigator.languages || []).join(', '),
+          'Note': 'Tor Browser has fixed, detectable defaults to prevent fingerprinting',
+        })
+      },
+      {
+        id: 'proxy-headers',
+        label: 'Proxy / Anonymizer Signals (JS)',
+        risk: 'info',
+        collect: () => {
+          const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+          const lang = navigator.language;
+          return `TZ: ${tz} | lang: ${lang}`;
+        },
+        detail: () => ({
+          'Timezone': Intl.DateTimeFormat().resolvedOptions().timeZone,
+          'Language': navigator.language,
+          'Note': 'Mismatch between IP geolocation & timezone/language is a common proxy signal',
+        })
+      },
+      {
+        id: 'adblock-detail',
+        label: 'Ad/Tracker Blocker Detection',
+        risk: 'info',
+        collect: async () => {
+          const checks = [
+            { name: 'Bait div (.adsbox)', check: async () => {
+              const d = document.createElement('div');
+              d.className = 'adsbox pub_300x250 pub_300x250m pub_728x90 text-ad textAd text_ad text_ads text-ads';
+              d.style.cssText = 'position:absolute;left:-9999px;height:1px;width:1px;';
+              document.body.appendChild(d);
+              await new Promise(r => setTimeout(r, 80));
+              const blocked = d.offsetHeight === 0;
+              document.body.removeChild(d);
+              return blocked;
+            }},
+          ];
+          const results = await Promise.all(checks.map(async c => ({ name: c.name, blocked: await c.check() })));
+          const blocked = results.filter(r => r.blocked);
+          return blocked.length ? `Detected (${blocked.map(r=>r.name).join(', ')})` : 'Not detected';
+        },
+        detail: async () => {
+          const d = document.createElement('div');
+          d.className = 'adsbox';
+          d.style.cssText = 'position:absolute;left:-9999px;height:1px;';
+          document.body.appendChild(d);
+          await new Promise(r => setTimeout(r, 80));
+          const h = d.offsetHeight; const disp = getComputedStyle(d).display;
+          document.body.removeChild(d);
+          return { 'Bait element height': h, 'Bait display': disp, 'Blocked': h === 0 || disp === 'none' ? 'likely yes' : 'likely no' };
+        }
+      },
+    ]
+  },
+
+  // ────────────────────────────────────────────────
+  {
+    id: 'tls-http', icon: '🔒', title: 'TLS & HTTP Protocols',
+    desc: 'HTTP/2, QUIC/HTTP3, TLS fingerprint, mixed content, protocol detection',
+    items: [
+      {
+        id: 'nav-protocol',
+        label: 'HTTP Protocol Version',
+        risk: 'med',
+        collect: () => {
+          const nav = performance?.getEntriesByType?.('navigation')?.[0];
+          return nav?.nextHopProtocol || 'unavailable (no Performance API)';
+        },
+        detail: () => {
+          const nav = performance?.getEntriesByType?.('navigation')?.[0];
+          if (!nav) return { Status: 'Performance Navigation Timing API not available' };
+          return {
+            'Protocol': nav.nextHopProtocol || '—',
+            'Transfer Size (bytes)': nav.transferSize,
+            'Encoded Body Size': nav.encodedBodySize,
+            'Decoded Body Size': nav.decodedBodySize,
+            'Connection ID': nav.connectEnd - nav.connectStart > 0 ? 'new connection' : 'reused',
+            'TLS Negotiation (ms)': (nav.requestStart - nav.secureConnectionStart).toFixed(2),
+          };
+        }
+      },
+      {
+        id: 'http2-detection',
+        label: 'HTTP/2 Detection',
+        risk: 'info',
+        collect: () => {
+          const nav = performance?.getEntriesByType?.('navigation')?.[0];
+          const proto = nav?.nextHopProtocol || '';
+          if (proto === 'h2') return 'HTTP/2 confirmed';
+          if (proto === 'h3') return 'HTTP/3 (QUIC) confirmed';
+          if (proto === 'http/1.1') return 'HTTP/1.1 only';
+          return 'Unknown – ' + (proto || 'no data');
+        },
+        detail: () => {
+          const nav = performance?.getEntriesByType?.('navigation')?.[0];
+          return {
+            'nextHopProtocol': nav?.nextHopProtocol || '—',
+            'H2 Push Support': typeof nav?.serverTiming !== 'undefined' ? 'possible' : 'n/a',
+            'Note': 'HTTP/2 fingerprinting (Akamai format) requires server-side frame inspection',
+          };
+        }
+      },
+      {
+        id: 'quic-detection',
+        label: 'QUIC / HTTP3 Support',
+        risk: 'info',
+        collect: () => {
+          const nav = performance?.getEntriesByType?.('navigation')?.[0];
+          if (nav?.nextHopProtocol === 'h3') return 'H3 (QUIC) active on this page';
+          // Alt-Svc header would reveal H3, but JS can't read it directly
+          return 'Cannot confirm from JS alone (requires server Alt-Svc)';
+        },
+        detail: () => ({
+          'Detection method': 'Performance API nextHopProtocol',
+          'Current protocol': performance?.getEntriesByType?.('navigation')?.[0]?.nextHopProtocol || '—',
+          'Note': 'Full QUIC fingerprinting (QUIC Transport Parameters) requires server-side capture',
+        })
+      },
+      {
+        id: 'tls-fingerprint',
+        label: 'TLS Fingerprint (JA3/JA4)',
+        risk: 'high',
+        collect: () => 'Server-side only – JS cannot read TLS ClientHello',
+        detail: () => ({
+          'JA3/JA4': 'Requires server-side packet inspection',
+          'What it captures': 'TLS version, cipher suites, extensions, elliptic curves, point formats',
+          'Uniqueness': 'Identifies browser+OS combination independently of User-Agent',
+          'Note': 'Your TLS fingerprint is sent on every HTTPS connection and cannot be hidden by JS',
+        })
+      },
+      {
+        id: 'tcp-fingerprint',
+        label: 'TCP/IP Fingerprint (JA4T)',
+        risk: 'high',
+        collect: () => 'Server-side only – JS cannot read TCP headers',
+        detail: () => ({
+          'JA4T': 'Requires server-side packet capture',
+          'What it captures': 'Window size, TTL, MTU, TCP options, hop count',
+          'Note': 'OS-level TCP stack differences are visible to servers even through VPNs/proxies',
+        })
+      },
+      {
+        id: 'secure-context',
+        label: 'Secure Context / HTTPS',
+        risk: 'info',
+        collect: () => `${window.isSecureContext ? 'Secure' : '⚠ Insecure'} – ${location.protocol}`,
+        detail: () => ({
+          'isSecureContext': String(window.isSecureContext),
+          'protocol': location.protocol,
+          'crossOriginIsolated': String(window.crossOriginIsolated),
+          'crypto.subtle available': typeof window.crypto?.subtle !== 'undefined' ? 'yes' : 'no',
+        })
+      },
+      {
+        id: 'server-timing',
+        label: 'Server Timing API',
+        risk: 'info',
+        collect: () => {
+          const nav = performance?.getEntriesByType?.('navigation')?.[0];
+          return nav?.serverTiming?.length ? `${nav.serverTiming.length} server-timing entries` : 'No server-timing headers';
+        },
+        detail: () => {
+          const nav = performance?.getEntriesByType?.('navigation')?.[0];
+          if (!nav?.serverTiming?.length) return { Status: 'No Server-Timing headers present' };
+          const r = {};
+          nav.serverTiming.forEach((t, i) => { r[`Entry ${i+1}`] = `${t.name}: ${t.duration}ms – ${t.description}`; });
+          return r;
+        }
+      },
+    ]
+  },
+
+  // ────────────────────────────────────────────────
+  {
+    id: 'css-media', icon: '🎨', title: 'CSS Media Queries',
+    desc: 'Display, color, motion, environment – detectable via matchMedia()',
+    items: [
+      {
+        id: 'color-gamut',
+        label: 'Color Gamut',
+        risk: 'med',
+        collect: () => {
+          if (window.matchMedia('(color-gamut: rec2020)').matches) return 'rec2020 (wide, HDR)';
+          if (window.matchMedia('(color-gamut: p3)').matches) return 'P3 (wide)';
+          if (window.matchMedia('(color-gamut: srgb)').matches) return 'sRGB (standard)';
+          return 'unknown';
+        },
+        detail: () => ({
+          'color-gamut: srgb': String(window.matchMedia('(color-gamut: srgb)').matches),
+          'color-gamut: p3': String(window.matchMedia('(color-gamut: p3)').matches),
+          'color-gamut: rec2020': String(window.matchMedia('(color-gamut: rec2020)').matches),
+        })
+      },
+      {
+        id: 'display-mode',
+        label: 'Display Mode (PWA)',
+        risk: 'med',
+        collect: () => {
+          for (const m of ['fullscreen','standalone','minimal-ui','browser']) {
+            if (window.matchMedia(`(display-mode: ${m})`).matches) return m;
+          }
+          return 'unknown';
+        },
+        detail: () => ({
+          'display-mode: browser': String(window.matchMedia('(display-mode: browser)').matches),
+          'display-mode: standalone': String(window.matchMedia('(display-mode: standalone)').matches),
+          'display-mode: minimal-ui': String(window.matchMedia('(display-mode: minimal-ui)').matches),
+          'display-mode: fullscreen': String(window.matchMedia('(display-mode: fullscreen)').matches),
+        })
+      },
+      {
+        id: 'prefers-reduced-motion',
+        label: 'Reduced Motion Preference',
+        risk: 'info',
+        collect: () => window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'Reduce motion' : 'No preference',
+        detail: () => ({
+          'prefers-reduced-motion: reduce': String(window.matchMedia('(prefers-reduced-motion: reduce)').matches),
+          'prefers-reduced-motion: no-preference': String(window.matchMedia('(prefers-reduced-motion: no-preference)').matches),
+        })
+      },
+      {
+        id: 'prefers-contrast',
+        label: 'Contrast Preference',
+        risk: 'info',
+        collect: () => {
+          if (window.matchMedia('(prefers-contrast: more)').matches) return 'More contrast';
+          if (window.matchMedia('(prefers-contrast: less)').matches) return 'Less contrast';
+          if (window.matchMedia('(prefers-contrast: forced)').matches) return 'Forced';
+          return 'No preference';
+        },
+        detail: () => ({
+          'prefers-contrast: more': String(window.matchMedia('(prefers-contrast: more)').matches),
+          'prefers-contrast: less': String(window.matchMedia('(prefers-contrast: less)').matches),
+          'prefers-contrast: forced': String(window.matchMedia('(prefers-contrast: forced)').matches),
+          'forced-colors: active': String(window.matchMedia('(forced-colors: active)').matches),
+        })
+      },
+      {
+        id: 'hdr-display',
+        label: 'HDR / Dynamic Range',
+        risk: 'med',
+        collect: () => window.matchMedia('(dynamic-range: high)').matches ? 'HDR display' : 'Standard dynamic range',
+        detail: () => ({
+          'dynamic-range: high': String(window.matchMedia('(dynamic-range: high)').matches),
+          'dynamic-range: standard': String(window.matchMedia('(dynamic-range: standard)').matches),
+          'video-dynamic-range: high': String(window.matchMedia('(video-dynamic-range: high)').matches),
+        })
+      },
+      {
+        id: 'orientation-mq',
+        label: 'Orientation & Aspect Ratio',
+        risk: 'info',
+        collect: () => {
+          const land = window.matchMedia('(orientation: landscape)').matches;
+          const ar = (window.innerWidth / window.innerHeight).toFixed(2);
+          return `${land ? 'landscape' : 'portrait'} (${ar}:1)`;
+        },
+        detail: () => ({
+          'orientation': window.matchMedia('(orientation: landscape)').matches ? 'landscape' : 'portrait',
+          'aspect-ratio': `${window.innerWidth}/${window.innerHeight}`,
+          'aspect-ratio ≥ 16/9': String(window.matchMedia('(min-aspect-ratio: 16/9)').matches),
+          'aspect-ratio ≥ 4/3': String(window.matchMedia('(min-aspect-ratio: 4/3)').matches),
+          'aspect-ratio ≥ 1/1': String(window.matchMedia('(min-aspect-ratio: 1/1)').matches),
+        })
+      },
+      {
+        id: 'resolution-mq',
+        label: 'Resolution / DPI',
+        risk: 'med',
+        collect: () => {
+          if (window.matchMedia('(min-resolution: 192dpi)').matches) return '≥192 dpi (HiDPI/Retina)';
+          if (window.matchMedia('(min-resolution: 144dpi)').matches) return '≥144 dpi';
+          if (window.matchMedia('(min-resolution: 96dpi)').matches) return '≥96 dpi (standard)';
+          return '<96 dpi';
+        },
+        detail: () => ({
+          'devicePixelRatio': window.devicePixelRatio,
+          '≥96 dpi': String(window.matchMedia('(min-resolution: 96dpi)').matches),
+          '≥144 dpi': String(window.matchMedia('(min-resolution: 144dpi)').matches),
+          '≥192 dpi': String(window.matchMedia('(min-resolution: 192dpi)').matches),
+          '≥288 dpi': String(window.matchMedia('(min-resolution: 288dpi)').matches),
+        })
+      },
+      {
+        id: 'scripting-mq',
+        label: 'Scripting MQ',
+        risk: 'info',
+        collect: () => {
+          if (window.matchMedia('(scripting: enabled)').matches) return 'enabled';
+          if (window.matchMedia('(scripting: initial-only)').matches) return 'initial-only';
+          return 'none or unsupported';
+        },
+        detail: () => ({
+          'scripting: enabled': String(window.matchMedia('(scripting: enabled)').matches),
+          'scripting: initial-only': String(window.matchMedia('(scripting: initial-only)').matches),
+          'scripting: none': String(window.matchMedia('(scripting: none)').matches),
+        })
+      },
+      {
+        id: 'update-mq',
+        label: 'Update Frequency (e-ink?)',
+        risk: 'info',
+        collect: () => {
+          if (window.matchMedia('(update: none)').matches) return 'none (e-ink/print)';
+          if (window.matchMedia('(update: slow)').matches) return 'slow (e-ink)';
+          if (window.matchMedia('(update: fast)').matches) return 'fast (screen)';
+          return 'unknown';
+        },
+        detail: () => ({
+          'update: fast': String(window.matchMedia('(update: fast)').matches),
+          'update: slow': String(window.matchMedia('(update: slow)').matches),
+          'update: none': String(window.matchMedia('(update: none)').matches),
+          'Note': 'Distinguishes e-ink displays and print from normal screens',
+        })
+      },
+      {
+        id: 'prefers-data',
+        label: 'Data Saver / Reduced Data',
+        risk: 'info',
+        collect: () => window.matchMedia('(prefers-reduced-data: reduce)').matches ? 'Reduce data mode' : 'No preference / unsupported',
+        detail: () => ({
+          'prefers-reduced-data: reduce': String(window.matchMedia('(prefers-reduced-data: reduce)').matches),
+          'connection.saveData': String((navigator.connection || {}).saveData),
+        })
+      },
+      {
+        id: 'print-mq',
+        label: 'Print Media Detection',
+        risk: 'info',
+        collect: () => window.matchMedia('print').matches ? 'Print mode active' : 'Screen mode',
+        detail: () => ({
+          'print': String(window.matchMedia('print').matches),
+          'screen': String(window.matchMedia('screen').matches),
+          'Note': 'Some trackers inject print-specific tracking via @media print CSS',
+        })
+      },
+    ]
+  },
+
+  // ────────────────────────────────────────────────
+  {
+    id: 'sensors', icon: '📡', title: 'Sensors & Device APIs',
+    desc: 'Motion, orientation, Bluetooth, USB, NFC, MIDI, HID, Serial',
+    items: [
+      {
+        id: 'device-motion',
+        label: 'DeviceMotion / Accelerometer',
+        risk: 'high',
+        collect: () => {
+          if (typeof DeviceMotionEvent === 'undefined') return 'Not supported';
+          if (typeof DeviceMotionEvent.requestPermission === 'function') return 'Supported (iOS – requires permission)';
+          return 'Supported (no permission needed)';
+        },
+        detail: () => ({
+          'DeviceMotionEvent': typeof DeviceMotionEvent,
+          'requestPermission required': typeof DeviceMotionEvent?.requestPermission === 'function' ? 'yes (iOS 13+)' : 'no',
+          'Note': 'Accelerometer data can reveal physical device type and user behavior patterns',
+        })
+      },
+      {
+        id: 'device-orientation',
+        label: 'DeviceOrientation / Gyroscope',
+        risk: 'high',
+        collect: () => {
+          if (typeof DeviceOrientationEvent === 'undefined') return 'Not supported';
+          if (typeof DeviceOrientationEvent.requestPermission === 'function') return 'Supported (iOS – requires permission)';
+          return 'Supported (no permission needed)';
+        },
+        detail: () => ({
+          'DeviceOrientationEvent': typeof DeviceOrientationEvent,
+          'AbsoluteOrientationSensor': typeof AbsoluteOrientationSensor,
+          'RelativeOrientationSensor': typeof RelativeOrientationSensor,
+          'Gyroscope': typeof Gyroscope,
+          'Accelerometer': typeof Accelerometer,
+          'GravitySensor': typeof GravitySensor,
+          'LinearAccelerationSensor': typeof LinearAccelerationSensor,
+          'Magnetometer': typeof Magnetometer,
+        })
+      },
+      {
+        id: 'ambient-light',
+        label: 'Ambient Light Sensor',
+        risk: 'med',
+        collect: () => typeof AmbientLightSensor !== 'undefined' ? 'Supported' : 'Not supported',
+        detail: () => ({
+          'AmbientLightSensor': typeof AmbientLightSensor,
+          'Note': 'Can reveal whether user is in a dark/light room; blocked in most browsers for privacy',
+        })
+      },
+      {
+        id: 'vibration',
+        label: 'Vibration API',
+        risk: 'low',
+        collect: () => typeof navigator.vibrate === 'function' ? 'Supported' : 'Not supported',
+        detail: () => ({
+          'navigator.vibrate': typeof navigator.vibrate,
+          'Note': 'Presence confirms mobile device; can be used for covert signaling',
+        })
+      },
+      {
+        id: 'web-bluetooth',
+        label: 'Web Bluetooth API',
+        risk: 'high',
+        collect: () => navigator.bluetooth ? 'Supported' : 'Not supported',
+        detail: () => ({
+          'navigator.bluetooth': typeof navigator.bluetooth,
+          'Note': 'With permission: can enumerate nearby BT devices, creating unique location fingerprints',
+        })
+      },
+      {
+        id: 'webusb',
+        label: 'WebUSB API',
+        risk: 'high',
+        collect: () => navigator.usb ? 'Supported' : 'Not supported',
+        detail: () => ({
+          'navigator.usb': typeof navigator.usb,
+          'Note': 'With permission: enumerates USB devices; unique hardware config = unique fingerprint',
+        })
+      },
+      {
+        id: 'webhid',
+        label: 'WebHID API',
+        risk: 'high',
+        collect: () => navigator.hid ? 'Supported' : 'Not supported',
+        detail: () => ({
+          'navigator.hid': typeof navigator.hid,
+          'Note': 'HID devices (keyboards, gamepads) list is a strong fingerprinting vector',
+        })
+      },
+      {
+        id: 'webserial',
+        label: 'Web Serial API',
+        risk: 'high',
+        collect: () => navigator.serial ? 'Supported' : 'Not supported',
+        detail: () => ({
+          'navigator.serial': typeof navigator.serial,
+          'Note': 'Access to serial ports can uniquely identify hardware setups',
+        })
+      },
+      {
+        id: 'webnfc',
+        label: 'Web NFC',
+        risk: 'med',
+        collect: () => typeof NDEFReader !== 'undefined' ? 'Supported' : 'Not supported',
+        detail: () => ({
+          'NDEFReader': typeof NDEFReader,
+          'Note': 'NFC support implies mobile NFC hardware; presence fingerprints device class',
+        })
+      },
+      {
+        id: 'webmidi',
+        label: 'Web MIDI API',
+        risk: 'med',
+        collect: () => typeof navigator.requestMIDIAccess === 'function' ? 'Supported' : 'Not supported',
+        detail: () => ({
+          'navigator.requestMIDIAccess': typeof navigator.requestMIDIAccess,
+          'Note': 'With permission: list of MIDI devices creates hardware fingerprint',
+        })
+      },
+      {
+        id: 'gamepad',
+        label: 'Gamepad API',
+        risk: 'med',
+        collect: () => {
+          if (!navigator.getGamepads) return 'Not supported';
+          const pads = [...navigator.getGamepads()].filter(Boolean);
+          return pads.length ? `${pads.length} gamepad(s) connected` : 'Supported, no gamepads';
+        },
+        detail: () => {
+          if (!navigator.getGamepads) return { Status: 'Gamepad API not supported' };
+          const pads = [...navigator.getGamepads()].filter(Boolean);
+          if (!pads.length) return { Status: 'No gamepads connected' };
+          const r = {};
+          pads.forEach((p, i) => { r[`Pad ${i+1}`] = `${p.id} (${p.buttons.length} btns, ${p.axes.length} axes)`; });
+          return r;
+        }
+      },
+      {
+        id: 'contact-picker',
+        label: 'Contact Picker / Payment Request',
+        risk: 'high',
+        collect: () => {
+          const cp = 'contacts' in navigator ? 'Contacts' : null;
+          const pr = typeof PaymentRequest !== 'undefined' ? 'PaymentRequest' : null;
+          return [cp, pr].filter(Boolean).join(', ') || 'Neither supported';
+        },
+        detail: () => ({
+          'ContactsManager (navigator.contacts)': typeof navigator.contacts,
+          'PaymentRequest': typeof PaymentRequest,
+          'Note': 'Contact Picker can enumerate device contacts with permission',
+        })
+      },
+    ]
+  },
+
+  // ────────────────────────────────────────────────
+  {
+    id: 'performance-timing', icon: '⏱️', title: 'Performance & Timing',
+    desc: 'Navigation timing, resource timing, memory, timer precision',
+    items: [
+      {
+        id: 'nav-timing',
+        label: 'Navigation Timing',
+        risk: 'med',
+        collect: () => {
+          const nav = performance?.getEntriesByType?.('navigation')?.[0];
+          if (!nav) return 'unavailable';
+          return `load: ${nav.loadEventEnd.toFixed(0)}ms | DNS: ${(nav.domainLookupEnd - nav.domainLookupStart).toFixed(0)}ms`;
+        },
+        detail: () => {
+          const nav = performance?.getEntriesByType?.('navigation')?.[0];
+          if (!nav) return { Status: 'Navigation Timing API not available' };
+          return {
+            'DNS Lookup (ms)': (nav.domainLookupEnd - nav.domainLookupStart).toFixed(2),
+            'TCP Connect (ms)': (nav.connectEnd - nav.connectStart).toFixed(2),
+            'TLS Handshake (ms)': nav.secureConnectionStart > 0 ? (nav.connectEnd - nav.secureConnectionStart).toFixed(2) : '—',
+            'TTFB (ms)': (nav.responseStart - nav.requestStart).toFixed(2),
+            'Response (ms)': (nav.responseEnd - nav.responseStart).toFixed(2),
+            'DOM Interactive (ms)': nav.domInteractive.toFixed(2),
+            'DOM Complete (ms)': nav.domComplete.toFixed(2),
+            'Load Event (ms)': nav.loadEventEnd.toFixed(2),
+            'Transfer Size (bytes)': nav.transferSize,
+          };
+        }
+      },
+      {
+        id: 'perf-memory',
+        label: 'JS Heap Memory (Chrome)',
+        risk: 'med',
+        collect: () => {
+          const m = performance?.memory;
+          if (!m) return 'API unavailable (Chrome only)';
+          return `${(m.usedJSHeapSize/1048576).toFixed(1)} MB used / ${(m.jsHeapSizeLimit/1048576).toFixed(0)} MB limit`;
+        },
+        detail: () => {
+          const m = performance?.memory;
+          if (!m) return { Status: 'performance.memory only in Chrome' };
+          return {
+            'usedJSHeapSize': (m.usedJSHeapSize/1048576).toFixed(2) + ' MB',
+            'totalJSHeapSize': (m.totalJSHeapSize/1048576).toFixed(2) + ' MB',
+            'jsHeapSizeLimit': (m.jsHeapSizeLimit/1048576).toFixed(2) + ' MB',
+          };
+        }
+      },
+      {
+        id: 'timer-precision',
+        label: 'High-Resolution Timer Precision',
+        risk: 'high',
+        collect: () => {
+          const samples = [];
+          for (let i = 0; i < 20; i++) samples.push(performance.now());
+          const diffs = samples.slice(1).map((v,i) => v - samples[i]).filter(d => d > 0);
+          const min = diffs.length ? Math.min(...diffs).toFixed(4) : '?';
+          return `min delta: ${min} ms`;
+        },
+        detail: () => {
+          const samples = [];
+          for (let i = 0; i < 50; i++) samples.push(performance.now());
+          const diffs = samples.slice(1).map((v,i) => v - samples[i]).filter(d => d > 0);
+          const min = diffs.length ? Math.min(...diffs) : null;
+          return {
+            'Min observable delta (ms)': min?.toFixed(5) ?? '—',
+            'Estimated precision': min ? (min < 0.01 ? 'High (<0.01ms)' : min < 0.1 ? 'Medium (<0.1ms)' : 'Reduced (≥0.1ms, mitigated)') : '—',
+            'Note': 'Browsers reduce timer precision to mitigate Spectre/timing attacks (cross-origin isolation)',
+            'performance.now() available': typeof performance?.now,
+          };
+        }
+      },
+      {
+        id: 'raf-timing',
+        label: 'requestAnimationFrame Rate',
+        risk: 'info',
+        collect: async () => {
+          return new Promise(resolve => {
+            let frames = 0, start = performance.now();
+            const tick = () => {
+              frames++;
+              if (performance.now() - start < 500) requestAnimationFrame(tick);
+              else resolve(`~${Math.round(frames * 2)} fps (display refresh)`);
+            };
+            requestAnimationFrame(tick);
+          });
+        },
+        detail: async () => {
+          return new Promise(resolve => {
+            let frames = 0, start = performance.now();
+            const tick = () => {
+              frames++;
+              if (performance.now() - start < 1000) requestAnimationFrame(tick);
+              else resolve({
+                'Detected refresh rate': `~${frames} Hz`,
+                'Note': 'Screen refresh rate (60/90/120/144Hz) fingerprints display hardware',
+              });
+            };
+            requestAnimationFrame(tick);
+          });
+        }
+      },
+      {
+        id: 'resource-timing',
+        label: 'Resource Timing Entries',
+        risk: 'info',
+        collect: () => {
+          const entries = performance?.getEntriesByType?.('resource') || [];
+          return `${entries.length} resource(s) loaded`;
+        },
+        detail: () => {
+          const entries = (performance?.getEntriesByType?.('resource') || []).slice(0, 8);
+          if (!entries.length) return { Status: 'No resource timing entries' };
+          const r = {};
+          entries.forEach((e,i) => { r[`Resource ${i+1}`] = `${e.initiatorType}: ${e.name.split('/').pop().substring(0,40)} (${e.transferSize}b)`; });
+          return r;
+        }
+      },
+    ]
+  },
+
+  // ────────────────────────────────────────────────
+  {
+    id: 'extension-detection', icon: '🧩', title: 'Extension Detection',
+    desc: 'Chrome/Firefox extension detection via web-accessible resources',
+    items: [
+      {
+        id: 'ext-ublockorigin',
+        label: 'uBlock Origin',
+        risk: 'info',
+        collect: async () => {
+          // Try Chrome then Firefox extension ID
+          const ids = ['cjpalhdlnbpafiamejdnhcphjbkeiagm', '{d10d0bf8-f5b5-c8b4-a8b2-2b9879e08c5d}'];
+          for (const id of ids) {
+            try {
+              await fetch(`chrome-extension://${id}/manifest.json`, {method:'HEAD', mode:'no-cors'});
+              return 'Detected';
+            } catch(e) {}
+          }
+          return 'Not detected';
+        },
+        detail: () => ({
+          'Method': 'Attempt to load chrome-extension:// web-accessible resource',
+          'Note': 'If uBlock blocks this detection, that itself is a signal',
+        })
+      },
+      {
+        id: 'ext-react-devtools',
+        label: 'React DevTools',
+        risk: 'info',
+        collect: () => {
+          return typeof window.__REACT_DEVTOOLS_GLOBAL_HOOK__ !== 'undefined' ? 'Detected (via global hook)' : 'Not detected';
+        },
+        detail: () => ({
+          '__REACT_DEVTOOLS_GLOBAL_HOOK__': typeof window.__REACT_DEVTOOLS_GLOBAL_HOOK__,
+          'Method': 'Check for extension-injected global variables',
+        })
+      },
+      {
+        id: 'ext-grammarly',
+        label: 'Grammarly',
+        risk: 'info',
+        collect: () => {
+          const grammarlyEls = document.querySelectorAll('grammarly-extension,grammarly-desktop-integration,[data-grammarly-shadow-root]');
+          return grammarlyEls.length > 0 ? 'Detected (DOM injection)' : 'Not detected';
+        },
+        detail: () => ({
+          'Method': 'Check for Grammarly DOM elements injected by extension',
+          'grammarly elements': document.querySelectorAll('grammarly-extension,grammarly-desktop-integration').length,
+        })
+      },
+      {
+        id: 'ext-password-manager',
+        label: 'Password Manager Signals',
+        risk: 'info',
+        collect: () => {
+          const signals = [];
+          if (document.querySelector('[data-lastpass-icon-root]')) signals.push('LastPass');
+          if (document.querySelector('[data-1p-ignore]')) signals.push('1Password');
+          if (document.querySelector('com-1password-button')) signals.push('1Password button');
+          return signals.length ? signals.join(', ') + ' detected' : 'None detected';
+        },
+        detail: () => ({
+          'LastPass DOM marker': String(!!document.querySelector('[data-lastpass-icon-root]')),
+          '1Password DOM marker': String(!!document.querySelector('[data-1p-ignore],[data-1p-id]')),
+          'Bitwarden': String(!!document.querySelector('[data-bitwarden-watching]')),
+          'Note': 'Password managers inject DOM markers into pages for autofill functionality',
+        })
+      },
+      {
+        id: 'ext-browser-type',
+        label: 'Browser-Specific Extension APIs',
+        risk: 'med',
+        collect: () => {
+          const apis = [];
+          if (typeof browser !== 'undefined' && browser?.runtime) apis.push('WebExtensions API (Firefox/Edge)');
+          if (typeof chrome !== 'undefined' && chrome?.runtime) apis.push('Chrome extensions API');
+          if (typeof InstallTrigger !== 'undefined') apis.push('Firefox InstallTrigger');
+          if (typeof window.sidebar !== 'undefined') apis.push('Firefox Sidebar');
+          if (typeof window.opera !== 'undefined') apis.push('Opera');
+          if (navigator.userAgent.includes('Edg/')) apis.push('Edge detected via UA');
+          return apis.length ? apis.join(', ') : 'No special APIs found';
+        },
+        detail: () => ({
+          'chrome.runtime': typeof (typeof chrome !== 'undefined' && chrome?.runtime),
+          'browser.runtime (FF)': typeof (typeof browser !== 'undefined' && browser?.runtime),
+          'InstallTrigger (FF)': typeof InstallTrigger,
+          'window.sidebar (FF)': typeof window.sidebar,
+          'window.opera': typeof window.opera,
+          'opr (Opera)': typeof window.opr,
+        })
+      },
+    ]
+  },
+
+  // ────────────────────────────────────────────────
+  {
+    id: 'legacy', icon: '💀', title: 'Legacy & Deprecated',
+    desc: 'Flash, Silverlight, Java, ActiveX – fingerprintable by presence or absence',
+    items: [
+      {
+        id: 'flash',
+        label: 'Adobe Flash Player',
+        risk: 'high',
+        collect: () => {
+          // Check via plugins (works in older browsers)
+          for (let i = 0; i < navigator.plugins.length; i++) {
+            if (/flash/i.test(navigator.plugins[i].name)) return '⚠ Flash detected in plugins!';
+          }
+          // Check via MimeTypes
+          if (navigator.mimeTypes['application/x-shockwave-flash']) return '⚠ Flash MIME detected!';
+          return 'Not detected (EOL since Dec 2020)';
+        },
+        detail: () => ({
+          'Flash in plugins': [...navigator.plugins].some(p => /flash/i.test(p.name)) ? '⚠ YES' : 'no',
+          'Flash MIME type': navigator.mimeTypes['application/x-shockwave-flash'] ? '⚠ registered' : 'not registered',
+          'Status': 'Flash reached End-of-Life on 31 Dec 2020. Any detection = security risk.',
+        })
+      },
+      {
+        id: 'silverlight',
+        label: 'Microsoft Silverlight',
+        risk: 'high',
+        collect: () => {
+          for (let i = 0; i < navigator.plugins.length; i++) {
+            if (/silverlight/i.test(navigator.plugins[i].name)) return '⚠ Silverlight detected!';
+          }
+          if (navigator.mimeTypes['application/x-silverlight-2']) return '⚠ Silverlight MIME detected!';
+          return 'Not detected (EOL since Oct 2021)';
+        },
+        detail: () => ({
+          'Silverlight in plugins': [...navigator.plugins].some(p => /silverlight/i.test(p.name)) ? '⚠ YES' : 'no',
+          'Silverlight MIME': navigator.mimeTypes['application/x-silverlight-2'] ? '⚠ registered' : 'not registered',
+          'Status': 'Silverlight reached EOL in October 2021.',
+        })
+      },
+      {
+        id: 'java',
+        label: 'Java Applet',
+        risk: 'high',
+        collect: () => {
+          for (let i = 0; i < navigator.plugins.length; i++) {
+            if (/java/i.test(navigator.plugins[i].name)) return '⚠ Java plugin detected!';
+          }
+          if (navigator.mimeTypes['application/x-java-applet']) return '⚠ Java MIME detected!';
+          return 'Not detected (removed in Chrome 45+, FF 52+)';
+        },
+        detail: () => ({
+          'Java in plugins': [...navigator.plugins].some(p => /java/i.test(p.name)) ? '⚠ YES' : 'no',
+          'Java MIME': navigator.mimeTypes['application/x-java-applet'] ? '⚠ registered' : 'not registered',
+          'navigator.javaEnabled()': typeof navigator.javaEnabled === 'function' ? String(navigator.javaEnabled()) : 'n/a',
+        })
+      },
+      {
+        id: 'activex',
+        label: 'ActiveX / Internet Explorer',
+        risk: 'high',
+        collect: () => {
+          const isIE = typeof window.ActiveXObject !== 'undefined' || !!window.MSInputMethodContext;
+          if (isIE) return '⚠ IE/ActiveX environment detected!';
+          if (/Trident|MSIE/.test(navigator.userAgent)) return '⚠ IE User-Agent detected!';
+          return 'Not detected';
+        },
+        detail: () => ({
+          'ActiveXObject': typeof window.ActiveXObject,
+          'MSInputMethodContext': typeof window.MSInputMethodContext,
+          'IE in UA': String(/Trident|MSIE/.test(navigator.userAgent)),
+          'Status': 'IE reached EOL in June 2022. Any ActiveX = critical security risk.',
+        })
+      },
+      {
+        id: 'vbscript',
+        label: 'VBScript / Netscape APIs',
+        risk: 'med',
+        collect: () => {
+          const vb = typeof window.execScript !== 'undefined';
+          const ns = typeof window.Components !== 'undefined';
+          return [vb ? '⚠ execScript' : null, ns ? 'Firefox Components' : null].filter(Boolean).join(', ') || 'Not detected';
+        },
+        detail: () => ({
+          'window.execScript (VBScript/IE)': typeof window.execScript,
+          'window.Components (Firefox)': typeof window.Components,
+          'window.netscape': typeof window.netscape,
+          'window.java': typeof window.java,
+        })
+      },
+      {
+        id: 'webrtc-legacy',
+        label: 'WebRTC Legacy APIs',
+        risk: 'info',
+        collect: () => {
+          const apis = [];
+          if (typeof window.webkitRTCPeerConnection !== 'undefined') apis.push('webkitRTCPeerConnection');
+          if (typeof window.mozRTCPeerConnection !== 'undefined') apis.push('mozRTCPeerConnection');
+          if (typeof RTCPeerConnection !== 'undefined') apis.push('RTCPeerConnection');
+          return apis.join(', ') || 'none';
+        },
+        detail: () => ({
+          'RTCPeerConnection (standard)': typeof RTCPeerConnection,
+          'webkitRTCPeerConnection (Chrome legacy)': typeof window.webkitRTCPeerConnection,
+          'mozRTCPeerConnection (Firefox legacy)': typeof window.mozRTCPeerConnection,
+          'Note': 'Presence of prefixed APIs reveals exact browser engine generation',
+        })
+      },
+      {
+        id: 'firefox-resources',
+        label: 'Firefox Resource URLs',
+        risk: 'med',
+        collect: () => {
+          const isFirefox = navigator.userAgent.includes('Firefox');
+          if (!isFirefox) return 'N/A (Firefox only)';
+          try {
+            const img = new Image();
+            img.src = 'resource://gre/modules/';
+            return 'resource:// scheme accessible (pre-Quantum Firefox)';
+          } catch(e) {
+            return 'resource:// blocked (modern Firefox)';
+          }
+        },
+        detail: () => ({
+          'Firefox detected': String(navigator.userAgent.includes('Firefox')),
+          'Note': 'Pre-Quantum Firefox allowed reading internal resource:// URLs, revealing extension list and build info',
+          'Status': 'Blocked in Firefox Quantum (57+)',
+        })
+      },
+    ]
+  },
+
+  // ────────────────────────────────────────────────
+  {
+    id: 'advanced-fp', icon: '🧬', title: 'Advanced Fingerprinting',
+    desc: 'AudioContext, WebGL extensions, CSS hacks, iframe sandboxing, entropy scoring',
+    items: [
+      {
+        id: 'audiocontext-fp',
+        label: 'AudioContext Full Fingerprint',
+        risk: 'high',
+        collect: async () => {
+          try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 44100 });
+            const osc = ctx.createOscillator();
+            const comp = ctx.createDynamicsCompressor();
+            comp.threshold.setValueAtTime(-50, ctx.currentTime);
+            comp.knee.setValueAtTime(40, ctx.currentTime);
+            comp.ratio.setValueAtTime(12, ctx.currentTime);
+            comp.attack.setValueAtTime(0, ctx.currentTime);
+            comp.release.setValueAtTime(0.25, ctx.currentTime);
+            osc.connect(comp);
+            const dest = ctx.createMediaStreamDestination();
+            comp.connect(dest);
+            osc.start(0);
+            const buf = new Float32Array(4096);
+            comp.connect(ctx.destination);
+            const analyser = ctx.createAnalyser();
+            comp.connect(analyser);
+            analyser.getFloatTimeDomainData(buf);
+            osc.stop();
+            await ctx.close();
+            const fp = buf.slice(0, 64).reduce((a, b) => a + b, 0);
+            return '0x' + hashString(String(fp)).toString(16).toUpperCase().padStart(8, '0');
+          } catch(e) { return 'Blocked: ' + e.message; }
+        },
+        detail: async () => {
+          try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const info = {
+              'Sample Rate': ctx.sampleRate,
+              'State': ctx.state,
+              'Base Latency (s)': ctx.baseLatency ?? '—',
+              'Output Latency (s)': ctx.outputLatency ?? '—',
+              'Max Channel Count': ctx.destination.maxChannelCount,
+              'Channel Count': ctx.destination.channelCount,
+              'Channel Count Mode': ctx.destination.channelCountMode,
+              'Channel Interpretation': ctx.destination.channelInterpretation,
+              'Note': 'DynamicsCompressor output varies per CPU FPU implementation = unique hash',
+            };
+            await ctx.close();
+            return info;
+          } catch(e) { return { Error: e.message }; }
+        }
+      },
+      {
+        id: 'webgl-extensions-fp',
+        label: 'WebGL Extensions List',
+        risk: 'high',
+        collect: () => {
+          try {
+            const c = document.createElement('canvas');
+            const gl = c.getContext('webgl') || c.getContext('experimental-webgl');
+            if (!gl) return 'WebGL unavailable';
+            const exts = gl.getSupportedExtensions() || [];
+            return `${exts.length} extensions`;
+          } catch(e) { return 'Error'; }
+        },
+        detail: () => {
+          try {
+            const c = document.createElement('canvas');
+            const gl = c.getContext('webgl') || c.getContext('experimental-webgl');
+            if (!gl) return { Status: 'WebGL not available' };
+            const exts = gl.getSupportedExtensions() || [];
+            const r = { 'Total extensions': exts.length };
+            exts.slice(0, 20).forEach((e, i) => { r[`Ext ${i+1}`] = e; });
+            if (exts.length > 20) r['…'] = `+${exts.length - 20} more`;
+            return r;
+          } catch(e) { return { Error: e.message }; }
+        }
+      },
+      {
+        id: 'css-injection-test',
+        label: 'CSS Computed Style Fingerprint',
+        risk: 'med',
+        collect: () => {
+          try {
+            const el = document.createElement('div');
+            document.body.appendChild(el);
+            const style = getComputedStyle(el);
+            const hash = hashString([
+              style.fontFamily, style.fontSize, style.lineHeight,
+              style.color, style.backgroundColor, style.getPropertyValue('font-size')
+            ].join('|'));
+            document.body.removeChild(el);
+            return '0x' + hash.toString(16).toUpperCase().padStart(8, '0');
+          } catch(e) { return 'Error'; }
+        },
+        detail: () => {
+          try {
+            const el = document.createElement('div');
+            document.body.appendChild(el);
+            const style = getComputedStyle(el);
+            const r = {
+              'fontFamily': style.fontFamily?.substring(0,60),
+              'fontSize': style.fontSize,
+              'lineHeight': style.lineHeight,
+              'Note': 'Default computed styles vary per OS/browser configuration',
+            };
+            document.body.removeChild(el);
+            return r;
+          } catch(e) { return { Error: e.message }; }
+        }
+      },
+      {
+        id: 'math-fingerprint',
+        label: 'Math / FPU Fingerprint',
+        risk: 'high',
+        collect: () => {
+          // Math functions produce slightly different results across CPU/JS engines
+          const vals = [
+            Math.acos(0.45678998989), Math.acosh(3.141592653589793),
+            Math.atan2(1.1, 0.91), Math.atanh(0.5),
+            Math.cbrt(2.5), Math.cos(21 * Math.E),
+            Math.cosh(492), Math.expm1(1.0),
+            Math.hypot(2, 3, 4, 5), Math.log1p(4.605170185988092),
+            Math.pow(Math.PI, -100), Math.sin(Math.PI),
+            Math.sinh(Math.PI), Math.sqrt(0.001),
+            Math.tan(10.000000000000002), Math.tanh(0.5),
+          ];
+          return '0x' + hashString(vals.join(',')).toString(16).toUpperCase().padStart(8, '0');
+        },
+        detail: () => ({
+          'Math.acos(0.45678998989)': Math.acos(0.45678998989),
+          'Math.acosh(π)': Math.acosh(Math.PI),
+          'Math.atan2(1.1, 0.91)': Math.atan2(1.1, 0.91),
+          'Math.sin(π)': Math.sin(Math.PI),
+          'Math.cos(21·e)': Math.cos(21 * Math.E),
+          'Math.hypot(2,3,4,5)': Math.hypot(2, 3, 4, 5),
+          'Note': 'Floating-point results vary between JS engines and CPU architectures',
+        })
+      },
+      {
+        id: 'iframe-sandbox',
+        label: 'iframe Sandbox Escape Detection',
+        risk: 'med',
+        collect: () => {
+          // Detect if we're running inside a sandboxed iframe
+          try {
+            const inIframe = window !== window.top;
+            const hasSandbox = inIframe ? (() => {
+              try { window.top.document; return false; } catch(e) { return true; }
+            })() : false;
+            return inIframe ? (hasSandbox ? 'In sandboxed iframe' : 'In non-sandboxed iframe') : 'Top-level window';
+          } catch(e) { return 'In restricted iframe'; }
+        },
+        detail: () => ({
+          'window === window.top': String(window === window.top),
+          'Can access parent': (() => { try { return window.parent !== window ? 'yes' : 'self'; } catch(e) { return 'no (sandboxed)'; } })(),
+          'Can access top': (() => { try { window.top.document; return 'yes'; } catch(e) { return 'no (cross-origin/sandboxed)'; } })(),
+        })
+      },
+      {
+        id: 'entropy-score',
+        label: 'Estimated Fingerprint Entropy',
+        risk: 'high',
+        collect: () => {
+          // Rough entropy estimate based on available data
+          let bits = 0;
+          bits += 5;  // screen resolution
+          bits += 3;  // color depth
+          bits += 4;  // timezone
+          bits += 3;  // language
+          bits += 8;  // user agent
+          bits += 5;  // canvas fingerprint
+          bits += 6;  // webgl renderer
+          bits += 4;  // fonts
+          bits += 3;  // plugins count
+          bits += 3;  // hardware concurrency
+          if (navigator.deviceMemory) bits += 2;
+          if (window.devicePixelRatio !== 1) bits += 2;
+          return `~${bits} bits (of ~100 theoretically possible)`;
+        },
+        detail: () => ({
+          'Screen': '~5 bits',
+          'Timezone': '~4 bits',
+          'User-Agent': '~8 bits',
+          'Canvas FP': '~5+ bits',
+          'WebGL Renderer': '~6+ bits',
+          'Fonts detected': '~4 bits',
+          'Language': '~3 bits',
+          'Hardware Concurrency': '~3 bits',
+          'Note': 'Total ~33 bits from JS alone. With WebGL+audio+fonts: easily 40-50 bits. 1 in 1 trillion at 40 bits.',
+        })
+      },
+    ]
+  },
+
+];
+
+// ═══════════════════════════════════════════════════════════════
+// Utility
+// ═══════════════════════════════════════════════════════════════
+
+function hashString(str) {
+  let hash = 0x811c9dc5;
+  for (let i = 0; i < str.length; i++) {
+    hash ^= str.charCodeAt(i);
+    hash = (hash * 0x01000193) >>> 0;
+  }
+  return hash;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// DOM build
+// ═══════════════════════════════════════════════════════════════
+
+const main = document.getElementById('main');
+const allCards = [];   // { catEl, cardEl, labelEl, valueEl, detailEl, item }
+
+function riskBadge(risk) {
+  const labels = { high:'HIGH RISK', med:'MEDIUM', low:'LOW', info:'INFO' };
+  return `<span class="risk risk-${risk}">${labels[risk] || risk}</span>`;
+}
+
+CATEGORIES.forEach(cat => {
+  const catEl = document.createElement('div');
+  catEl.className = 'category';
+  catEl.dataset.catId = cat.id;
+
+  const headerEl = document.createElement('div');
+  headerEl.className = 'cat-header';
+  headerEl.innerHTML = `
+    <span class="cat-icon">${cat.icon}</span>
+    <span class="cat-title">${cat.title}</span>
+    <span class="cat-desc">${cat.desc}</span>
+    <span class="chevron">&#9660;</span>
+  `;
+
+  const bodyEl = document.createElement('div');
+  bodyEl.className = 'cat-body';
+
+  headerEl.addEventListener('click', () => {
+    const collapsed = bodyEl.classList.toggle('collapsed');
+    headerEl.classList.toggle('collapsed', collapsed);
+  });
+
+  cat.items.forEach(item => {
+    const cardEl = document.createElement('div');
+    cardEl.className = 'data-card';
+    cardEl.dataset.itemId = item.id;
+
+    const cardHeader = document.createElement('div');
+    cardHeader.className = 'card-header';
+    const labelEl = document.createElement('span');
+    labelEl.className = 'card-label';
+    labelEl.textContent = item.label;
+    const valueEl = document.createElement('span');
+    valueEl.className = 'card-value loading';
+    valueEl.textContent = '…';
+    const badge = document.createElement('span');
+    badge.innerHTML = riskBadge(item.risk);
+    const chevEl = document.createElement('span');
+    chevEl.className = 'card-chevron';
+    chevEl.textContent = '▶';
+
+    cardHeader.append(labelEl, valueEl, badge, chevEl);
+
+    const detailEl = document.createElement('div');
+    detailEl.className = 'card-detail';
+    detailEl.innerHTML = '<span style="color:#333">Click to load details…</span>';
+
+    let detailLoaded = false;
+
+    cardHeader.addEventListener('click', async () => {
+      const expanded = detailEl.classList.toggle('expanded');
+      cardHeader.classList.toggle('expanded', expanded);
+      if (expanded && !detailLoaded) {
+        detailLoaded = true;
+        detailEl.innerHTML = '<span style="color:#333">Loading…</span>';
+        try {
+          const data = await Promise.resolve(item.detail());
+          renderDetail(detailEl, data);
+        } catch(e) {
+          detailEl.innerHTML = `<span style="color:#a00">Error: ${e.message}</span>`;
+        }
+      }
+    });
+
+    cardEl.append(cardHeader, detailEl);
+    bodyEl.append(cardEl);
+
+    allCards.push({ catEl, cardEl, labelEl, valueEl, detailEl, item });
+  });
+
+  catEl.append(headerEl, bodyEl);
+  main.append(catEl);
+});
+
+function renderDetail(el, data) {
+  if (!data || typeof data !== 'object') {
+    el.innerHTML = `<span>${data}</span>`;
+    return;
+  }
+  el.innerHTML = Object.entries(data).map(([k, v]) =>
+    `<div class="detail-row"><span class="detail-key">${k}</span><span class="detail-val">${escHtml(String(v))}</span></div>`
+  ).join('');
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Run all checks
+// ═══════════════════════════════════════════════════════════════
+
+async function runAllChecks() {
+  await Promise.all(allCards.map(async ({ item, valueEl }) => {
+    try {
+      const result = await Promise.resolve(item.collect());
+      valueEl.textContent = String(result).substring(0, 80);
+      valueEl.className = 'card-value';
+    } catch(e) {
+      valueEl.textContent = 'Error';
+      valueEl.className = 'card-value na';
+    }
+  }));
+  document.getElementById('btn-run-all').textContent = '✔ Done';
+}
+
+document.getElementById('btn-run-all').addEventListener('click', () => {
+  document.getElementById('btn-run-all').textContent = '⏳ Running…';
+  runAllChecks();
+});
+
+// Auto-run on load
+window.addEventListener('load', () => setTimeout(runAllChecks, 200));
+
+// ═══════════════════════════════════════════════════════════════
+// Search / filter
+// ═══════════════════════════════════════════════════════════════
+
+const searchInput = document.getElementById('search-input');
+const matchCount  = document.getElementById('match-count');
+const noResults   = document.getElementById('no-results');
+
+searchInput.addEventListener('input', () => filterCards(searchInput.value.trim().toLowerCase()));
+
+function filterCards(q) {
+  let visible = 0;
+  const catVisibility = new Map();
+
+  allCards.forEach(({ catEl, cardEl, labelEl, item }) => {
+    const text = (item.label + ' ' + item.id + ' ' + (catEl.querySelector('.cat-title')?.textContent||'')).toLowerCase();
+    const show = !q || text.includes(q);
+    cardEl.classList.toggle('hidden', !show);
+    if (show) visible++;
+    catVisibility.set(catEl, (catVisibility.get(catEl) || 0) + (show ? 1 : 0));
+  });
+
+  catVisibility.forEach((count, catEl) => {
+    catEl.classList.toggle('hidden', count === 0);
+  });
+
+  matchCount.textContent = q ? `${visible} match${visible !== 1 ? 'es' : ''}` : '';
+  noResults.style.display = visible === 0 ? 'block' : 'none';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Expand / Collapse all
+// ═══════════════════════════════════════════════════════════════
+
+document.getElementById('btn-expand-all').addEventListener('click', () => {
+  document.querySelectorAll('.cat-body').forEach(b => b.classList.remove('collapsed'));
+  document.querySelectorAll('.cat-header').forEach(h => h.classList.remove('collapsed'));
+});
+
+document.getElementById('btn-collapse-all').addEventListener('click', () => {
+  document.querySelectorAll('.cat-body').forEach(b => b.classList.add('collapsed'));
+  document.querySelectorAll('.cat-header').forEach(h => h.classList.add('collapsed'));
+});
+</script>
+</body>
+</html>
