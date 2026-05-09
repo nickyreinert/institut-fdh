@@ -1,70 +1,96 @@
 # Institut für digitale Herausforderungen
 
-> Eine deutschsprachige Sammlung digitaler Experimente, Tools und Projekte rund um Programmierung, KI, Netzkultur und Datenanalyse.
+> A collection of digital experiments, tools, and projects focused on programming, AI, internet culture, and data analysis.
 
 Website: https://institut-fdh.de
-Sprache: Deutsch
-Betreiber: Nicky Reinert
+Language: English
+Maintainer: Nicky Reinert
 
-## Über diese Website
+## About This Website
 
-Das Institut für digitale Herausforderungen (FdH) ist eine persönliche Plattform für digitale Experimente und Projekte. Die Oberfläche ist bewusst im Stil von DOS-Dateimanagern der 1990er Jahre gehalten (blauer Hintergrund, Monospace-Schrift, Doppelrahmen-Fenster).
+Institut für digitale Herausforderungen (FdH) is a personal platform for digital experiments and projects. The interface intentionally follows a 1990s DOS file-manager aesthetic (blue background, monospace typography, double-border windows).
 
-## Projekte
+## Projects
 
-### Primes Web-App (2023)
+### Primes Web App (2023)
 URL: https://institut-fdh.de/seiten/2023-primes.html
-Visualisierung von Primzahlen auf spiralförmigen Anordnungen, implementiert in JavaScript. Konfigurierbare Parameter für Skalierung, Farbkodierung und Animationen.
-Externe URL: https://primes.nickyreinert.de
+Interactive JavaScript visualization of prime numbers on spiral structures. Supports configurable scaling, coloring, and animation parameters.
+External URL: https://primes.nickyreinert.de
 
-### Nerd Enzyklopädie (2024)
+### Nerd Encyclopedia (2024)
 URL: https://institut-fdh.de/seiten/2024-nerdenz.html
-Durchsuchbare Enzyklopädie für Nerd-Kultur, Technik und Internet-Geschichte.
+Searchable encyclopedia about nerd culture, technology, and internet history.
 
 ### Header Mirror (2025)
 URL: https://institut-fdh.de/seiten/2025-mirror.html
-Spiegelt HTTP-Request-Header zurück an den Browser. Nützlich zur Diagnose von Proxy- und CDN-Konfigurationen.
-Externe URL: https://9000.1-1-1.de/
+Reflects HTTP request context for debugging proxy and CDN setups.
+External URL: https://9000.1-1-1.de/
 
 ### Verbotspartei (2025)
 URL: https://institut-fdh.de/seiten/2025-verbotspartei.html
-KI-gestützte Analyse der Wahlprogramme deutscher Parteien. Untersucht die These, ob Bündnis 90/Die Grünen eine "Verbotspartei" sind. Datenbasis: Wahlprogramme von 8 Parteien, analysiert durch verschiedene KI-Chatbots.
-Externes Dashboard: https://verbote.nickyreinert.de
+AI-assisted analysis of election programs from major German parties, including a comparative chatbot-based workflow.
+External dashboard: https://verbote.nickyreinert.de
 
-### AI Honeypot – BOFH (2026)
+### AI Honeypot - BOFH (2026)
 URL: https://institut-fdh.de/seiten/2026-bofh.html
-Honeypot für KI-Crawler. Zeichnet Zugriffe von KI-Bots auf und testet Anfälligkeit für Prompt-Injection-Angriffe.
-Externe URL: https://bofh.1-1-1.de/
+Honeypot for AI crawlers that records bot behavior and tests prompt-injection resilience.
+External URL: https://bofh.1-1-1.de/
 
 ### DB Orakel (2026)
 URL: https://institut-fdh.de/seiten/2026-dborakel.html
-Vorhersage von Zugpünktlichkeit der Deutschen Bahn. Modell basiert auf historischen Verspätungsdaten, Spritpreisen, Wetterdaten und Feriendaten.
-Externe URL: https://db-orakel.de
+German rail punctuality prediction experiment based on historical delay data, fuel prices, weather, and holiday signals.
+External URL: https://db-orakel.de
 
-### Manifest für das Duzen (2026)
+### Manifest for Informal "Du" (2026)
 URL: https://institut-fdh.de/seiten/2026-duman.html
-Ein Internet-Manifest für die Verwendung des informellen "Du" im digitalen Raum als Ausdruck von Gleichheit und Offenheit – in Anlehnung an die Netzkultur der 1990er.
+Internet manifesto advocating informal address in digital spaces as a symbol of openness and equality.
 
 ### Faces of Joy (2026)
 URL: https://institut-fdh.de/seiten/2026-faces.html
-Visualisierungsprojekt.
+Collection and utility page for ASCII/Unicode text faces.
 
 ### OSINT Tools Directory (2026)
 URL: https://institut-fdh.de/seiten/2026-osint.html
-Durchsuchbares Verzeichnis von OSINT-Tools (Open Source Intelligence) mit Beschreibungen und Kategorisierungen.
+Searchable directory of open-source intelligence tools with categories and descriptions.
 
 ### Text Transformer (2026)
 URL: https://institut-fdh.de/seiten/2026-text.html
-Browser-basiertes Tool zur Textverarbeitung und -transformation ohne Server-Backend.
+Browser-based client-side text transformation utility.
 
-## Technische Details
+## Tool Deep Links (Grounding)
 
-- Statische Website, gehostet auf GitHub Pages
-- Kein serverseitiges Rendering, kein Framework
-- Vanilla JavaScript (ES-Module)
-- Sprache: Deutsch
-- Lizenz: nicht angegeben
+The homepage supports deep links via query string:
+https://institut-fdh.de/?<slug>
 
-## Kontakt
+Supported tool slugs:
 
-Über den Betreiber: https://nickyreinert.de
+- ?2025-mirror -> Header Mirror
+  URL: https://institut-fdh.de/seiten/2025-mirror.html
+  Summary: Request-context and header reflection for debugging browser, proxy, and CDN behavior.
+
+- ?2026-faces -> Faces of Joy
+  URL: https://institut-fdh.de/seiten/2026-faces.html
+  Summary: Searchable, copy-friendly collection of ASCII and Unicode faces.
+
+- ?2026-text -> Text Transformer
+  URL: https://institut-fdh.de/seiten/2026-text.html
+  Summary: Local text transformations including fullwidth, flip, strikethrough, small caps, checklists, and zalgo.
+
+- ?2026-osint -> OSINT Tools Directory
+  URL: https://institut-fdh.de/seiten/2026-osint.html
+  Summary: Curated OSINT tool index grouped by category with quick filtering.
+
+- ?2026-aya -> AYA (Are You Anonymous?)
+  URL: https://institut-fdh.de/seiten/2026-aya.html
+  Summary: Browser privacy and fingerprinting exposure check.
+
+## Technical Details
+
+- Static website hosted on GitHub Pages
+- No server-side rendering, no framework
+- Vanilla JavaScript (ES modules)
+- License: not specified
+
+## Contact
+
+About the maintainer: https://nickyreinert.de

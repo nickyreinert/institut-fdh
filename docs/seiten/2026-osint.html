@@ -1,12 +1,30 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>OSINT Tools Directory – Institut für digitale Herausforderungen</title>
-	<meta name="description" content="Durchsuchbares Verzeichnis von OSINT-Tools (Open Source Intelligence) mit Beschreibungen und Kategorisierungen.">
+	<meta name="description" content="Searchable directory of OSINT tools with categories, descriptions, and quick filtering.">
 	<meta name="robots" content="index, follow">
 	<link rel="canonical" href="https://institut-fdh.de/seiten/2026-osint.html">
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "SoftwareApplication",
+		"name": "OSINT Tools Directory",
+		"url": "https://institut-fdh.de/seiten/2026-osint.html",
+		"applicationCategory": "EducationalApplication",
+		"operatingSystem": "Web Browser",
+		"inLanguage": "en",
+		"description": "Searchable directory of open-source intelligence tools grouped by category with practical descriptions.",
+		"isAccessibleForFree": true,
+		"provider": {
+			"@type": "Person",
+			"name": "Nicky Reinert",
+			"url": "https://nickyreinert.de"
+		}
+	}
+	</script>
 	<link rel="icon" type="image/png" href="../gfx/favicon.png">
     <link rel="stylesheet" href="iframes.css">
 	<style>
@@ -49,9 +67,44 @@
 </head>
 <body>
 	<h1>OSINT Tools Directory</h1>
+	<p id="osint-desc-1">
+		A searchable directory of open-source intelligence tools with categories, short descriptions, and direct links.
+	</p>
+	<p id="osint-desc-2">
+		This page is designed as a quick starting point for investigation, infrastructure, and security workflows in OSINT research.
+	</p>
+
+	<script>
+		(function applyOsintLanguage() {
+			const langParam = new URLSearchParams(window.location.search).get('lang');
+			const storedLang = localStorage.getItem('ifdh_lang');
+			const lang = langParam === 'de' || storedLang === 'de' ? 'de' : 'en';
+
+			const t = lang === 'de'
+				? {
+					metaDescription: 'Durchsuchbares Verzeichnis von OSINT-Tools mit Kategorien, Beschreibungen und schneller Filterung.',
+					desc1: 'Ein durchsuchbares Verzeichnis fuer Open-Source-Intelligence-Tools mit Kategorien, Kurzbeschreibungen und Direktlinks.',
+					desc2: 'Die Seite dient als schneller Einstieg in Recherche-, Infrastruktur- und Sicherheitswerkzeuge fuer OSINT-Workflows.'
+				}
+				: {
+					metaDescription: 'Searchable directory of OSINT tools with categories, descriptions, and quick filtering.',
+					desc1: 'A searchable directory of open-source intelligence tools with categories, short descriptions, and direct links.',
+					desc2: 'This page is designed as a quick starting point for investigation, infrastructure, and security workflows in OSINT research.'
+				};
+
+			document.documentElement.lang = lang;
+			const meta = document.querySelector('meta[name="description"]');
+			if (meta) meta.setAttribute('content', t.metaDescription);
+
+			const p1 = document.getElementById('osint-desc-1');
+			const p2 = document.getElementById('osint-desc-2');
+			if (p1) p1.textContent = t.desc1;
+			if (p2) p2.textContent = t.desc2;
+		})();
+	</script>
 
 	<div class="search-wrap">
-		<label for="osint-search">Search tools, categories, or descriptions:</label>
+		<label for="osint-search" id="osint-search-label">Search tools, categories, or descriptions:</label>
 		<input id="osint-search" type="search" placeholder="Type to filter..." autocomplete="off">
 		<div id="search-result" aria-live="polite"></div>
 	</div>
@@ -59,9 +112,9 @@
 	<table id="osint-table">
 		<thead>
 			<tr>
-				<th scope="col">Category</th>
-				<th scope="col">Tool</th>
-				<th scope="col">Description</th>
+				<th scope="col" id="osint-col-category">Category</th>
+				<th scope="col" id="osint-col-tool">Tool</th>
+				<th scope="col" id="osint-col-description">Description</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -242,12 +295,44 @@
 	</table>
 
 	<script>
+		const osintLangParam = new URLSearchParams(window.location.search).get('lang');
+		const osintStoredLang = localStorage.getItem('ifdh_lang');
+		const osintUiLang = osintLangParam === 'de' || osintStoredLang === 'de' ? 'de' : 'en';
+
+		const OSINT_UI = osintUiLang === 'de'
+			? {
+				searchLabel: 'Tools, Kategorien oder Beschreibungen durchsuchen:',
+				searchPlaceholder: 'Zum Filtern tippen...',
+				colCategory: 'Kategorie',
+				colTool: 'Tool',
+				colDescription: 'Beschreibung',
+				resultText: (visible, total) => `${visible} von ${total} Eintraegen sichtbar`
+			}
+			: {
+				searchLabel: 'Search tools, categories, or descriptions:',
+				searchPlaceholder: 'Type to filter...',
+				colCategory: 'Category',
+				colTool: 'Tool',
+				colDescription: 'Description',
+				resultText: (visible, total) => `${visible} of ${total} entries shown`
+			};
+
 		const searchInput = document.getElementById("osint-search");
 		const rows = Array.from(document.querySelectorAll("#osint-table tbody tr"));
 		const resultLabel = document.getElementById("search-result");
+		const searchLabel = document.getElementById("osint-search-label");
+		const colCategory = document.getElementById("osint-col-category");
+		const colTool = document.getElementById("osint-col-tool");
+		const colDescription = document.getElementById("osint-col-description");
+
+		if (searchLabel) searchLabel.textContent = OSINT_UI.searchLabel;
+		if (searchInput) searchInput.setAttribute('placeholder', OSINT_UI.searchPlaceholder);
+		if (colCategory) colCategory.textContent = OSINT_UI.colCategory;
+		if (colTool) colTool.textContent = OSINT_UI.colTool;
+		if (colDescription) colDescription.textContent = OSINT_UI.colDescription;
 
 		function updateResultLabel(visible, total) {
-			resultLabel.textContent = `${visible} of ${total} entries shown`;
+			resultLabel.textContent = OSINT_UI.resultText(visible, total);
 		}
 
 		function filterRows() {

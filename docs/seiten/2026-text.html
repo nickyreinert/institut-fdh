@@ -1,12 +1,30 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text Transformer – Institut für digitale Herausforderungen</title>
-    <meta name="description" content="Browser-basiertes Tool zur Textverarbeitung und -transformation – ohne Server-Backend, vollständig clientseitig.">
+        <meta name="description" content="Browser-based text processing and transformation tool that runs fully client-side without a server backend.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://institut-fdh.de/seiten/2026-text.html">
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "Text Transformer",
+            "url": "https://institut-fdh.de/seiten/2026-text.html",
+            "applicationCategory": "UtilityApplication",
+            "operatingSystem": "Web Browser",
+            "inLanguage": "en",
+            "description": "Client-side utility for transforming text into multiple styles such as fullwidth, flip, strikethrough, small caps, and zalgo.",
+            "isAccessibleForFree": true,
+            "provider": {
+                "@type": "Person",
+                "name": "Nicky Reinert",
+                "url": "https://nickyreinert.de"
+            }
+        }
+        </script>
     <link rel="icon" type="image/png" href="../gfx/favicon.png">
     <link rel="stylesheet" href="iframes.css">
     <style>
@@ -74,16 +92,51 @@
 </head>
 <body>
     <h1>Text Transformer</h1>
+        <p id="text-desc-1">
+        Text Transformer is a browser-based utility for client-side text transformations without a server backend.
+    </p>
+        <p id="text-desc-2">
+        It supports transformations such as strikethrough, fullwidth, flip, small caps, checklist formats, and zalgo variants.
+    </p>
+
+        <script>
+            (function applyTextLanguage() {
+                const langParam = new URLSearchParams(window.location.search).get('lang');
+                const storedLang = localStorage.getItem('ifdh_lang');
+                const lang = langParam === 'de' || storedLang === 'de' ? 'de' : 'en';
+
+                const t = lang === 'de'
+                    ? {
+                            metaDescription: 'Browserbasiertes Tool fuer clientseitige Textverarbeitung und -transformation ohne Server-Backend.',
+                            desc1: 'Text Transformer ist ein browserbasiertes Tool fuer clientseitige Textumwandlungen ohne Server-Backend.',
+                            desc2: 'Unterstuetzt werden unter anderem Strikethrough, Fullwidth, Flip, Small Caps, Checkbox-Formate und Zalgo-Varianten.'
+                        }
+                    : {
+                            metaDescription: 'Browser-based text processing and transformation tool that runs fully client-side without a server backend.',
+                            desc1: 'Text Transformer is a browser-based utility for client-side text transformations without a server backend.',
+                            desc2: 'It supports transformations such as strikethrough, fullwidth, flip, small caps, checklist formats, and zalgo variants.'
+                        };
+
+                document.documentElement.lang = lang;
+                const meta = document.querySelector('meta[name="description"]');
+                if (meta) meta.setAttribute('content', t.metaDescription);
+
+                const p1 = document.getElementById('text-desc-1');
+                const p2 = document.getElementById('text-desc-2');
+                if (p1) p1.textContent = t.desc1;
+                if (p2) p2.textContent = t.desc2;
+            })();
+        </script>
 
     <div class="panel" id="text-transformer">
         <div class="field">
-            <label for="source-text">Eingabe</label>
-            <textarea id="source-text" placeholder="Text eingeben...">das Institut ist sehr gut</textarea>
+            <label for="source-text" id="text-label-input">Input</label>
+            <textarea id="source-text" placeholder="Enter text...">the institute is very good</textarea>
         </div>
 
         <div class="field">
-            <span>Modus</span>
-            <div class="mode-grid" id="mode-buttons" role="radiogroup" aria-label="Textmodus">
+            <span id="text-label-mode">Mode</span>
+            <div class="mode-grid" id="mode-buttons" role="radiogroup" aria-label="Text mode">
                 <button type="button" class="mode-btn" data-mode="normal" aria-pressed="true">Normal</button>
                 <button type="button" class="mode-btn" data-mode="strikethrough" aria-pressed="false">Strikethrough</button>
                 <button type="button" class="mode-btn" data-mode="fullwidth" aria-pressed="false">Fullwidth</button>
@@ -97,20 +150,87 @@
 
         <div class="toolbar">
             <div id="zalgo-wrap">
-                <label for="zalgo-strength">Zalgo-Stufe</label>
+                <label for="zalgo-strength" id="text-label-zalgo">Zalgo level</label>
                 <input type="range" id="zalgo-strength" min="1" max="10" value="3">
                 <span id="zalgo-strength-value">3</span>
             </div>
-            <button type="button" id="copy-output">Ausgabe kopieren</button>
+            <button type="button" id="copy-output">Copy output</button>
         </div>
 
         <div class="field">
-            <label for="output-text">Ausgabe (Live)</label>
+            <label for="output-text" id="text-label-output">Output (live)</label>
             <textarea id="output-text" readonly></textarea>
         </div>
     </div>
 
     <script>
+        const textLangParam = new URLSearchParams(window.location.search).get('lang');
+        const textStoredLang = localStorage.getItem('ifdh_lang');
+        const textUiLang = textLangParam === 'de' || textStoredLang === 'de' ? 'de' : 'en';
+
+        const TEXT_UI = textUiLang === 'de'
+            ? {
+                sourceLabel: 'Eingabe',
+                sourcePlaceholder: 'Text eingeben...',
+                modeLabel: 'Modus',
+                modeGroupAria: 'Textmodus',
+                modeButtons: {
+                    normal: 'Normal',
+                    strikethrough: 'Durchgestrichen',
+                    fullwidth: 'Vollbreite',
+                    flip: 'Umdrehen',
+                    smallcaps: 'Kapitälchen',
+                    zalgo: 'Zalgo',
+                    checkbox: 'Checkbox ☑',
+                    uncheckbox: 'Checkbox ☐'
+                },
+                zalgoLabel: 'Zalgo-Stufe',
+                copyOutput: 'Ausgabe kopieren',
+                copied: 'Kopiert',
+                copyFailed: 'Kopieren fehlgeschlagen',
+                outputLabel: 'Ausgabe (Live)'
+            }
+            : {
+                sourceLabel: 'Input',
+                sourcePlaceholder: 'Enter text...',
+                modeLabel: 'Mode',
+                modeGroupAria: 'Text mode',
+                modeButtons: {
+                    normal: 'Normal',
+                    strikethrough: 'Strikethrough',
+                    fullwidth: 'Fullwidth',
+                    flip: 'Flip',
+                    smallcaps: 'Small Caps',
+                    zalgo: 'Zalgo',
+                    checkbox: 'Checkbox ☑',
+                    uncheckbox: 'Checkbox ☐'
+                },
+                zalgoLabel: 'Zalgo level',
+                copyOutput: 'Copy output',
+                copied: 'Copied',
+                copyFailed: 'Copy failed',
+                outputLabel: 'Output (live)'
+            };
+
+        const textSourceLabel = document.getElementById('text-label-input');
+        const textSource = document.getElementById('source-text');
+        const textModeLabel = document.getElementById('text-label-mode');
+        const textModeGroup = document.getElementById('mode-buttons');
+        const textZalgoLabel = document.getElementById('text-label-zalgo');
+        const textOutputLabel = document.getElementById('text-label-output');
+
+        if (textSourceLabel) textSourceLabel.textContent = TEXT_UI.sourceLabel;
+        if (textSource) textSource.setAttribute('placeholder', TEXT_UI.sourcePlaceholder);
+        if (textModeLabel) textModeLabel.textContent = TEXT_UI.modeLabel;
+        if (textModeGroup) textModeGroup.setAttribute('aria-label', TEXT_UI.modeGroupAria);
+        if (textZalgoLabel) textZalgoLabel.textContent = TEXT_UI.zalgoLabel;
+        if (textOutputLabel) textOutputLabel.textContent = TEXT_UI.outputLabel;
+
+        document.querySelectorAll('.mode-btn').forEach((button) => {
+            const label = TEXT_UI.modeButtons[button.dataset.mode];
+            if (label) button.textContent = label;
+        });
+
         const smallCapsMap = {
             a: "ᴀ", b: "ʙ", c: "ᴄ", d: "ᴅ", e: "ᴇ", f: "ꜰ", g: "ɢ", h: "ʜ", i: "ɪ", j: "ᴊ", k: "ᴋ",
             l: "ʟ", m: "ᴍ", n: "ɴ", o: "ᴏ", p: "ᴘ", q: "ǫ", r: "ʀ", s: "s", t: "ᴛ", u: "ᴜ", v: "ᴠ",
@@ -254,17 +374,19 @@
             try {
                 await navigator.clipboard.writeText(outputText.value);
                 const original = copyOutput.textContent;
-                copyOutput.textContent = "Kopiert";
+                copyOutput.textContent = TEXT_UI.copied;
                 setTimeout(() => {
                     copyOutput.textContent = original;
                 }, 1200);
             } catch (_error) {
-                copyOutput.textContent = "Copy fehlgeschlagen";
+                copyOutput.textContent = TEXT_UI.copyFailed;
                 setTimeout(() => {
-                    copyOutput.textContent = "Ausgabe kopieren";
+                    copyOutput.textContent = TEXT_UI.copyOutput;
                 }, 1200);
             }
         });
+
+        copyOutput.textContent = TEXT_UI.copyOutput;
 
         setMode("normal");
     </script>

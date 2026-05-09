@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nerd Enzyklopädie – Institut für digitale Herausforderungen</title>
-    <meta name="description" content="Durchsuchbare Enzyklopädie für Nerd-Kultur, Technik und Internet-Geschichte.">
+    <title>Nerd Encyclopedia – Institut für digitale Herausforderungen</title>
+    <meta name="description" content="Searchable encyclopedia archive about nerd culture, technology, and internet history.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://institut-fdh.de/seiten/2024-nerdenz.html">
     <link rel="icon" type="image/png" href="../gfx/favicon.png">
@@ -51,11 +51,11 @@
     </style>
 </head>
 <body>
-    <h1>Nerd Enzyklopädie</h1>
+    <h1>Nerd Encyclopedia</h1>
 
     <div class="search-wrap">
-        <label for="nerdenz-search">Suche in den Artikeln:</label>
-        <input id="nerdenz-search" type="search" placeholder="Titel eingeben..." autocomplete="off">
+        <label for="nerdenz-search">Search articles:</label>
+        <input id="nerdenz-search" type="search" placeholder="Type a title..." autocomplete="off">
         <div id="search-result" aria-live="polite"></div>
     </div>
 
@@ -116,7 +116,7 @@
         const resultLabel = document.getElementById("search-result");
 
         function updateResultLabel(visible, total) {
-            resultLabel.textContent = `${visible} von ${total} Artikeln sichtbar`;
+            resultLabel.textContent = `${visible} of ${total} articles visible`;
         }
 
         function filterItems() {

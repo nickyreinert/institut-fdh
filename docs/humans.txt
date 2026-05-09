@@ -2,12 +2,13 @@
 
 Creator: Nicky Reinert
 Site: https://nickyreinert.de
-Location: Deutschland
+Location: Germany
 
 /* SITE */
 
-Last update: 2026/05/05
-Language: Deutsch
+Last update: 2026/05/09
+Language: English
 Doctype: HTML5
 Standards: HTML5, CSS3, ES Modules
 Components: Vanilla JavaScript, GitHub Pages
+Discovery: sitemap.xml, llms.txt, deeplink query URLs

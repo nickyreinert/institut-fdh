@@ -104,6 +104,36 @@ function generateInhalteContent() {
     ];
 }
 
+let currentUiLanguage = 'en';
+
+function getCurrentUiLanguage() {
+  if (currentUiLanguage === 'de' || currentUiLanguage === 'en') {
+    return currentUiLanguage;
+  }
+  return getInitialLanguage();
+}
+
+function getLocalizedTarget(target) {
+  if (!target || /^https?:\/\//i.test(target)) {
+    return target;
+  }
+
+  try {
+    const hashIndex = target.indexOf('#');
+    const hash = hashIndex >= 0 ? target.slice(hashIndex) : '';
+    const withoutHash = hashIndex >= 0 ? target.slice(0, hashIndex) : target;
+    const queryIndex = withoutHash.indexOf('?');
+    const path = queryIndex >= 0 ? withoutHash.slice(0, queryIndex) : withoutHash;
+    const query = queryIndex >= 0 ? withoutHash.slice(queryIndex + 1) : '';
+    const params = new URLSearchParams(query);
+    params.set('lang', getCurrentUiLanguage());
+    const nextQuery = params.toString();
+    return `${path}${nextQuery ? `?${nextQuery}` : ''}${hash}`;
+  } catch (_error) {
+    return target;
+  }
+}
+
 // Modify showIframeModal to use the target attribute
 function showIframeModal(item) {
   beep();
@@ -111,7 +141,7 @@ function showIframeModal(item) {
   modal.className = 'modal';
   modal.style.display = 'block';
   
-  const target = item.target || '/default/path.html'; // Ensure target is defined
+  const target = getLocalizedTarget(item.target || 'seiten/2023-primes.html');
 
   modal.innerHTML = `
     <div class="modal-content iframe-modal-content">
@@ -139,6 +169,39 @@ function showIframeModal(item) {
     }
   };
   document.addEventListener('keydown', handleEsc);
+}
+
+function getDeepLinkSlugFromItem(item) {
+  if (!item || !item.target) {
+    return null;
+  }
+
+  let normalized = item.target.trim().toLowerCase();
+  normalized = normalized.replace(/^\/+/, '');
+  normalized = normalized.replace(/^seiten\//, '');
+
+  if (!/^[a-z0-9][a-z0-9-]*\.html$/.test(normalized)) {
+    return null;
+  }
+
+  return normalized.replace(/\.html$/, '');
+}
+
+function updateUrlForToolDeepLink(item) {
+  const slug = getDeepLinkSlugFromItem(item);
+  if (!slug) {
+    return;
+  }
+
+  const url = new URL(window.location.href);
+  const nextSearch = `?${slug}`;
+
+  if (url.search === nextSearch) {
+    return;
+  }
+
+  url.search = nextSearch;
+  window.history.pushState({ tool: slug }, '', url);
 }
 
 function getDeepLinkTargetFromUrl() {
@@ -195,6 +258,117 @@ function applyDeepLinkIfPresent() {
   }
 
   showIframeModal(item);
+}
+
+const UI_TRANSLATIONS = {
+  en: {
+    menuFile: 'File',
+    menuTools: 'Tools',
+    menuHelp: 'Help',
+    menuLang: 'LANG',
+    welcomeTitle: 'Institut for Digital Challenges',
+    welcomeIntro: 'Welcome to the Institute for Digital Challenges',
+    welcomeAchievementsLabel: 'Completed Challenges:',
+    welcomeContactPrefix: 'For questions, please contact the institute lead at',
+    welcomeButtons: ['Cancel', 'No', 'Back']
+  },
+  de: {
+    menuFile: 'Datei',
+    menuTools: 'Werkzeuge',
+    menuHelp: 'Hilfe',
+    menuLang: 'LANG',
+    welcomeTitle: 'Institut fuer Digitale Herausforderungen',
+    welcomeIntro: 'Willkommen beim Institut fuer Digitale Herausforderungen',
+    welcomeAchievementsLabel: 'Abgeschlossene Herausforderungen:',
+    welcomeContactPrefix: 'Bei Fragen kontaktieren Sie bitte den Institutsleiter auf',
+    welcomeButtons: ['Abbrechen', 'Nein', 'Zurueck']
+  }
+};
+
+function setMenuItemLabel(elementId, label) {
+  const menuItem = document.getElementById(elementId);
+  if (!menuItem) {
+    return;
+  }
+
+  const textNode = Array.from(menuItem.childNodes).find(node => node.nodeType === Node.TEXT_NODE);
+  if (textNode) {
+    textNode.nodeValue = ` ${label} `;
+    return;
+  }
+
+  menuItem.insertBefore(document.createTextNode(` ${label} `), menuItem.firstChild);
+}
+
+function getInitialLanguage() {
+  try {
+    const saved = localStorage.getItem('ifdh_lang');
+    if (saved === 'de' || saved === 'en') {
+      return saved;
+    }
+  } catch (_error) {
+    // Ignore storage access errors and use default language.
+  }
+
+  return 'en';
+}
+
+function updateLanguageMenuState(lang) {
+  document.querySelectorAll('#submenu-lang .submenu-item').forEach(item => {
+    item.style.fontWeight = item.dataset.lang === lang ? 'bold' : 'normal';
+  });
+}
+
+function applyUiLanguage(lang) {
+  const nextLang = lang === 'de' ? 'de' : 'en';
+  const t = UI_TRANSLATIONS[nextLang];
+  currentUiLanguage = nextLang;
+
+  document.documentElement.lang = nextLang;
+
+  setMenuItemLabel('menu-item-file', t.menuFile);
+  setMenuItemLabel('menu-item-tools', t.menuTools);
+  setMenuItemLabel('menu-item-help', t.menuHelp);
+  setMenuItemLabel('menu-item-lang', t.menuLang);
+
+  const welcomeTitle = document.getElementById('welcome-modal-title');
+  if (welcomeTitle) {
+    welcomeTitle.textContent = t.welcomeTitle;
+  }
+
+  const welcomeIntro = document.getElementById('welcome-intro');
+  if (welcomeIntro) {
+    welcomeIntro.textContent = t.welcomeIntro;
+  }
+
+  const welcomeAchievementsLabel = document.getElementById('welcome-achievements-label');
+  if (welcomeAchievementsLabel) {
+    welcomeAchievementsLabel.textContent = t.welcomeAchievementsLabel;
+  }
+
+  const welcomeContactPrefix = document.getElementById('welcome-contact-prefix');
+  if (welcomeContactPrefix) {
+    welcomeContactPrefix.textContent = t.welcomeContactPrefix;
+  }
+
+  const welcomeButtons = [
+    document.getElementById('welcome-btn-1'),
+    document.getElementById('welcome-btn-2'),
+    document.getElementById('welcome-btn-3')
+  ];
+  welcomeButtons.forEach((button, index) => {
+    if (button) {
+      button.textContent = t.welcomeButtons[index];
+    }
+  });
+
+  updateLanguageMenuState(nextLang);
+
+  try {
+    localStorage.setItem('ifdh_lang', nextLang);
+  } catch (_error) {
+    // Ignore storage access errors.
+  }
 }
 
 // Add CSS for the iframe modal to make it 60% of the screen size
@@ -1395,6 +1569,9 @@ function beep() {
 // Modify the window.onload function to handle Quit button differently
 window.onload = function() {
 
+  const initialLanguage = getInitialLanguage();
+  applyUiLanguage(initialLanguage);
+
   // Show welcome modal
   showWelcomeModal();
 
@@ -1405,6 +1582,7 @@ window.onload = function() {
   // Populate Tools submenu
   const toolsSubmenu = document.getElementById('submenu-tools');
   const toolsMenuItem = document.getElementById('menu-item-tools');
+  const langMenuItem = document.getElementById('menu-item-lang');
   generateInhalteContent()
     .filter(item => item.isTool)
     .forEach(item => {
@@ -1414,6 +1592,7 @@ window.onload = function() {
       el.addEventListener('click', (e) => {
         e.stopPropagation();
         toolsMenuItem.classList.remove('open');
+        updateUrlForToolDeepLink(item);
         showIframeModal(item);
       });
       toolsSubmenu.appendChild(el);
@@ -1421,10 +1600,33 @@ window.onload = function() {
 
   // Toggle submenu on click (for touch / keyboard users)
   toolsMenuItem.addEventListener('click', (e) => {
-    // Only toggle if the click was directly on the menu item, not a submenu child
-    if (e.target === toolsMenuItem || e.target.textContent.trim() === 'Tools') {
+    // Only toggle if the click was directly on the menu item, not a submenu child.
+    if (e.target === toolsMenuItem) {
       toolsMenuItem.classList.toggle('open');
+      langMenuItem.classList.remove('open');
     }
+  });
+
+  langMenuItem.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (e.target === langMenuItem) {
+      langMenuItem.classList.toggle('open');
+      toolsMenuItem.classList.remove('open');
+    }
+  });
+
+  const langSubmenu = document.getElementById('submenu-lang');
+  langSubmenu.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
+
+  document.querySelectorAll('#submenu-lang .submenu-item').forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const lang = item.dataset.lang;
+      applyUiLanguage(lang);
+      langMenuItem.classList.remove('open');
+    });
   });
 
   // Close submenu when clicking elsewhere
@@ -1432,12 +1634,20 @@ window.onload = function() {
     if (!toolsMenuItem.contains(e.target)) {
       toolsMenuItem.classList.remove('open');
     }
+    if (!langMenuItem.contains(e.target)) {
+      langMenuItem.classList.remove('open');
+    }
   });
 
   // Add handlers for menu items
   document.querySelectorAll('.menu-item').forEach(item => {
-    // prevent if menu-item-help or menu-item-tools is clicked
-    if (item.id === 'menu-item-help' || item.id === 'menu-item-tools') {
+    // Exclude menu items with dedicated handlers.
+    if (
+      item.id === 'menu-item-help' ||
+      item.id === 'menu-item-tools' ||
+      item.id === 'menu-item-lang' ||
+      item.classList.contains('menu-item-has-sub')
+    ) {
       return;
     }
     item.addEventListener('click', () => {

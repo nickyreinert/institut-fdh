@@ -1,12 +1,30 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Faces of Joy – Institut für digitale Herausforderungen</title>
-    <meta name="description" content="Ein Visualisierungsprojekt des Instituts für digitale Herausforderungen.">
+    <meta name="description" content="A searchable utility page for ASCII and Unicode text faces with copy and favorites support.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://institut-fdh.de/seiten/2026-faces.html">
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "Faces of Joy",
+            "url": "https://institut-fdh.de/seiten/2026-faces.html",
+            "applicationCategory": "UtilityApplication",
+            "operatingSystem": "Web Browser",
+            "inLanguage": "en",
+            "description": "Tool for collecting, organizing, and reusing ASCII and Unicode text faces, including favorites and copy actions.",
+            "isAccessibleForFree": true,
+            "provider": {
+                "@type": "Person",
+                "name": "Nicky Reinert",
+                "url": "https://nickyreinert.de"
+            }
+        }
+        </script>
     <link rel="icon" type="image/png" href="../gfx/favicon.png">
     <link rel="stylesheet" href="iframes.css">
     <style>
@@ -183,15 +201,18 @@
     <div class="faces-container">
     <div class="sticky-top">
         <h1>Faces of Joy</h1>
-
-        <p>
-            Ich empfehle Espanso und eine angepasste
-            <a href="https://gist.github.com/nickyreinert/91e67a7d054878338d1f1dc9fc592ae5" target="_blank" rel="noopener noreferrer">base.yaml</a>
-            - damit kannst du zeigen, dass du ein wahrer Leet-Hacker bist und hast die Faces of Joy immer griffbereit.
+        <p id="faces-desc-1">
+            Faces of Joy is a directory of ASCII and Unicode text faces focused on quick search, copy, and reuse.
         </p>
 
-        <div class="font-controls" aria-label="Face Font Auswahl">
-            <label>Face Font:</label>
+        <p id="faces-desc-2">
+            I recommend Espanso and an adapted
+            <a href="https://gist.github.com/nickyreinert/91e67a7d054878338d1f1dc9fc592ae5" target="_blank" rel="noopener noreferrer">base.yaml</a>
+            so you can use these faces through text expansion shortcuts.
+        </p>
+
+        <div class="font-controls" aria-label="Face font selection">
+            <label id="faces-font-label">Face Font:</label>
             <div class="font-buttons" id="face-font-buttons">
                 <button type="button" class="font-btn" data-font="symbols" aria-pressed="false">Symbols</button>
                 <button type="button" class="font-btn" data-font="mono" aria-pressed="false">Mono</button>
@@ -204,14 +225,14 @@
 
     <div class="tables-wrap">
     <section class="table-block" id="favorites-block">
-        <h2>Favoriten</h2>
-        <table aria-label="Favoriten Faces">
+        <h2 id="faces-favorites-title">Favorites</h2>
+        <table id="faces-favorites-table" aria-label="Favorite faces">
             <tbody id="favorites-body"></tbody>
         </table>
     </section>
 
     <section class="table-block">
-        <h2>Alle Faces</h2>
+        <h2 id="faces-all-title">All Faces</h2>
         <table id="all-faces-table" aria-label="Faces of Joy">
         <tbody id="all-faces-body">
         <tr>
@@ -430,6 +451,22 @@
 
     <script>
         (function () {
+            const langParam = new URLSearchParams(window.location.search).get('lang');
+            const storedLang = localStorage.getItem('ifdh_lang');
+            const uiLang = langParam === 'de' || storedLang === 'de' ? 'de' : 'en';
+
+            const FACE_UI = uiLang === 'de'
+                ? {
+                    favRemove: 'Favorit entfernen',
+                    favAdd: 'Als Favorit markieren',
+                    copyFace: 'Face kopieren'
+                }
+                : {
+                    favRemove: 'Remove favorite',
+                    favAdd: 'Mark as favorite',
+                    copyFace: 'Copy face'
+                };
+
             const STORAGE_KEY = "facesFavorites";
             const FONT_STORAGE_KEY = "facesFontPreference";
             const COLS = 3;
@@ -495,7 +532,7 @@
                         const isFav = favorites.has(face);
                         btn.type = "button";
                         btn.className = "fav-btn";
-                        btn.setAttribute("aria-label", isFav ? "Favorit entfernen" : "Als Favorit markieren");
+                        btn.setAttribute("aria-label", isFav ? FACE_UI.favRemove : FACE_UI.favAdd);
                         btn.setAttribute("aria-pressed", isFav ? "true" : "false");
                         btn.textContent = isFav ? "★" : "☆";
                         btn.addEventListener("click", () => onToggle(face));
@@ -507,7 +544,7 @@
                         const copyBtn = document.createElement("button");
                         copyBtn.type = "button";
                         copyBtn.className = "copy-btn";
-                        copyBtn.setAttribute("aria-label", "Face kopieren");
+                        copyBtn.setAttribute("aria-label", FACE_UI.copyFace);
                         copyBtn.textContent = "⧉";
                         copyBtn.addEventListener("click", () => onCopy(face, copyBtn));
 
@@ -588,5 +625,80 @@
             render();
         })();
     </script>
+        <script>
+            (function applyFacesLanguage() {
+                const langParam = new URLSearchParams(window.location.search).get('lang');
+                const storedLang = localStorage.getItem('ifdh_lang');
+                const lang = langParam === 'de' || storedLang === 'de' ? 'de' : 'en';
+
+                const t = lang === 'de'
+                    ? {
+                            metaDescription: 'Durchsuchbares Tool fuer ASCII- und Unicode-Faces mit Kopier- und Favoritenfunktionen.',
+                            desc1: 'Faces of Joy ist ein Verzeichnis fuer ASCII- und Unicode-Faces mit Fokus auf schnelles Finden, Kopieren und Wiederverwenden.',
+                            beforeLink: 'Ich empfehle Espanso und eine angepasste ',
+                            afterLink: ', damit du Faces per Text-Expansion schnell einfuegen kannst.',
+                            fontLabel: 'Face Schrift:',
+                            fontButtons: {
+                                symbols: 'Symbole',
+                                mono: 'Mono',
+                                system: 'System UI',
+                                noto: 'Noto Sans',
+                                emoji: 'Emoji zuerst'
+                            },
+                            favoritesTitle: 'Favoriten',
+                            allTitle: 'Alle Faces',
+                            favoritesAria: 'Favoriten Faces',
+                            allAria: 'Faces of Joy'
+                        }
+                    : {
+                            metaDescription: 'A searchable utility page for ASCII and Unicode text faces with copy and favorites support.',
+                            desc1: 'Faces of Joy is a directory of ASCII and Unicode text faces focused on quick search, copy, and reuse.',
+                            beforeLink: 'I recommend Espanso and an adapted ',
+                            afterLink: ' so you can use these faces through text expansion shortcuts.',
+                            fontLabel: 'Face Font:',
+                            fontButtons: {
+                                symbols: 'Symbols',
+                                mono: 'Mono',
+                                system: 'System UI',
+                                noto: 'Noto Sans',
+                                emoji: 'Emoji First'
+                            },
+                            favoritesTitle: 'Favorites',
+                            allTitle: 'All Faces',
+                            favoritesAria: 'Favorite faces',
+                            allAria: 'Faces of Joy'
+                        };
+
+                document.documentElement.lang = lang;
+                const meta = document.querySelector('meta[name="description"]');
+                if (meta) meta.setAttribute('content', t.metaDescription);
+
+                const desc1 = document.getElementById('faces-desc-1');
+                const desc2 = document.getElementById('faces-desc-2');
+                const link = desc2 ? desc2.querySelector('a') : null;
+                const fontLabel = document.getElementById('faces-font-label');
+                const favoritesTitle = document.getElementById('faces-favorites-title');
+                const allTitle = document.getElementById('faces-all-title');
+                const favoritesTable = document.getElementById('faces-favorites-table');
+                const allTable = document.getElementById('all-faces-table');
+
+                if (desc1) desc1.textContent = t.desc1;
+                if (desc2) {
+                    desc2.textContent = '';
+                    desc2.append(t.beforeLink);
+                    if (link) desc2.append(link);
+                    desc2.append(t.afterLink);
+                }
+                if (fontLabel) fontLabel.textContent = t.fontLabel;
+                document.querySelectorAll('#face-font-buttons .font-btn').forEach((button) => {
+                    const label = t.fontButtons[button.dataset.font];
+                    if (label) button.textContent = label;
+                });
+                if (favoritesTitle) favoritesTitle.textContent = t.favoritesTitle;
+                if (allTitle) allTitle.textContent = t.allTitle;
+                if (favoritesTable) favoritesTable.setAttribute('aria-label', t.favoritesAria);
+                if (allTable) allTable.setAttribute('aria-label', t.allAria);
+            })();
+        </script>
 </body>
 </html>

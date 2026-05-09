@@ -1,44 +1,122 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AYA - Are you Anonymous?</title>
-    <meta name="description" content="Browser fingerprinting & privacy leak overview – everything your browser reveals about you.">
+  <title>AYA - Are you Anonymous? – Institut für digitale Herausforderungen</title>
+  <meta name="description" content="Interactive browser privacy check with fingerprinting signals, leak indicators, and locally observable browser traits.">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://institut-fdh.de/seiten/2026-anonymous.html">
+  <link rel="canonical" href="https://institut-fdh.de/seiten/2026-aya.html">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "AYA - Are You Anonymous?",
+      "url": "https://institut-fdh.de/seiten/2026-aya.html",
+      "applicationCategory": "SecurityApplication",
+      "operatingSystem": "Web Browser",
+      "inLanguage": "en",
+      "description": "Interactive privacy check that analyzes locally observable browser and environment traits to reveal fingerprinting and leak risks.",
+      "isAccessibleForFree": true,
+      "provider": {
+        "@type": "Person",
+        "name": "Nicky Reinert",
+        "url": "https://nickyreinert.de"
+      }
+    }
+    </script>
     <link rel="icon" type="image/png" href="../gfx/favicon.png">
     <link rel="stylesheet" href="iframes.css">
     <style>
         *, *::before, *::after { box-sizing: border-box; }
 
+      body {
+        margin: 0;
+        line-height: 1.45;
+      }
+
+      .aya-shell {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 10px 10px 18px;
+      }
+
+      .dos-panel {
+        border: 1px solid #50FFFF;
+        margin-bottom: 10px;
+        padding: 10px;
+        background: rgba(0, 0, 120, 0.22);
+      }
+
+      .dos-panel h1,
+      .dos-panel h2,
+      .dos-panel h3 {
+        margin: 0 0 8px;
+        color: #FFFF50;
+        line-height: 1.2;
+      }
+
+      .dos-panel p {
+        margin: 0 0 8px;
+        font-size: 0.95rem;
+      }
+
+      .grid-two {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 10px;
+      }
+
+      .compact-list {
+        margin: 0;
+        padding-left: 18px;
+        font-size: 0.9rem;
+      }
+
+      .compact-list li {
+        margin-bottom: 4px;
+      }
+
+      .section-kicker {
+        margin: 0 0 8px;
+        color: #FFFF50;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+      }
+
         /* Layout */
-        #header { padding: 6px 8px; border-bottom: 1px solid #50FFFF; margin-bottom: 8px; }
-        #header h1 { margin: 0 0 4px; font-size: 1rem; }
+      #header {
+        padding: 8px;
+        border: 1px solid #50FFFF;
+        margin-bottom: 10px;
+        background: rgba(0, 0, 120, 0.22);
+      }
         #search-bar { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
-        #match-count { opacity: .6; font-size: 0.75rem; }
-        #main { padding: 0 8px 20px; }
-        #no-results { display: none; padding: 20px; opacity: .5; }
+      #match-count { opacity: .8; font-size: 0.88rem; }
+      #main { padding: 0; }
+      #no-results { display: none; padding: 16px; opacity: .7; border: 1px dashed #50FFFF; }
 
         /* Search input & buttons – inherit site font/color */
         #search-input {
             background: transparent;
             border: 1px solid #50FFFF;
             color: inherit;
-            padding: 2px 6px;
+        padding: 6px 8px;
             font-family: inherit;
-            font-size: 0.8rem;
+        font-size: 0.95rem;
             outline: none;
-            width: 220px;
+        width: 300px;
+        max-width: 100%;
         }
         #search-input::placeholder { color: #50FFFF; opacity: .4; }
         .ctrl-btn {
             background: transparent;
             border: 1px solid #50FFFF;
             color: inherit;
-            padding: 2px 8px;
+        padding: 6px 10px;
             font-family: inherit;
-            font-size: 0.75rem;
+        font-size: 0.9rem;
             cursor: pointer;
         }
         .ctrl-btn:hover { color: #FFFF50; border-color: #FFFF50; }
@@ -48,18 +126,18 @@
         .category.hidden { display: none; }
         .cat-header {
             display: flex; align-items: center; gap: 8px;
-            padding: 4px 8px; cursor: pointer; user-select: none;
+        padding: 8px 10px; cursor: pointer; user-select: none;
             border-bottom: 1px solid #50FFFF;
         }
         .cat-header:hover { color: #FFFF50; }
-        .cat-icon { min-width: 18px; }
-        .cat-title { font-weight: bold; font-size: 0.85rem; flex: 1; text-transform: uppercase; }
-        .cat-desc { font-size: 0.65rem; opacity: .6; flex: 2; }
-        .chevron { font-size: 0.6rem; transition: transform .15s; }
+      .cat-icon { min-width: 20px; }
+      .cat-title { font-weight: bold; font-size: 0.96rem; flex: 1; text-transform: uppercase; }
+      .cat-desc { font-size: 0.86rem; opacity: .85; flex: 2; }
+      .chevron { font-size: 0.86rem; transition: transform .15s; }
         .cat-header.collapsed .chevron { transform: rotate(-90deg); }
         .cat-body {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 1px;
             background: #50FFFF;
         }
@@ -70,55 +148,184 @@
         .data-card.hidden { display: none; }
         .card-header {
             display: flex; align-items: center; gap: 6px;
-            padding: 4px 8px; cursor: pointer; user-select: none;
+            padding: 8px 10px; cursor: pointer; user-select: none;
             border-bottom: 1px solid #50FFFF;
         }
         .card-header:hover { color: #FFFF50; }
-        .card-label { font-size: 0.75rem; flex: 1; }
+        .card-label { font-size: 0.92rem; flex: 1; }
         .card-value {
-            font-size: 0.7rem; opacity: .7;
-            max-width: 160px; overflow: hidden;
+            font-size: 0.86rem; opacity: .85;
+            max-width: 190px; overflow: hidden;
             text-overflow: ellipsis; white-space: nowrap; text-align: right;
         }
         .card-value.loading { opacity: .3; font-style: italic; }
-        .card-chevron { font-size: 0.55rem; opacity: .5; transition: transform .15s; }
+        .card-chevron { font-size: 0.8rem; opacity: .7; transition: transform .15s; }
         .card-header.expanded .card-chevron { transform: rotate(90deg); opacity: 1; color: #FFFF50; }
 
-        .card-detail { display: none; padding: 4px 8px 8px; border-top: 1px solid #50FFFF; font-size: 0.68rem; }
+        .card-detail { display: none; padding: 8px 10px 10px; border-top: 1px solid #50FFFF; font-size: 0.84rem; }
         .card-detail.expanded { display: block; }
         .detail-row {
             display: flex; justify-content: space-between; gap: 6px;
-            padding: 1px 0; border-bottom: 1px dotted rgba(80,255,255,.2);
+            padding: 4px 0; border-bottom: 1px dotted rgba(80,255,255,.35);
         }
         .detail-row:last-child { border-bottom: none; }
-        .detail-key { opacity: .6; min-width: 100px; }
+        .detail-key { opacity: .85; min-width: 120px; }
         .detail-val { text-align: right; word-break: break-all; color: #FFFF50; }
 
         /* Risk badges */
-        .risk { font-size: 0.55rem; padding: 1px 4px; border: 1px solid; white-space: nowrap; }
+        .risk { font-size: 0.72rem; padding: 2px 6px; border: 1px solid; white-space: nowrap; }
         .risk-high  { color: #FF5050; border-color: #FF5050; }
         .risk-med   { color: #FFFF50; border-color: #FFFF50; }
         .risk-low   { color: #50FFFF; border-color: #50FFFF; }
         .risk-info  { color: #50FFFF; border-color: #50FFFF; opacity: .5; }
 
+        @media (max-width: 780px) {
+            .grid-two {
+                grid-template-columns: 1fr;
+            }
+
+            .cat-body {
+                grid-template-columns: 1fr;
+            }
+        }
+
         #canvas-fp { display: none; }
     </style>
 </head>
 <body>
+<div class="aya-shell">
+  <section class="dos-panel">
+    <div class="section-kicker" id="aya-kicker">Privacy Diagnostic Utility</div>
+    <h1>AYA - Are You Anonymous?</h1>
+    <p id="aya-desc-1">
+      This in-browser diagnostic maps which browser and environment signals are observable and how those signals can contribute to fingerprinting.
+    </p>
+    <p id="aya-desc-2">
+      Keep the retro 90s terminal feeling, but read results like a report: scan categories first, then open cards for details.
+    </p>
+  </section>
 
-<div id="header">
-    <div id="search-bar">
-        <input id="search-input" type="search" placeholder="Filter…" autocomplete="off" spellcheck="false">
-        <span id="match-count"></span>
-        <button class="ctrl-btn" id="btn-expand-all">[+] all</button>
-        <button class="ctrl-btn" id="btn-collapse-all">[-] all</button>
-        <button class="ctrl-btn" id="btn-run-all">&#9654; run</button>
+  <section class="grid-two">
+    <div class="dos-panel">
+      <h2 id="aya-read-title">How To Read This Report</h2>
+      <ul class="compact-list" id="aya-read-list">
+        <li>Each category groups related signals (network, browser, device, storage, and behavior).</li>
+        <li>Each card has a current value and a risk tag.</li>
+        <li>Expand cards to view raw details and context notes.</li>
+        <li>Use run to refresh checks that are asynchronous or environment-dependent.</li>
+      </ul>
     </div>
+
+    <div class="dos-panel">
+      <h2 id="aya-risk-title">Risk Legend</h2>
+      <ul class="compact-list">
+        <li><span class="risk risk-high">HIGH</span> Strong fingerprinting or leakage surface.</li>
+        <li><span class="risk risk-med">MED</span> Potentially identifying, context-dependent.</li>
+        <li><span class="risk risk-low">LOW</span> Limited uniqueness by itself.</li>
+        <li><span class="risk risk-info">INFO</span> Diagnostic context only.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="header">
+    <h2 id="aya-controls-title">Controls</h2>
+    <div id="search-bar">
+      <input id="search-input" type="search" placeholder="Filter cards, values, or categories..." autocomplete="off" spellcheck="false">
+      <span id="match-count"></span>
+      <button class="ctrl-btn" id="btn-expand-all">[+] all</button>
+      <button class="ctrl-btn" id="btn-collapse-all">[-] all</button>
+      <button class="ctrl-btn" id="btn-run-all">&#9654; run</button>
+    </div>
+  </section>
+
+  <section class="dos-panel">
+    <h2 id="aya-report-title">Fingerprint Report</h2>
+    <p id="aya-report-desc">Expand categories and cards to inspect observed signals in detail.</p>
+    <div id="main">
+    <div id="no-results">No matching data points found.</div>
+    </div>
+  </section>
 </div>
 
-<div id="main">
-    <div id="no-results">No matching data points found.</div>
-</div>
+<script>
+  (function applyAyaLanguage() {
+    const langParam = new URLSearchParams(window.location.search).get('lang');
+    const storedLang = localStorage.getItem('ifdh_lang');
+    const lang = langParam === 'de' || storedLang === 'de' ? 'de' : 'en';
+
+    const t = lang === 'de'
+      ? {
+          metaDescription: 'Interaktiver Browser-Privacy-Check mit Fingerprinting-Signalen, Leak-Indikatoren und lokal auslesbaren Browsermerkmalen.',
+          kicker: 'Privacy Diagnose Tool',
+          desc1: 'Diese Browser-Diagnose zeigt, welche Browser- und Umgebungsmerkmale lokal auslesbar sind und wie sie zum Fingerprinting beitragen koennen.',
+          desc2: 'Die Seite bleibt im 90er-Terminal-Look, liest sich aber wie ein Bericht: erst Kategorien scannen, dann Karten im Detail oeffnen.',
+          readTitle: 'So liest du diesen Bericht',
+          readItems: [
+            'Jede Kategorie gruppiert zusammenhaengende Signale (Netzwerk, Browser, Geraet, Storage und Verhalten).',
+            'Jede Karte zeigt einen aktuellen Wert und ein Risiko-Label.',
+            'Karten aufklappen, um Rohdaten und Kontext-Hinweise zu sehen.',
+            'Mit run aktualisierst du asynchrone oder umgebungsabhaengige Checks.'
+          ],
+          riskTitle: 'Risiko Legende',
+          controlsTitle: 'Steuerung',
+          reportTitle: 'Fingerprint Bericht',
+          reportDesc: 'Kategorien und Karten oeffnen, um beobachtete Signale im Detail zu pruefen.',
+          searchPlaceholder: 'Karten, Werte oder Kategorien filtern...',
+          noResults: 'Keine passenden Datenpunkte gefunden.'
+        }
+      : {
+          metaDescription: 'Interactive browser privacy check with fingerprinting signals, leak indicators, and locally observable browser traits.',
+          kicker: 'Privacy Diagnostic Utility',
+          desc1: 'This in-browser diagnostic maps which browser and environment signals are observable and how those signals can contribute to fingerprinting.',
+          desc2: 'Keep the retro 90s terminal feeling, but read results like a report: scan categories first, then open cards for details.',
+          readTitle: 'How To Read This Report',
+          readItems: [
+            'Each category groups related signals (network, browser, device, storage, and behavior).',
+            'Each card has a current value and a risk tag.',
+            'Expand cards to view raw details and context notes.',
+            'Use run to refresh checks that are asynchronous or environment-dependent.'
+          ],
+          riskTitle: 'Risk Legend',
+          controlsTitle: 'Controls',
+          reportTitle: 'Fingerprint Report',
+          reportDesc: 'Expand categories and cards to inspect observed signals in detail.',
+          searchPlaceholder: 'Filter cards, values, or categories...',
+          noResults: 'No matching data points found.'
+        };
+
+    document.documentElement.lang = lang;
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute('content', t.metaDescription);
+
+    const setText = (id, value) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value;
+    };
+
+    setText('aya-kicker', t.kicker);
+    setText('aya-desc-1', t.desc1);
+    setText('aya-desc-2', t.desc2);
+    setText('aya-read-title', t.readTitle);
+    setText('aya-risk-title', t.riskTitle);
+    setText('aya-controls-title', t.controlsTitle);
+    setText('aya-report-title', t.reportTitle);
+    setText('aya-report-desc', t.reportDesc);
+    setText('no-results', t.noResults);
+
+    const readList = document.getElementById('aya-read-list');
+    if (readList) {
+      readList.innerHTML = '';
+      t.readItems.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        readList.appendChild(li);
+      });
+    }
+
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) searchInput.setAttribute('placeholder', t.searchPlaceholder);
+  })();
+</script>
 
 <canvas id="canvas-fp" width="240" height="60"></canvas>
 
