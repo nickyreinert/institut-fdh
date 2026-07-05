@@ -1,0 +1,113 @@
+{
+    "projects": [
+        {
+            "id": "2025-verbotspartei",
+            "title": "Verbotspartei",
+            "description": "KI-gestützte Analyse der Wahlprogramme der acht größten deutschen Parteien zur Überprüfung der Behauptung einer „Verbotspartei“. Nutzt mehrere KI-Modelle.",
+            "category": "analysis",
+            "tags": [
+                "KI",
+                "Daten",
+                "Analyse",
+                "Kultur"
+            ],
+            "year": 2025,
+            "url": "https://nickyreinert.de/2025/2025-12-14-verbotsparteien/",
+            "image": "docs/gfx/screenshots/analysis/2025-verbotspartei.jpg"
+        },
+        {
+            "id": "2026-google-maps-reviews",
+            "title": "Google-Maps-Bewertungen – Löschpraxis unter der Lupe",
+            "description": "Analyse von über 38.000 Google-Maps-Bewertungen aus 12 Burgermeister-Filialen: 304 gelöschte Reviews im Sieben-Monats-Zeitraum zeigen, dass auch berechtigte Kritik als „Kollateralschaden“ mitgelöscht wird.",
+            "category": "analysis",
+            "tags": [
+                "Daten",
+                "Analyse"
+            ],
+            "year": 2026,
+            "url": "https://nickyreinert.de/2026/2026-05-28-google-maps-reviews/",
+            "image": "docs/gfx/screenshots/analysis/2026-google-maps-reviews.jpg"
+        },
+        {
+            "id": "2025-aldi-grenze",
+            "title": "Wo liegt die Aldi-Grenze?",
+            "description": "Analyse von rund 70.000 Google-Maps-Supermarktstandorten in Deutschland: die Aldi-Nord/Süd-Grenze verläuft durchs Ruhrgebiet und dann fast horizontal östlich an Frankfurt vorbei; Lidl erhält im Schnitt die besten Bewertungen (4,24 Sterne).",
+            "category": "analysis",
+            "tags": [
+                "Daten",
+                "Analyse"
+            ],
+            "year": 2025,
+            "url": "https://nickyreinert.de/2025/2025-10-26-wo-liegt-die-aldi-grenze/",
+            "image": "docs/gfx/screenshots/analysis/2025-aldi-grenze.jpg"
+        },
+        {
+            "id": "2025-fair-parken",
+            "title": "Fair Parken? – Eine Datenschutz- und Bewertungsanalyse",
+            "description": "Untersuchung des Parkraum-Dienstleisters Fair Parken GmbH: Dark Patterns im Cookie-Banner, ungenannte Tracking-Technologien sowie ein auffälliges Bewertungsmuster (15.000+ Google-Bewertungen mit 4,2 Sternen vs. 2,2 Sterne auf Trustpilot).",
+            "category": "analysis",
+            "tags": [
+                "Datenschutz",
+                "Daten",
+                "Analyse"
+            ],
+            "year": 2025,
+            "url": "https://nickyreinert.de/2025/2025-10-07-fair-parken/",
+            "image": "docs/gfx/screenshots/analysis/2025-fair-parken.jpg"
+        },
+        {
+            "id": "2025-scam-unternehmertum",
+            "title": "Schmaler Grat: Scam und Unternehmertum",
+            "description": "Kritische Analyse aggressiver Mobile-Game-Vermarktung am Beispiel von „Dozer Demolish“: Dark Patterns, fragwürdige Werbung für Minderjährige und mangelnde Transparenz bei In-App-Käufen trotz Alterseinstufung 0-4.",
+            "category": "analysis",
+            "tags": [
+                "Datenschutz",
+                "Kultur"
+            ],
+            "year": 2025,
+            "url": "https://nickyreinert.de/2025/2025-08-06-schmaler-grat-scam-und-unternehmertum/",
+            "image": "docs/gfx/screenshots/analysis/2025-scam-unternehmertum.jpg"
+        },
+        {
+            "id": "2021-augenblicke",
+            "title": "Augenblicke – Statistische Analyse des BVG-Flirtportals",
+            "description": "Analyse von 20.108 Einträgen aus 240 BVG-Linien (2006–2021): Aktivitätsspitze im Mai 2018, U- und S-Bahn liefern die meisten Einträge, das Wort „leider“ fällt über 6.000 Mal.",
+            "category": "analysis",
+            "tags": [
+                "Daten",
+                "Kultur",
+                "Analyse"
+            ],
+            "year": 2021,
+            "url": "https://nickyreinert.de/2021/2021-01-21-augenblicke-eine-statistische-analyse-des-flirt-portals-der-bvg/",
+            "image": "docs/gfx/screenshots/analysis/2021-augenblicke.jpg"
+        },
+        {
+            "id": "2020-db-ticketpreise",
+            "title": "Das Ticketpreissystem der Deutschen Bahn",
+            "description": "Reverse-Engineering der undokumentierten DB-Preis-API anhand von 90 Tagen Preisdaten: Preise variieren stark nach Buchungszeitpunkt, Sparpreise wirken nahezu zufällig – Ergebnis ist die alternative Preissuche „nickets.de“.",
+            "category": "analysis",
+            "tags": [
+                "Daten",
+                "Analyse"
+            ],
+            "year": 2020,
+            "url": "https://nickyreinert.de/2020/2020-09-09-das-ticket-preis-system-der-deutschen-bahn-oder-wie-findest-du-den-optimalen-fahrschein-preis/",
+            "image": "docs/gfx/screenshots/analysis/2020-db-ticketpreise.jpg"
+        },
+        {
+            "id": "2019-fefe-analyse",
+            "title": "Fefes Blog – Eine Analyse",
+            "description": "Auswertung von 43.908 Blog-Einträgen (2005–2019) per Python und Tableau: Der Spiegel als meistverlinkte Quelle, aktivste Zeit ist mittwochs gegen 17 Uhr, dazu Fefes berüchtigte Wortungetüme.",
+            "category": "analysis",
+            "tags": [
+                "Daten",
+                "Kultur",
+                "Analyse"
+            ],
+            "year": 2019,
+            "url": "https://nickyreinert.de/2019/2019-11-05-fefes-blog-eine-analyse/",
+            "image": "docs/gfx/screenshots/analysis/2019-fefe-analyse.jpg"
+        }
+    ]
+}

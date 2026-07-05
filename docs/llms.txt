@@ -13,37 +13,24 @@ Institut für digitale Herausforderungen (FdH) is a personal platform for digita
 ## Projects
 
 ### Primes Web App (2023)
-URL: https://institut-fdh.de/seiten/2023-primes.html
 Interactive JavaScript visualization of prime numbers on spiral structures. Supports configurable scaling, coloring, and animation parameters.
 External URL: https://primes.nickyreinert.de
 
-### Nerd Encyclopedia (2024)
-URL: https://institut-fdh.de/seiten/2024-nerdenz.html
-Searchable encyclopedia about nerd culture, technology, and internet history.
-
 ### Header Mirror (2025)
-URL: https://institut-fdh.de/seiten/2025-mirror.html
 Reflects HTTP request context for debugging proxy and CDN setups.
 External URL: https://9000.1-1-1.de/
 
 ### Verbotspartei (2025)
-URL: https://institut-fdh.de/seiten/2025-verbotspartei.html
 AI-assisted analysis of election programs from major German parties, including a comparative chatbot-based workflow.
-External dashboard: https://verbote.nickyreinert.de
+External URL: https://nickyreinert.de/2025/2025-12-14-verbotsparteien/
 
 ### AI Honeypot - BOFH (2026)
-URL: https://institut-fdh.de/seiten/2026-bofh.html
 Honeypot for AI crawlers that records bot behavior and tests prompt-injection resilience.
 External URL: https://bofh.1-1-1.de/
 
 ### DB Orakel (2026)
-URL: https://institut-fdh.de/seiten/2026-dborakel.html
 German rail punctuality prediction experiment based on historical delay data, fuel prices, weather, and holiday signals.
 External URL: https://db-orakel.de
-
-### Manifest for Informal "Du" (2026)
-URL: https://institut-fdh.de/seiten/2026-duman.html
-Internet manifesto advocating informal address in digital spaces as a symbol of openness and equality.
 
 ### Faces of Joy (2026)
 URL: https://institut-fdh.de/seiten/2026-faces.html
@@ -63,10 +50,6 @@ The homepage supports deep links via query string:
 https://institut-fdh.de/?<slug>
 
 Supported tool slugs:
-
-- ?2025-mirror -> Header Mirror
-  URL: https://institut-fdh.de/seiten/2025-mirror.html
-  Summary: Request-context and header reflection for debugging browser, proxy, and CDN behavior.
 
 - ?2026-faces -> Faces of Joy
   URL: https://institut-fdh.de/seiten/2026-faces.html

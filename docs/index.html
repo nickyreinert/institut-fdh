@@ -1,239 +1,116 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Institut für digitale Herausforderungen</title>
-<meta name="description" content="Digital experiments, tools, and projects about programming, AI, internet culture, and data analysis in a retro DOS-style interface.">
-<meta name="author" content="Nicky Reinert">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://institut-fdh.de/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Institut für digitale Herausforderungen</title>
+    <meta name="description" content="Digital experiments, tools, and projects focused on programming, AI, internet culture, and data analysis.">
+    <meta name="author" content="Nicky Reinert">
+    <link rel="canonical" href="https://institut-fdh.de/">
 
-<!-- Open Graph -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://institut-fdh.de/">
-<meta property="og:title" content="Institut für digitale Herausforderungen">
-<meta property="og:description" content="Digital experiments, tools, and projects about programming, AI, internet culture, and data analysis.">
-<meta property="og:image" content="https://institut-fdh.de/gfx/header.png">
-<meta property="og:locale" content="en_US">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://institut-fdh.de/">
+    <meta property="og:title" content="Institut für digitale Herausforderungen">
+    <meta property="og:description" content="Digital experiments, tools, and projects focused on programming, AI, internet culture, and data analysis.">
+    <meta property="og:image" content="https://institut-fdh.de/gfx/header.png">
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "Institut für digitale Herausforderungen",
-  "url": "https://institut-fdh.de/",
-  "inLanguage": "en",
-  "description": "Digital experiments, tools, and projects about programming, AI, internet culture, and data analysis.",
-  "publisher": {
-    "@type": "Person",
-    "name": "Nicky Reinert",
-    "url": "https://nickyreinert.de"
-  },
-  "hasPart": [
-    {
-      "@type": "SoftwareApplication",
-      "name": "Header Mirror",
-      "url": "https://institut-fdh.de/seiten/2025-mirror.html",
-      "applicationCategory": "DeveloperApplication"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "Faces of Joy",
-      "url": "https://institut-fdh.de/seiten/2026-faces.html",
-      "applicationCategory": "UtilityApplication"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "Text Transformer",
-      "url": "https://institut-fdh.de/seiten/2026-text.html",
-      "applicationCategory": "UtilityApplication"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "OSINT Tools Directory",
-      "url": "https://institut-fdh.de/seiten/2026-osint.html",
-      "applicationCategory": "EducationalApplication"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "AYA - Are You Anonymous?",
-      "url": "https://institut-fdh.de/seiten/2026-aya.html",
-      "applicationCategory": "SecurityApplication"
-    }
-  ]
-}
-</script>
-
-<!-- Twitter / X -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Institut für digitale Herausforderungen">
-<meta name="twitter:description" content="Digital experiments, tools, and projects about programming, AI, internet culture, and data analysis.">
-<meta name="twitter:image" content="https://institut-fdh.de/gfx/header.png">
-
-<!-- PWA / Discovery -->
-<link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#0000AF">
-
-<link rel="icon" type="image/png" href="gfx/favicon.png">
-<link rel="stylesheet" href="style.css"> 
+    <!-- PWA / Discovery -->
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#dcdcdc">
+    <link rel="icon" type="image/png" href="gfx/favicon.png">
+    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="menu-bar">
-  <div class="menu-item" id="menu-item-file">File</div>
-  <div class="menu-item menu-item-has-sub" id="menu-item-tools">
-    Tools
-    <div class="submenu" id="submenu-tools"></div>
-  </div>
-  <div class="menu-item menu-item-has-sub" id="menu-item-lang">
-    Lan
-    <div class="submenu" id="submenu-lang">
-      <div class="submenu-item" data-lang="de">DE</div>
-      <div class="submenu-item" data-lang="en">EN</div>
-    </div>
-  </div>
-  <div class="menu-item" id="menu-item-help">Help</div>
-</div>
+    <header class="amts-header">
+        <div class="amts-header-inner">
+            <div class="amts-titles">
+                <h1>Institut für digitale Herausforderungen</h1>
+                <p class="amts-motto">Analysen - Tools - Wissen</p>
+            </div>
+        </div>
+    </header>
 
-<div class="container">
-  <div class="window" id="window1">
-    <div class="window-content"> 
-      <div class="lane">
-        <div class="lane-header">
-          <div class="name-header">Name</div>
-        </div>
-        <div class="file-list-1">
-          <div class="file-list-name"></div>
-          <div class="file-list-extension"></div>
-        </div>
-      </div>
-      <div class="lane">
-        <div class="lane-header">
-          <div class="name-header">Name</div>
-        </div>
-        <div class="file-list-2">
-          <div class="file-list-name"></div>
-          <div class="file-list-extension"></div>
-        </div>
-      </div>
-      <div class="lane">
-        <div class="lane-header">
-          <div class="name-header">Name</div>
-        </div>
-        <div class="file-list-3">
-          <div class="file-list-name"></div>
-          <div class="file-list-extension"></div>
-        </div>
-      </div>
-    </div> 
-    <div class="file-details">
-      <div class="detail-column">Name</div>
-      <div class="detail-column">Date</div>
-      <div class="detail-column">Time</div>
-      <div class="detail-column">Size</div>
-    </div>
-  </div>
+    <nav class="register-nav" aria-label="Filter">
+        <div class="nav-container">
+            <div class="tag-filter-container">
+                <div class="tag-filters" id="tagFilters">
+                    <!-- Tags generated by JS -->
+                </div>
+            </div>
 
-  <div class="window" id="window2">
-    <div class="window-content"> 
-      <div class="lane">
-        <div class="lane-header">
-          <div class="name-header">Name</div>
+            <div class="controls">
+                <div class="search-wrapper">
+                    <input type="text" id="searchInput" placeholder="Finden..." aria-label="Finden">
+                </div>
+            </div>
         </div>
-        <div class="file-list-1">
-          <div class="file-list-name"></div>
-          <div class="file-list-extension"></div>
+    </nav>
+
+    <main class="main-content">
+        <section class="projects-section" id="analysisSection">
+            <div class="section-header">
+                <button type="button" class="section-toggle" aria-expanded="true" aria-controls="analysisGrid" aria-label="Bereich ein- oder ausklappen">
+                    <span class="section-toggle-icon" aria-hidden="true">&lt;&gt;</span>
+                </button>
+                <nav class="header-nav" aria-label="Bereiche">
+                    <a href="#analysisSection" class="header-nav-link is-current" aria-current="true" data-section-nav="analysisSection">Analysen <span class="header-nav-count" data-count-for="analysis">0</span></a>
+                    <a href="#toolsSection" class="header-nav-link" data-section-nav="toolsSection">Werkzeuge <span class="header-nav-count" data-count-for="tools">0</span></a>
+                    <a href="#nerdenzSection" class="header-nav-link" data-section-nav="nerdenzSection">Nerd Enzyklopädie <span class="header-nav-count" data-count-for="nerdenz">0</span></a>
+                </nav>
+            </div>
+            <div class="project-grid" id="analysisGrid">
+                <!-- Cards generated by JS -->
+            </div>
+        </section>
+
+        <section class="projects-section" id="toolsSection">
+            <div class="section-header">
+                <button type="button" class="section-toggle" aria-expanded="true" aria-controls="toolsGrid" aria-label="Bereich ein- oder ausklappen">
+                    <span class="section-toggle-icon" aria-hidden="true">&lt;&gt;</span>
+                </button>
+                <nav class="header-nav" aria-label="Bereiche">
+                    <a href="#analysisSection" class="header-nav-link" data-section-nav="analysisSection">Analysen <span class="header-nav-count" data-count-for="analysis">0</span></a>
+                    <a href="#toolsSection" class="header-nav-link is-current" aria-current="true" data-section-nav="toolsSection">Werkzeuge <span class="header-nav-count" data-count-for="tools">0</span></a>
+                    <a href="#nerdenzSection" class="header-nav-link" data-section-nav="nerdenzSection">Nerd Enzyklopädie <span class="header-nav-count" data-count-for="nerdenz">0</span></a>
+                </nav>
+            </div>
+            <div class="project-grid" id="toolsGrid">
+                <!-- Cards generated by JS -->
+            </div>
+        </section>
+
+        <section class="projects-section" id="nerdenzSection">
+            <div class="section-header">
+                <button type="button" class="section-toggle" aria-expanded="true" aria-controls="nerdenzGrid" aria-label="Bereich ein- oder ausklappen">
+                    <span class="section-toggle-icon" aria-hidden="true">&lt;&gt;</span>
+                </button>
+                <nav class="header-nav" aria-label="Bereiche">
+                    <a href="#analysisSection" class="header-nav-link" data-section-nav="analysisSection">Analysen <span class="header-nav-count" data-count-for="analysis">0</span></a>
+                    <a href="#toolsSection" class="header-nav-link" data-section-nav="toolsSection">Werkzeuge <span class="header-nav-count" data-count-for="tools">0</span></a>
+                    <a href="#nerdenzSection" class="header-nav-link is-current" aria-current="true" data-section-nav="nerdenzSection">Nerd Enzyklopädie <span class="header-nav-count" data-count-for="nerdenz">0</span></a>
+                </nav>
+            </div>
+            <div class="project-grid" id="nerdenzGrid">
+                <!-- Cards generated by JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="copyright">
+                &copy; <span id="currentYear"></span> Institut für digitale Herausforderungen
+            </div>
+            <div class="social-links" id="socialLinks">
+                <!-- Social links generated by JS -->
+            </div>
         </div>
-      </div>
-      <div class="lane">
-        <div class="lane-header">
-          <div class="name-header">Name</div>
-        </div>
-        <div class="file-list-2">
-          <div class="file-list-name"></div>
-          <div class="file-list-extension"></div>
-        </div>
-      </div>
-      <div class="lane">
-        <div class="lane-header">
-          <div class="name-header">Name</div>
-        </div>
-        <div class="file-list-3">
-          <div class="file-list-name"></div>
-          <div class="file-list-extension"></div>
-        </div>
-      </div>
-    </div> 
-    <div class="file-details">
-      <div class="detail-column">Name</div>
-      <div class="detail-column">Date</div>
-      <div class="detail-column">Time</div>
-      <div class="detail-column">Size</div>
-    </div>
-  </div>
+    </footer>
 
-</div>
-<div class="input-area">
-  C:\> <input type="text">
-</div>
-
-<div class="button-bar-container">
-  <div class="button-bar">
-    <div class="button"><span>1</span> Help</div>
-    <div class="button"><span>2</span> Menu</div>
-    <div class="button"><span>3</span> View</div>
-    <div class="button"><span>4</span> Edit</div>
-    <div class="button"><span>5</span> Copy</div>
-    <div class="button"><span>6</span> RenMov</div>
-    <div class="button"><span>7</span> Mkdir</div>
-    <div class="button"><span>8</span> Delete</div>
-    <div class="button"><span>9</span> PullDn</div>
-    <div class="button"><span>10</span> Quit</div>
-  </div>
-</div>
-
-<div id="welcome-modal" class="modal">
-  <div class="modal-content">
-    <div class="modal-header" id="welcome-modal-title">Institut for Digital Challenges</div>
-    <div class="modal-body">
-      <p id="welcome-intro">Welcome to the Institute for Digital Challenges</p>
-      <p id="welcome-achievements-label">Completed Challenges:</p>
-
-      <p><span class="achievement" id="S3CR3T.TXT">[ ]</span> S3CR3T.TXT</p>
-      <p><span class="achievement" id="TAR-BOMB">[ ]</span> TAR-BOMB</p>
-      <p><span class="achievement" id="DOOM.EXE">[ ]</span> DOOM</p>
-      <p><span class="achievement" id="SNAKE">[ ]</span> SNAKE</p>
-      <p><span class="achievement" id="BSOD">[ ]</span> BSOD</p>
-      <p><span class="achievement" id="IMG-TROJANER">[ ]</span> IMAGE TROJANER</p>
-
-      <p>
-        <span id="welcome-contact-prefix">For questions, please contact the institute lead at</span>
-        <a style="color: white;" target="_blank" href="https://nickyreinert.de">nickyreinert.de</a>
-      </p>
-    </div>
-    <div class="modal-footer">
-      <div class="button" id="welcome-btn-1">Cancel</div>
-      <div class="button" id="welcome-btn-2">No</div>
-      <div class="button" id="welcome-btn-3">Back</div>
-    </div>
-  </div>
-</div>
-
-<div id="game-modal" class="modal">
-  <div class="modal-content game-modal-content">
-    <div class="modal-header">
-      Snake.exe
-    </div>
-    <div class="modal-body">
-      <canvas id="snake-game" width="300" height="300"></canvas>
-    </div>
-    <div class="modal-footer">
-      <div class="button">Close</div>
-    </div>
-  </div>
-</div>
-
-    <script type="module" src="script.js"></script>
+    <script src="script.js" type="module"></script>
 </body>
 </html>

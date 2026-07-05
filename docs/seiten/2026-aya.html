@@ -26,13 +26,20 @@
     }
     </script>
     <link rel="icon" type="image/png" href="../gfx/favicon.png">
-    <link rel="stylesheet" href="iframes.css">
+    <link rel="stylesheet" href="tool-page.css">
     <style>
         *, *::before, *::after { box-sizing: border-box; }
 
       body {
-        margin: 0;
         line-height: 1.45;
+      }
+
+      .aya-main {
+        flex: 1;
+        background: #000080;
+        color: #50FFFF;
+        padding: 0;
+        max-width: none;
       }
 
       .aya-shell {
@@ -193,6 +200,17 @@
     </style>
 </head>
 <body>
+    <header class="amts-header">
+        <div class="amts-header-inner">
+            <div class="amts-titles">
+                <h1>Institut für digitale Herausforderungen</h1>
+                <p class="amts-motto">Tools und Analysen</p>
+            </div>
+            <a class="amts-back-link" href="../index.html">&larr; Zur Übersicht</a>
+        </div>
+    </header>
+
+    <main class="tool-content aya-main">
 <div class="aya-shell">
   <section class="dos-panel">
     <div class="section-kicker" id="aya-kicker">Privacy Diagnostic Utility</div>
@@ -246,6 +264,19 @@
     </div>
   </section>
 </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="copyright">
+                &copy; <span id="currentYear"></span> Institut für digitale Herausforderungen
+            </div>
+            <div class="social-links">
+                <a href="https://ministerium-für-digitale-herausforderungen.de" target="_blank" rel="noopener noreferrer">Das Ministerium</a>
+            </div>
+        </div>
+    </footer>
+    <script>document.getElementById('currentYear').textContent = new Date().getFullYear();</script>
 
 <script>
   (function applyAyaLanguage() {

@@ -1,0 +1,504 @@
+{
+    "projects": [
+        {
+            "id": "2026-nerdenz-50",
+            "title": "Das @-Zeichen",
+            "description": "Das @-Zeichen hat eine lange, teils rätselhafte Geschichte und wurde 1971 durch Ray Tomlinsons E-Mail-Adressformat endgültig zum Symbol der digitalen Kommunikation.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2026,
+            "url": "https://nickyreinert.de/2026/2026-06-11-nerdenz---das-at-zeichen/",
+            "image": "docs/gfx/screenshots/nerdenz/2026-nerdenz-50.jpg"
+        },
+        {
+            "id": "2026-nerdenz-49",
+            "title": "POPCOUNT",
+            "description": "Was ist POPCOUNT, warum existiert es als CPU-Instruktion, und was hat die NSA damit zu tun? Die Geschichte hinter einer der ältesten Maschinencode-Operationen.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2026,
+            "url": "https://nickyreinert.de/2026/2026-03-30-popcount/",
+            "image": "docs/gfx/screenshots/nerdenz/2026-nerdenz-49.jpg"
+        },
+        {
+            "id": "2025-nerdenz-48",
+            "title": "Die dienstälteste Software",
+            "description": "Eine Erkundung aus der 'Nerd Enzyklopädie' über die dienstältesten Software-Systeme der Welt. Der Artikel stellt das Reservierungssystem SABRE (seit 1960) und das IRS Individual Master File (IMF, ebenfalls seit 1960, in COBOL und IBM Assembler geschrieben) vor und beleuchtet die Herausforderungen bei der Modernisierung solcher komplexen und kritischen Legacy-Systeme.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2025,
+            "url": "https://nickyreinert.de/2025/2025-04-20-nerd-enzyklop%C3%A4die-48---alte-software/",
+            "image": "docs/gfx/screenshots/nerdenz/2025-nerdenz-48.jpg"
+        },
+        {
+            "id": "2025-nerdenz-47",
+            "title": "Die 500-Meilen-E-Mail",
+            "description": "Eine Nacherzählung aus der 'Nerd Enzyklopädie' über die berühmte '500-Meilen-E-Mail'-Anekdote. Der Artikel beschreibt einen bizarren Softwarefehler, bei dem E-Mails nur innerhalb eines bestimmten Radius zugestellt wurden. Die Ursache war ein unentdecktes Downgrade des 'sendmail'-Servers, das zu einem 0-Sekunden-Timeout führte, wodurch entfernte Server nicht rechtzeitig antworten konnten.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2025,
+            "url": "https://nickyreinert.de/2025/2025-03-10-nerd-enzyklop%C3%A4die-47---die-500-meilen-e-mail/",
+            "image": "docs/gfx/screenshots/nerdenz/2025-nerdenz-47.jpg"
+        },
+        {
+            "id": "2025-nerdenz-46",
+            "title": "Bastard Operator From Hell",
+            "description": "Eine Einführung aus der 'Nerd Enzyklopädie' in den 'Bastard Operator From Hell' (BOfH), eine ikonische Figur der Nerd-Kultur. Der Artikel beleuchtet die satirischen Erzählungen von Simon Paul Travaglia über einen zynischen IT-Administrator, der seine Nutzer quält, und beschreibt die Entstehung, Verbreitung und den kulturellen Einfluss dieser Geschichten, inklusive der deutschen Adaption als BAfH.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2025,
+            "url": "https://nickyreinert.de/2025/2025-03-10-nerd-enzyklop%C3%A4die-46---bastard-operator-from-hell/",
+            "image": "docs/gfx/screenshots/nerdenz/2025-nerdenz-46.jpg"
+        },
+        {
+            "id": "2024-nerdenz-45",
+            "title": "80 Spalten und die Legende vom Pferdehintern",
+            "description": "Eine Erkundung aus der 'Nerd Enzyklopädie' über die Ursprünge des 80-Zeichen-Spaltenstandards in der Informatik. Der Artikel beleuchtet historische Einflüsse wie Schreibmaschinen und Lochkarten (insbesondere IBMs 80-Spalten-Lochkarten) und diskutiert die Lesbarkeitsargumente. Humorvoll wird die Verbindung zur 'Pferdehintern-Legende' hergestellt, um die oft obskuren Ursprünge technischer Standards zu illustrieren.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2024,
+            "url": "https://nickyreinert.de/2024/2024-01-15-nerd-enzyklop%C3%A4die-45---80-spalten-und-die-legende-vom-pferdehintern/",
+            "image": "docs/gfx/screenshots/nerdenz/2024-nerdenz-45.jpg"
+        },
+        {
+            "id": "2024-nerdenz-44",
+            "title": "Von Fliegenklatschen und Häkeldeckchen",
+            "description": "Eine humorvolle Anekdote aus der 'Nerd Enzyklopädie' über Streiche mit Lochkarten in den frühen Tagen der Computertechnik. Der Artikel erklärt, wie das Ausstanzen aller Löcher auf einer Lochkarte zu Instabilität führte und wie diese manipulierten Karten humorvolle Namen wie 'Fliegenklatsche' oder 'Häkeldeckchen' erhielten.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2024,
+            "url": "https://nickyreinert.de/2024/2024-01-10-nerd-enzyklop%C3%A4die-44---von-fliegenklatschen-und-h%C3%A4keldeckchen/",
+            "image": "docs/gfx/screenshots/nerdenz/2024-nerdenz-44.jpg"
+        },
+        {
+            "id": "2024-nerdenz-43",
+            "title": "0x5f3759df",
+            "description": "Eine detaillierte Erkundung aus der 'Nerd Enzyklopädie' über den berühmten 'Fast Inverse Square Root'-Algorithmus ('0x5f3759df') aus dem Quellcode von Quake III. Der Artikel erklärt die mathematischen Grundlagen der Vektornormierung, die Funktionsweise des Algorithmus mit seinem 'evil floating point bit hack' und der 'magischen Konstante', und beleuchtet die ungeklärte Urheberschaft sowie die heutige Relevanz.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2024,
+            "url": "https://nickyreinert.de/2024/2024-01-01-nerd-enzyklop%C3%A4die-43---0x5f3759df/",
+            "image": "docs/gfx/screenshots/nerdenz/2024-nerdenz-43.jpg"
+        },
+        {
+            "id": "2023-nerdenz-42",
+            "title": "Mit einem nassen Seil ins Internet",
+            "description": "Eine humorvolle Anekdote aus der 'Nerd Enzyklopädie' über einen britischen Internet-Techniker, dem es gelang, Daten über ein nasses Seil zu übertragen. Der Artikel beschreibt das Experiment, bei dem über eine Distanz von 2 Metern eine Geschwindigkeit von 3,5 MBit/Sekunde erreicht wurde, und beleuchtet die unerwarteten Möglichkeiten der Datenübertragung.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-10-05-nerd-enzyklop%C3%A4die-42---mit-einem-nassen-seil-ins-internet/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-42.jpg"
+        },
+        {
+            "id": "2023-nerdenz-41",
+            "title": "Welche Farbe hat Chuck Norris?",
+            "description": "Dieser Artikel behandelt Die Nerd Enzyklopädie 41 - Welche Farbe hat Chuck Norris? und bietet praktische Einblicke in das Thema.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-10-03-nerd-enzyklop%C3%A4die-41---welche-farbe-hat-chuck-norris/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-41.jpg"
+        },
+        {
+            "id": "2023-nerdenz-40",
+            "title": "isUserAMonkey",
+            "description": "Dieser Artikel behandelt Die Nerd Enzyklopädie 40 - isUserAMonkey und bietet praktische Einblicke in das Thema.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-06-22-nerd-enzyklop%C3%A4die-40---isuseramonkey/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-40.jpg"
+        },
+        {
+            "id": "2023-nerdenz-39",
+            "title": "Der Kerzen-Controller",
+            "description": "Eine kuriose Anekdote aus der 'Nerd Enzyklopädie', die erklärt, wie man zwei Kerzen als Ersatz für die Sensorleiste der Nintendo Wii verwenden kann. Der Artikel beschreibt das Prinzip der Infrarot-Kommunikation der Wiimote und wie Kerzen Infrarotstrahlen emittieren, die der Controller zur Positionsbestimmung nutzen kann.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-06-19-nerd-enzyklop%C3%A4die-39---der-kerzen-controller/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-39.jpg"
+        },
+        {
+            "id": "2023-nerdenz-38",
+            "title": "Du Idiot",
+            "description": "Eine Erkundung aus der 'Nerd Enzyklopädie' über das ikonische Zitat 'You fool' von OpenPGP-Entwickler Robert J. Hansen. Der Artikel beleuchtet den Hintergrund dieses Ausbruchs: einen Angriff auf das SKS-Netzwerk, der durch die Ausnutzung bekannter Schwachstellen in einer veralteten, als Proof-of-Concept gedachten Software erfolgte, und dient als Warnung vor vernachlässigter Softwarewartung in kritischen Infrastrukturen.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-06-16-nerd-enzyklop%C3%A4die-38---du-idiot/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-38.jpg"
+        },
+        {
+            "id": "2023-nerdenz-37",
+            "title": "Mehrdeutige Bilder",
+            "description": "Eine Erklärung aus der 'Nerd Enzyklopädie' über 'mehrdeutige Bilder' und eine spezifische Schwachstelle in Apples PNG-Implementierung. Der Artikel beschreibt, wie ein und dieselbe PNG-Datei aufgrund eines Bugs in Apples proprietärem 'iDOT'-Chunk auf Apple-Geräten anders dargestellt werden konnte als auf anderen Systemen, und beleuchtet die Komplexität der Bildverarbeitung.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-06-13-nerd-enzyklop%C3%A4die-37---mehrdeutige-bilder/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-37.jpg"
+        },
+        {
+            "id": "2023-nerdenz-36",
+            "title": "Das kik & left-pad Drama",
+            "description": "Eine Nacherzählung des 'kik & left-pad Dramas' von 2016, das die JavaScript-Entwicklergemeinschaft erschütterte. Der Artikel erklärt, wie die Entfernung eines kleinen, aber weit verbreiteten npm-Pakets namens 'left-pad' aufgrund eines Namensstreits zu weitreichenden Problemen in Tausenden von Softwareprojekten führte und die Fragilität moderner Software-Abhängigkeiten aufzeigte.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-06-10-nerd-enzyklop%C3%A4die-36---das-kik--left-pad-drama/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-36.jpg"
+        },
+        {
+            "id": "2023-nerdenz-35",
+            "title": "JavaScript Bananas",
+            "description": "Dieser Artikel behandelt Die Nerd Enzyklopädie 35 - JavaScript Bananas und bietet praktische Einblicke in das Thema.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-06-07-nerd-enzyklop%C3%A4die-35---javascript-bananas/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-35.jpg"
+        },
+        {
+            "id": "2023-nerdenz-34",
+            "title": "JavaScript wurde innerhalb von 10 Tagen entwickelt",
+            "description": "Eine historische Erkundung aus der 'Nerd Enzyklopädie' über die Entstehung von JavaScript, das innerhalb von nur 10 Tagen entwickelt wurde. Der Artikel beleuchtet die Notwendigkeit einer Skriptsprache für dynamische Webseiten, die Rolle von Brendan Eich bei Netscape, die Namensentwicklung von Mocha zu JavaScript und Microsofts Reaktion mit JScript.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-06-04-nerd-enzyklop%C3%A4die-34---javascript-wurde-innerhalb-von-10-tagen-entwickelt/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-34.jpg"
+        },
+        {
+            "id": "2023-nerdenz-33",
+            "title": "GCJ-02",
+            "description": "Eine Erklärung aus der 'Nerd Enzyklopädie' über GCJ-02, Chinas nationalen Standard für geografische Koordinaten. Der Artikel beleuchtet, wie dieser Standard bewusst Abweichungen zum globalen WGS-System einführt, offiziell aus Gründen der nationalen Sicherheit, und wie dies zu Problemen für Navigationssysteme führt. Auch der davon abgeleitete Baidu-Standard BD-09 wird kurz vorgestellt.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-06-01-nerd-enzyklop%C3%A4die-33---gcj-02/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-33.jpg"
+        },
+        {
+            "id": "2023-nerdenz-32",
+            "title": "Was haben PHP, Visa und Mandelbrot gemeinsam?",
+            "description": "Eine humorvolle Erkundung aus der 'Nerd Enzyklopädie', die die Gemeinsamkeit zwischen PHP, Visa und Mandelbrot aufdeckt: rekursive Akronyme und selbst-referenzielle Konzepte. Der Artikel erklärt die Bedeutung von rekursiven Akronymen in der IT und beleuchtet humorvolle Legenden rund um Namen wie Benoit B. Mandelbrot und Bing.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-05-28-nerd-enzyklop%C3%A4die-32---was-haben-php-visa-und-mandelbrot-gemeinsam/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-32.jpg"
+        },
+        {
+            "id": "2023-nerdenz-31",
+            "title": "Der allererste Bug",
+            "description": "Eine historische Untersuchung aus der 'Nerd Enzyklopädie' über den Ursprung des Begriffs 'Bug' in der Informatik. Der Artikel entlarvt den Mythos der Motte im Harvard Mark II Computer als Ursprung und verfolgt die wahre Etymologie des Wortes zurück zu Thomas Edison im späten 19. Jahrhundert, während er Grace Hoppers Rolle bei der Popularisierung des Begriffs in der Computerwelt würdigt.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-05-25-nerd-enzyklop%C3%A4die-31---der-allererste-bug/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-31.jpg"
+        },
+        {
+            "id": "2023-nerdenz-30",
+            "title": "Die falsche Fehlermeldung",
+            "description": "Eine humorvolle Anekdote aus der 'Nerd Enzyklopädie' über einen peinlichen Fehler im Registrierungsprozess des frühen Internetdienstes WebTV. Ein falsch konfigurierter Filter für Benutzernamen führte dazu, dass jede Eingabe als 'schlechtes Wort' ('That's a bad word.') abgewiesen wurde, was die Bedeutung gründlicher Tests unterstreicht.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-05-22-nerd-enzyklop%C3%A4die-30---die-falsche-fehlermeldung/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-30.jpg"
+        },
+        {
+            "id": "2023-nerdenz-29",
+            "title": "Programmieren mit Emojis",
+            "description": "Eine unterhaltsame Erkundung aus der 'Nerd Enzyklopädie' über das Programmieren mit Emojis. Der Artikel erklärt die Grundlagen der Zeichenkodierung (Unicode, UTF-8) und beleuchtet die (begrenzten) Möglichkeiten, Emojis in gängigen Programmiersprachen zu verwenden. Zudem wird 'Emojicode' vorgestellt, eine Programmiersprache, die ausschließlich auf Emojis basiert.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-05-19-nerd-enzyklop%C3%A4die-29---programmieren-mit-emojis/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-29.jpg"
+        },
+        {
+            "id": "2023-nerdenz-28",
+            "title": "Damönen aus der Nase",
+            "description": "Eine Erklärung aus der 'Nerd Enzyklopädie' über das Konzept des 'undefinierten Verhaltens' in der Informatik, insbesondere in der Programmiersprache C. Der Artikel beleuchtet den Ursprung des humorvollen Ausdrucks 'nasal demons' und demonstriert anhand eines einfachen C-Code-Beispiels die unvorhersehbaren Konsequenzen, wenn ein Compiler auf undefiniertes Verhalten trifft.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-05-16-nerd-enzyklop%C3%A4die-28---dam%C3%B6nen-aus-der-nase/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-28.jpg"
+        },
+        {
+            "id": "2023-nerdenz-27",
+            "title": "Die Geschichte von Mel",
+            "description": "Eine Nacherzählung der berühmten Anekdote 'Die Geschichte von Mel' aus der Computerprogrammierung. Der Artikel beleuchtet das Genie des legendären Programmierers Mel Kaye, seine unkonventionellen Optimierungstechniken in Assemblersprache und die Herausforderungen, die sein selbstmodifizierender Code für andere Entwickler darstellte, insbesondere am Beispiel eines manipulierten Blackjack-Spiels.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-05-13-nerd-enzyklop%C3%A4die-27---die-geschichte-von-mel/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-27.jpg"
+        },
+        {
+            "id": "2023-nerdenz-26",
+            "title": "FOCAL",
+            "description": "Eine historische Erkundung aus der 'Nerd Enzyklopädie' über die Programmiersprache FOCAL (Formulating On-line Calculations in Algebraic Language), entwickelt 1968 von Richard Merrill (DEC). Der Artikel beleuchtet FOCALs Einsatz auf PDP-Computern, seine Ähnlichkeit mit BASIC, die Gründe für seine begrenzte Popularität (u.a. durch eine Anekdote über Microsoft) und seinen kurzen zweiten Frühling in der Sowjetunion.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-05-10-nerd-enzyklop%C3%A4die-26---focal/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-26.jpg"
+        },
+        {
+            "id": "2023-nerdenz-25",
+            "title": "Bare Metal Programming",
+            "description": "Eine humorvolle Anekdote aus der 'Nerd Enzyklopädie', die das Konzept des 'Bare Metal Programming' veranschaulicht. Der Artikel erzählt die Geschichte eines Entwicklers, der bei einem Programmfehler auf einem 'discrete component' Computer buchstäblich mit einem Schraubenzieher in die Hardware eingreifen musste, um das System zu stoppen.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-05-07-nerd-enzyklop%C3%A4die-25---bare-metal-programming/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-25.jpg"
+        },
+        {
+            "id": "2023-nerdenz-24",
+            "title": "Zeichenketten braten",
+            "description": "Eine humorvolle Vorstellung der C-Funktion 'strfry' aus der 'Nerd Enzyklopädie'. Der Artikel erklärt, wie diese Funktion eine Zeichenkette zufällig neu anordnet, um ein Anagramm zu erzeugen, und beleuchtet die Kuriosität solcher Funktionen in Programmiersprachen.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-05-04-nerd-enzyklop%C3%A4die-24---zeichenketten-braten/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-24.jpg"
+        },
+        {
+            "id": "2023-nerdenz-23",
+            "title": "30 x 10 = 1.000",
+            "description": "Eine humorvolle Demonstration aus der 'Nerd Enzyklopädie', die zeigt, wie man in Python die interne Darstellung von Integer-Objekten mittels 'ctypes' manipuliert. Der Artikel präsentiert ein Code-Beispiel, das dazu führt, dass eine scheinbar einfache Multiplikation wie '30 * 10' ein unerwartetes Ergebnis von '1000' liefert, und warnt vor den daraus resultierenden Debugging-Herausforderungen.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-05-01-nerd-enzyklop%C3%A4die-23---30-x-10--1.000/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-23.jpg"
+        },
+        {
+            "id": "2023-nerdenz-22",
+            "title": "Läuft darauf Doom?",
+            "description": "Dieser Artikel behandelt Die Nerd Enzyklopädie 22 - Läuft darauf Doom? und bietet praktische Einblicke in das Thema.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-04-28nerd-enzyklop%C3%A4die-22---l%C3%A4uft-darauf-doom/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-22.jpg"
+        },
+        {
+            "id": "2023-nerdenz-21",
+            "title": "00000000000000000021e800c1e8df51b22c1588e5a624bea17e9faa34b2dc4a",
+            "description": "Dieser Artikel behandelt Die Nerd Enzyklopädie 21 - 00000000000000000021e800c1e8df51b22c1588e5a624bea17e9faa34b2dc4a und bietet praktische Einblicke in das Thema.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-04-25-nerd-enzyklop%C3%A4die-21---00000000000000000021e800c1e8df51b22c1588e5a624bea17e9faa34b2dc4a/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-21.jpg"
+        },
+        {
+            "id": "2023-nerdenz-20",
+            "title": "Elvis und Raumschiffe",
+            "description": "Eine humorvolle Erklärung aus der 'Nerd Enzyklopädie' über zwei spezielle Operatoren in Programmiersprachen: den 'Elvis Operator' ('?:'), der einen Standardwert zuweist, wenn eine Variable null oder falsch ist, und den 'Spaceship Operator' ('<=>'), der einen Drei-Wege-Vergleich durchführt. Der Artikel beleuchtet die Herkunft ihrer ungewöhnlichen Namen.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-04-22-nerd-enzyklop%C3%A4die-20---elvis-und-raumschiffe/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-20.jpg"
+        },
+        {
+            "id": "2023-nerdenz-19",
+            "title": "Das Brieftauben-Protokoll",
+            "description": "Eine humorvolle Erkundung aus der 'Nerd Enzyklopädie' über das 'IP over Avian Carriers' (IPoAC) Protokoll, auch bekannt als 'Brieftauben-Protokoll'. Der Artikel beschreibt die Entstehung dieses Aprilscherzes als offiziellen RFC, seine Aktualisierung für IPv6 und einen realen Testlauf in Norwegen, der die Grenzen der Datenübertragung per Brieftaube aufzeigt.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-04-19-nerd-enzyklop%C3%A4die-19---das-brieftauben-protokoll/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-19.jpg"
+        },
+        {
+            "id": "2023-nerdenz-18",
+            "title": "Willkommen auf Null Island",
+            "description": "Eine Einführung in 'Null Island' aus der 'Nerd Enzyklopädie', eine fiktive Insel am Nullmeridian und Äquator (0°N, 0°O). Der Artikel erklärt, wie dieser geografische Punkt als 'Auffangbecken' für Fehler in geografischen Systemen dient, wenn Ortsdaten nicht korrekt verarbeitet werden können, und beleuchtet die humorvolle Community, die sich um dieses Konzept gebildet hat.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-04-16-nerd-enzyklop%C3%A4die-18---willkommen-auf-null-island/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-18.jpg"
+        },
+        {
+            "id": "2023-nerdenz-17",
+            "title": "Fuenf — In your Face",
+            "description": "Eine Einführung in die Demoszene und ihre Geschichte, am Beispiel der berühmten 5-Byte-Demo 'Fuenf — In your Face' der Gruppe Farbrausch. Der Artikel erklärt, wie Demos als audiovisuelle Kunstwerke technische und kreative Fähigkeiten unter extremen Größenbeschränkungen demonstrieren und wie sich die Demoszene aus der Warez-Szene entwickelte.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-04-13-nerd-enzyklop%C3%A4die-17---fuenf--in-your-face/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-17.jpg"
+        },
+        {
+            "id": "2023-nerdenz-16",
+            "title": "USERSEEUSERDO",
+            "description": "Eine Erklärung aus der 'Nerd Enzyklopädie' über die 'USERSEEUSERDO'-Funktion in Windows 3.1. Der Artikel beleuchtet, wie diese Funktion zur Simulation von Benutzerverhalten für Stresstests des Betriebssystems eingesetzt wurde und ihren Namen vom Sprichwort 'Monkey See, Monkey Do' ableitet.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-04-10-nerd-enzyklop%C3%A4die-16---userseeuserdo/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-16.jpg"
+        },
+        {
+            "id": "2023-nerdenz-15",
+            "title": "Der O’Reilly Zoo",
+            "description": "Eine Erkundung aus der 'Nerd Enzyklopädie' über die Entstehungsgeschichte der ikonischen Tierillustrationen auf den Covern der O'Reilly Computerbücher. Der Artikel erzählt, wie die Illustratorin Ellie Friedmann durch historische Tierstiche inspiriert wurde und wie Tim O'Reilly das Alleinstellungsmerkmal dieser Designs erkannte, die später auch dazu dienten, auf bedrohte Tierarten aufmerksam zu machen.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-04-07-nerd-enzyklop%C3%A4die-15---der-oreilly-zoo/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-15.jpg"
+        },
+        {
+            "id": "2023-nerdenz-14",
+            "title": "FCKGW-RHQQ2-YXRKT-8TG6W-2B7Q8",
+            "description": "Eine historische Anekdote aus der 'Nerd Enzyklopädie' über den berüchtigten Windows XP Volumenlizenzschlüssel 'FCKGW-RHQQ2-YXRKT-8TG6W-2B7Q8'. Der Artikel beleuchtet die Geschichte dieses Schlüssels, seine Verbreitung durch Hacker, Microsofts Reaktion und die Entwicklung von Lizenzschutzmechanismen in der Softwareindustrie.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-04-04-nerd-enzyklop%C3%A4die-14---fckgw-rhqq2-yxrkt-8tg6w-2b7q8/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-14.jpg"
+        },
+        {
+            "id": "2023-nerdenz-13",
+            "title": "Total hours wasted here = 42",
+            "description": "Eine humorvolle Erkundung aus der 'Nerd Enzyklopädie' über den speziellen Humor von Entwicklern, der sich in Quellcode-Kommentaren und unkonventionellen Programmierpraktiken widerspiegelt. Der Artikel beleuchtet das berühmte 'total_hours_wasted_here = 42'-Meme und präsentiert weitere Beispiele für witzige, zynische oder selbstironische Code-Kommentare und 'quick and dirty'-Lösungen.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-04-01-nerd-enzyklop%C3%A4die-13---total-hours-wasted-here-42/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-13.jpg"
+        },
+        {
+            "id": "2023-nerdenz-12",
+            "title": "A CPU is literally a rock that we tricked into thinking",
+            "description": "Eine humorvolle Erkundung aus der 'Nerd Enzyklopädie' über das Bonmot 'A CPU is literally a rock that we tricked into thinking'. Der Artikel beleuchtet die wörtliche Wahrheit hinter dieser Aussage, indem er die Zusammensetzung einer CPU aus Silizium (Quarzsand) erklärt und auf ein Video von Intel verweist, das den Herstellungsprozess dokumentiert.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-03-28-nerd-enzyklop%C3%A4die-12---a-cpu-is-literally-a-rock-that-we-tricked-into-thinking/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-12.jpg"
+        },
+        {
+            "id": "2023-nerdenz-11",
+            "title": "Der kleine Bobby Tables",
+            "description": "Eine Erklärung aus der 'Nerd Enzyklopädie' über den berühmten xkcd-Comic 'Der kleine Bobby Tables' und die von ihm illustrierte Sicherheitslücke: SQL-Injection. Der Artikel erläutert, wie bösartiger SQL-Code über Eingabefelder in Datenbanken eingeschleust werden kann, um unerwünschte Aktionen auszuführen, und betont die Notwendigkeit der Validierung von Benutzereingaben.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-03-25-nerd-enzyklop%C3%A4die-11---der-kleine-bobby-tables/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-11.jpg"
+        },
+        {
+            "id": "2023-nerdenz-10",
+            "title": "Brainfuck",
+            "description": "Eine Einführung aus der 'Nerd Enzyklopädie' in die esoterische Programmiersprache Brainfuck. Der Artikel erklärt die acht minimalistischen Befehle der Sprache, demonstriert ihre Komplexität anhand eines 'Hello World!'-Beispiels und beleuchtet ihren Zweck als Lernwerkzeug oder Coding-Challenge, anstatt für den produktiven Einsatz.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-03-22-nerd-enzyklop%C3%A4die-10---brainfuck/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-10.jpg"
+        },
+        {
+            "id": "2023-nerdenz-9",
+            "title": "Der Streisand-Effekt",
+            "description": "Eine Erklärung aus der 'Nerd Enzyklopädie' über den 'Streisand-Effekt', ein Phänomen, bei dem der Versuch, Informationen zu unterdrücken, unbeabsichtigt zu deren weiterer Verbreitung führt. Der Artikel beleuchtet den Ursprung des Begriffs anhand des Rechtsstreits von Barbara Streisand um ein Luftbild ihres Anwesens und die tatsächliche Prägung des Begriffs durch Mike Masnick im Zusammenhang mit einem 'Pissoir'-Fall.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-03-19-nerd-enzyklop%C3%A4die-9---der-streisand-effekt/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-9.jpg"
+        },
+        {
+            "id": "2023-nerdenz-8",
+            "title": "Hello World hat einen Bug",
+            "description": "Dieser Artikel behandelt Die Nerd Enzyklopädie 8 - Hello World hat einen Bug und bietet praktische Einblicke in das Thema.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-03-16-nerd-enzyklop%C3%A4die-8---hello-world-hat-einen-bug/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-8.jpg"
+        },
+        {
+            "id": "2023-nerdenz-7",
+            "title": "Das allererste Easter-Egg",
+            "description": "Eine historische Erkundung aus der 'Nerd Enzyklopädie' über die Ursprünge von 'Easter Eggs' in Software und Spielen. Der Artikel beleuchtet frühe Beispiele wie den 'make love'-Befehl und das Spiel 'Moonlander', konzentriert sich aber auf das erste bekannte Easter Egg in Ataris 'Adventure' von Warren Robinett und die Prägung des Begriffs durch Steve Wright.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-03-13-nerd-enzyklop%C3%A4die-7---das-allererste-easter-egg/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-7.jpg"
+        },
+        {
+            "id": "2023-nerdenz-6",
+            "title": "Die Entstehungsgeschichte von Activision",
+            "description": "Dieser Artikel behandelt Die Nerd Enzyklopädie 6 - Die Entstehungsgeschichte von Activision und bietet praktische Einblicke in das Thema.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-03-10-nerd-enzyklop%C3%A4die-6---die-entstehungsgeschichte-von-activision/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-6.jpg"
+        },
+        {
+            "id": "2023-nerdenz-5",
+            "title": "Gesehen, gelacht, F8",
+            "description": "Dieser Artikel aus der 'Nerd Enzyklopädie' beleuchtet die Herkunft des Ausdrucks 'Gesehen, gelacht, F8' im Kontext der frühen Computer-Dateiverwaltung. Er erklärt die Rolle des Norton Commanders und seiner Klone, wie dem Total Commander, und wie die Funktionstaste F8 zum Löschen von Dateien zu einem humorvollen Ausdruck für das Verwerfen enttäuschender Software oder Medien wurde.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-03-07-nerd-enzyklop%C3%A4die-5---gesehen-gelacht-f8/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-5.jpg"
+        },
+        {
+            "id": "2023-nerdenz-4",
+            "title": "RegExen — Jetzt hast du zwei Probleme",
+            "description": "Eine humorvolle und kritische Auseinandersetzung mit regulären Ausdrücken (RegEx) und dem bekannten Programmierer-Meme 'Jetzt hast du zwei Probleme'. Der Artikel beleuchtet die Komplexität, den Missbrauch und die Sicherheitsrisiken (Catastrophic Backtracking, ReDOS) von RegEx und verfolgt die Ursprünge des berühmten Zitats.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-03-04-nerd-enzyklop%C3%A4die-4---regexen--jetzt-hast-du-zwei-probleme/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-4.jpg"
+        },
+        {
+            "id": "2023-nerdenz-640k-speicher",
+            "title": "640K Speicher sind genug",
+            "description": "Eine Untersuchung aus der 'Nerd Enzyklopädie' über das berühmte, aber oft falsch zugeschriebene Zitat von Bill Gates: '640K Speicher sind genug'. Der Artikel entlarvt den Mythos, dass Gates diese Aussage je gemacht hat, und verfolgt die Ursprünge der Fehlzuschreibung in verschiedenen Publikationen, während er die Hartnäckigkeit des Gerüchts beleuchtet.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2023,
+            "url": "https://nickyreinert.de/2023/2023-03-01-die-nerd-enzyklop%C3%A4die---640k-speicher-sind-genug/",
+            "image": "docs/gfx/screenshots/nerdenz/2023-nerdenz-640k-speicher.jpg"
+        },
+        {
+            "id": "2022-nerdenz-computer-sind-nicht-puenktlich",
+            "title": "Computer sind nicht pünktlich",
+            "description": "Eine umfassende Erkundung aus der 'Nerd Enzyklopädie' über die Herausforderungen von Computern bei der Zeitmessung und -verarbeitung. Der Artikel beleuchtet historische Zeitfehler wie das Jahr-2038-Problem und den Y2K-Bug, zukünftige Limitierungen von 64-Bit-Systemen, die Komplexität von Schaltsekunden und die Ursachen für die 'Unpünktlichkeit' von Computern.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2022,
+            "url": "https://nickyreinert.de/2022/2022-01-30-die-nerd-enzyklop%C3%A4die/",
+            "image": "docs/gfx/screenshots/nerdenz/2022-nerdenz-computer-sind-nicht-puenktlich.jpg"
+        },
+        {
+            "id": "2022-nerdenz-1-byte-8-bit",
+            "title": "Warum ist 1 Byte 8 Bit groß?",
+            "description": "Eine detaillierte historische und technische Erklärung, warum ein Byte heute standardmäßig 8 Bit groß ist. Der Artikel beleuchtet die Ursprünge des Begriffs 'Byte', die Entwicklung von Bit-Größen in frühen Computersystemen, die Rolle von ASCII und IBM bei der Etablierung des 8-Bit-Standards und die spätere offizielle Normierung sowie die Einführung des Begriffs 'Oktett'.",
+            "category": "nerdenz",
+            "tags": [],
+            "year": 2022,
+            "url": "https://nickyreinert.de/2022/2022-01-15-die-nerd-enzyklop%C3%A4die---warum-ist-1-byte-8-bit-gro%C3%9F/",
+            "image": "docs/gfx/screenshots/nerdenz/2022-nerdenz-1-byte-8-bit.jpg"
+        }
+    ]
+}

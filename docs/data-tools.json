@@ -1,0 +1,483 @@
+{
+    "projects": [
+        {
+            "id": "2026-dborakel",
+            "title": "DB Orakel",
+            "description": "Experiment zur Vorhersage der Pünktlichkeit der Deutschen Bahn auf Basis historischer Verspätungsdaten, Kraftstoffpreise, Wetter- und Feiertagssignale.",
+            "category": "tool",
+            "tags": [
+                "Daten",
+                "Analyse"
+            ],
+            "year": 2026,
+            "url": "https://db-orakel.de",
+            "image": "gfx/screenshots/placeholder.png"
+        },
+        {
+            "id": "2026-bofh",
+            "title": "KI-Honeypot – BOFH",
+            "description": "Honeypot für KI-Crawler, der Bot-Verhalten aufzeichnet und die Widerstandsfähigkeit gegenüber Prompt-Injection testet.",
+            "category": "tool",
+            "tags": [
+                "KI",
+                "Sicherheit"
+            ],
+            "year": 2026,
+            "url": "https://bofh.1-1-1.de/",
+            "image": "docs/gfx/screenshots/tool/2026-bofh.jpg"
+        },
+        {
+            "id": "2023-primes",
+            "title": "Primzahlen-Web-App",
+            "description": "Interaktive JavaScript-Visualisierung von Primzahlen auf Spiralstrukturen. Unterstützt konfigurierbare Skalierung und Farbgebung.",
+            "category": "tool",
+            "tags": [
+                "Daten",
+                "Spaß"
+            ],
+            "year": 2023,
+            "url": "https://primes.nickyreinert.de",
+            "image": "docs/gfx/screenshots/tool/2023-primes.jpg"
+        },
+        {
+            "id": "2025-mirror",
+            "title": "Header Mirror",
+            "description": "Spiegelt den Kontext von HTTP-Anfragen zur Fehlersuche bei Proxy- und CDN-Konfigurationen. Zeigt technisch relevante Anfragedaten an.",
+            "category": "tool",
+            "tags": [
+                "Entwicklerwerkzeuge",
+                "Sicherheit"
+            ],
+            "year": 2025,
+            "url": "https://9000.1-1-1.de/",
+            "image": "docs/gfx/screenshots/tool/2025-mirror.jpg"
+        },
+        {
+            "id": "2026-text",
+            "title": "Text Transformer",
+            "description": "Browserbasierte Textumwandlung, die vollständig lokal im Browser ausgeführt wird. Unterstützt Fullwidth, Flip, Durchgestrichen, Small Caps und Zalgo.",
+            "category": "tool",
+            "tags": [
+                "Text",
+                "Entwicklerwerkzeuge"
+            ],
+            "year": 2026,
+            "url": "seiten/2026-text.html",
+            "image": "gfx/screenshots/placeholder.png"
+        },
+        {
+            "id": "2026-faces",
+            "title": "Faces of Joy",
+            "description": "Durchsuchbare Sammlung von ASCII- und Unicode-Textgesichtern mit Kopierfunktion und Favoritenverwaltung.",
+            "category": "tool",
+            "tags": [
+                "Text",
+                "Spaß"
+            ],
+            "year": 2026,
+            "url": "seiten/2026-faces.html",
+            "image": "gfx/screenshots/placeholder.png"
+        },
+        {
+            "id": "2026-osint",
+            "title": "OSINT-Werkzeugverzeichnis",
+            "description": "Durchsuchbares Verzeichnis von Open-Source-Intelligence-Werkzeugen mit Kategorien und Beschreibungen.",
+            "category": "tool",
+            "tags": [
+                "Datenschutz",
+                "Sicherheit",
+                "Daten"
+            ],
+            "year": 2026,
+            "url": "seiten/2026-osint.html",
+            "image": "gfx/screenshots/placeholder.png"
+        },
+        {
+            "id": "2026-aya",
+            "title": "AYA – Bist du anonym?",
+            "description": "Interaktive Datenschutzprüfung im Browser mit Fingerprinting-Signalen, Leak-Indikatoren und lokal erkennbaren Browsereigenschaften.",
+            "category": "tool",
+            "tags": [
+                "Datenschutz",
+                "Sicherheit"
+            ],
+            "year": 2026,
+            "url": "seiten/2026-aya.html",
+            "image": "gfx/screenshots/placeholder.png"
+        },
+        {
+            "id": "2026-nine",
+            "title": "9 – Text-Sharing per WebRTC",
+            "description": "Serverloses Peer-to-Peer-Werkzeug zum sicheren Austausch von Text zwischen Geräten über verschlüsselte WebRTC-Verbindungen. Kopplung per QR-Code oder 6-stelligem Code, ganz ohne Registrierung.",
+            "category": "tool",
+            "tags": [
+                "Entwicklerwerkzeuge",
+                "Datenschutz"
+            ],
+            "year": 2026,
+            "url": "https://9.1-1-1.de/",
+            "image": "docs/gfx/screenshots/tool/2026-nine.jpg"
+        },
+        {
+            "id": "2026-confidence-calculator",
+            "title": "The Confidence Calculator",
+            "description": "Web-Tool für A/B-Tests: berechnet Konfidenzniveaus, p-Werte und statistische Power für bis zu 5 Varianten, samt verständlichen Erklärungen gegen p-Hacking.",
+            "category": "tool",
+            "tags": [
+                "Daten",
+                "Entwicklerwerkzeuge"
+            ],
+            "year": 2026,
+            "url": "https://confidence.nickyreinert.de",
+            "image": "docs/gfx/screenshots/tool/2026-confidence-calculator.jpg"
+        },
+        {
+            "id": "2026-f1lo",
+            "title": "F1LO – Fitness Logger",
+            "description": "Selbstgebaute, werbefreie Fitness-Tracking-PWA nach der „Grease the Groove“-Methode mit Geräte-Sync über Firebase, Gamification und Supplement-Tracking.",
+            "category": "tool",
+            "tags": [
+                "Fitness",
+                "Datenschutz"
+            ],
+            "year": 2026,
+            "url": "https://f1l0.nickyreinert.de/",
+            "image": "docs/gfx/screenshots/tool/2026-f1lo.jpg"
+        },
+        {
+            "id": "2026-pictero",
+            "title": "Pictero",
+            "description": "Browserbasierte Werkzeugkiste für einfache Bildbearbeitung: Zuschneiden, Skalieren, Farbkorrektur, OCR, ASCII-Konvertierung und EXIF-Anzeige in einem Tool.",
+            "category": "tool",
+            "tags": [
+                "Bilder",
+                "Entwicklerwerkzeuge"
+            ],
+            "year": 2026,
+            "url": "https://pictero.com",
+            "image": "docs/gfx/screenshots/tool/2026-pictero.jpg"
+        },
+        {
+            "id": "2026-verbote-dashboard",
+            "title": "Verbote-Dashboard",
+            "description": "Interaktive Visualisierung, die Wahlprogramme deutscher Parteien mit mehreren KI-Modellen auf explizite und semantische Verbote untersucht und die Ergebnisse pro Modell und Partei vergleichbar macht.",
+            "category": "tool",
+            "tags": [
+                "KI",
+                "Daten",
+                "Kultur"
+            ],
+            "year": 2026,
+            "url": "https://verbote.nickyreinert.de/",
+            "image": "docs/gfx/screenshots/tool/2026-verbote-dashboard.jpg"
+        },
+        {
+            "id": "2025-moneymoney-analyzer",
+            "title": "MoneyMoney Dashboard",
+            "description": "Browserbasiertes Analyse-Tool für MoneyMoney-Kontoexporte: zeigt Einnahmen/Ausgaben-Trends, wiederkehrende Kosten und ein filterbares Kontobuch – alles lokal, ohne Datenübertragung an einen Server.",
+            "category": "tool",
+            "tags": [
+                "Finanzen",
+                "Datenschutz",
+                "Daten"
+            ],
+            "year": 2025,
+            "url": "https://money.nickyreinert.de/",
+            "image": "docs/gfx/screenshots/tool/2025-moneymoney-analyzer.jpg"
+        },
+        {
+            "id": "2025-video-orga",
+            "title": "VideoOrga",
+            "description": "Automatische Analyse und Verschlagwortung der eigenen Videosammlung mit lokal auf der GPU laufenden KI-Modellen. Alle Metadaten werden in einer SQLite-Datenbank mit Vorschaubildern und Audio-Transkription gespeichert. Mit Web-Frontend zum Durchstöbern der Datenbank.",
+            "category": "tool",
+            "tags": [
+                "Multimedia",
+                "KI",
+                "Produktivität"
+            ],
+            "year": 2025,
+            "url": "https://github.com/nickyreinert/videoOrga",
+            "image": "docs/gfx/screenshots/tool/2025-video-orga.jpg"
+        },
+        {
+            "id": "2024-hidey",
+            "title": "Hidey",
+            "description": "JavaScript-Steganographie-Tool, das versteckte Botschaften als Binärcode in unsichtbaren Zeichen im Text kodiert.",
+            "category": "tool",
+            "tags": [
+                "Text",
+                "Sicherheit",
+                "Entwicklerwerkzeuge"
+            ],
+            "year": 2024,
+            "url": "https://hidey.nickyreinert.de",
+            "image": "docs/gfx/screenshots/tool/2024-hidey.jpg"
+        },
+        {
+            "id": "2023-freecoffee",
+            "title": "Freecoffee – Der Stullen-Generator",
+            "description": "JavaScript-Web-App, die zufällige Belag-Kombinationen für Stullen generiert, wenn die Entscheidung schwerfällt.",
+            "category": "tool",
+            "tags": [
+                "Spiel",
+                "Entwicklerwerkzeuge"
+            ],
+            "year": 2023,
+            "url": "https://freecoffee.de",
+            "image": "docs/gfx/screenshots/tool/2023-freecoffee.jpg"
+        },
+        {
+            "id": "2021-maze",
+            "title": "Maze!",
+            "description": "JavaScript-Browserspiel, bei dem ein Labyrinth in möglichst kurzer Zeit gelöst werden muss. Konfigurierbare Parameter und Export-Funktion für generierte Labyrinthe.",
+            "category": "tool",
+            "tags": [
+                "Spiel",
+                "Entwicklerwerkzeuge"
+            ],
+            "year": 2021,
+            "url": "https://nickyreinert.github.io/maze",
+            "image": "docs/gfx/screenshots/tool/2021-maze.jpg"
+        },
+        {
+            "id": "2019-abbreviator",
+            "title": "AbbreViator (tm)",
+            "description": "Kürzt lange Texte automatisch, indem Wörter durch Abkürzungen ersetzt werden, inklusive Abkürzungsverzeichnis – praktisch für wortreiche Fachtexte.",
+            "category": "tool",
+            "tags": [
+                "Text",
+                "Entwicklerwerkzeuge"
+            ],
+            "year": 2019,
+            "url": "https://abbreviator.nickyreinert.de/",
+            "image": "docs/gfx/screenshots/tool/2019-abbreviator.jpg"
+        },
+        {
+            "id": "2018-coii",
+            "title": "COII – Cookie Opt-In Interface",
+            "description": "WordPress-Plugin, das Besuchern vor dem Laden von Tracking-Skripten wie Google Analytics eine Einwilligung abfragt und die Entscheidung per Cookie speichert.",
+            "category": "tool",
+            "tags": [
+                "WordPress",
+                "Datenschutz"
+            ],
+            "year": 2018,
+            "url": "https://nickyreinert.de/2018/2018-03-03-coii/",
+            "image": "docs/gfx/screenshots/tool/2018-coii.jpg"
+        },
+        {
+            "id": "2017-iso-toleranzen",
+            "title": "Excel-Vorlage für ISO-Toleranzen",
+            "description": "Berechnet automatisch die Passungsart (Spiel-, Übergangs- oder Presspassung) zwischen Welle und Bohrung anhand von Nennmaßen und Toleranzwerten.",
+            "category": "tool",
+            "tags": [
+                "VBA"
+            ],
+            "year": 2017,
+            "url": "https://nickyreinert.de/2017/2017-09-26-excel-vorlage-fuer-iso-toleranzen/",
+            "image": "docs/gfx/screenshots/tool/2017-iso-toleranzen.jpg"
+        },
+        {
+            "id": "2012-wordcloud-powerpoint",
+            "title": "WordCloud-Excel-Vorlage für PowerPoint",
+            "description": "VBA-Skript, das beliebigen Text in Einzelwörter zerlegt, zählt und sortiert und daraus eine PowerPoint-Folie mit größenskalierter Wordcloud erzeugt.",
+            "category": "tool",
+            "tags": [
+                "VBA"
+            ],
+            "year": 2012,
+            "url": "https://nickyreinert.de/2012/2012-07-23-wordcloud-in-powerpoint/",
+            "image": "docs/gfx/screenshots/tool/2012-wordcloud-powerpoint.jpg"
+        },
+        {
+            "id": "wordpress-faq",
+            "title": "WordPress FAQ",
+            "description": "Community-Wissensdatenbank mit News, Anleitungen, Kompatibilitäts-Troubleshooting und Plugin-Vergleichen rund um WordPress, größtenteils aus Reddit-Diskussionen zusammengetragen.",
+            "category": "tool",
+            "tags": [
+                "WordPress"
+            ],
+            "year": 2026,
+            "url": "https://wordpress-faq.com/",
+            "image": "docs/gfx/screenshots/tool/wordpress-faq.jpg"
+        },
+        {
+            "id": "diskaudit",
+            "title": "DiskAudit",
+            "description": "macOS-App, die die Festplatte scannt und große Dateien und Ordner visualisiert – nach Größe, Dateityp oder Ordnerstruktur.",
+            "category": "tool",
+            "tags": [
+                "Entwicklerwerkzeuge"
+            ],
+            "year": 2026,
+            "url": "https://github.com/nickyreinert/DiskAudit",
+            "image": "docs/gfx/screenshots/tool/diskaudit.jpg"
+        },
+        {
+            "id": "flabbi-pyrd",
+            "title": "flabbi-pyrd",
+            "description": "Containerisierte JavaScript-Web-App, laut Repo-Beschreibung ein Klon eines bekannten Spielprinzips – inklusive Docker-Setup.",
+            "category": "tool",
+            "tags": [
+                "Spiel",
+                "Entwicklerwerkzeuge"
+            ],
+            "year": 2025,
+            "url": "https://flabbi-pyrd.1-1-1.de/",
+            "image": "docs/gfx/screenshots/tool/flabbi-pyrd.jpg"
+        },
+        {
+            "id": "dynamictagloader",
+            "title": "DynamicTagLoader",
+            "description": "Debugging-Interface, das Tag-Manager-Skripte wie Adobe Launch nachlädt und ausgehende Requests (XHR, Tracking-Pixel, Fetch) samt GET-Parametern im Frontend sichtbar macht.",
+            "category": "tool",
+            "tags": [
+                "Entwicklerwerkzeuge",
+                "Datenschutz"
+            ],
+            "year": 2024,
+            "url": "https://github.com/nickyreinert/DynamicTagLoader",
+            "image": "docs/gfx/screenshots/tool/dynamictagloader.jpg"
+        },
+        {
+            "id": "monitortrackingcoverage",
+            "title": "MonitorTrackingCoverage",
+            "description": "Python-Skript mit Selenium/Headless-Chrome, das zwei Tracking-Setups für eine Liste von URLs vergleicht, um zu prüfen, ob Änderungen an Adobe-Data-Collection-Implementierungen bestehendes Tracking brechen.",
+            "category": "tool",
+            "tags": [
+                "Entwicklerwerkzeuge",
+                "Daten"
+            ],
+            "year": 2024,
+            "url": "https://github.com/nickyreinert/MonitorTrackingCoverage",
+            "image": "docs/gfx/screenshots/tool/monitortrackingcoverage.jpg"
+        },
+        {
+            "id": "bitnetrtr",
+            "title": "bitNetRTR",
+            "description": "Web-Oberfläche rund um Microsofts BitNet-Framework, mit der sich 1-Bit-Sprachmodelle auch auf schwacher Hardware wie NAS-Systemen betreiben lassen.",
+            "category": "tool",
+            "tags": [
+                "KI",
+                "Entwicklerwerkzeuge"
+            ],
+            "year": 2026,
+            "url": "https://github.com/nickyreinert/bitNetRTR",
+            "image": "docs/gfx/screenshots/tool/bitnetrtr.jpg"
+        },
+        {
+            "id": "wordcloud-wordpress",
+            "title": "WordCloud for WordPress",
+            "description": "WordPress-Plugin, das Wordclouds aus URLs, Datenbankabfragen, Custom Fields oder per Bild-OCR erzeugt, auf Basis von wordcloud2.js.",
+            "category": "tool",
+            "tags": [
+                "WordPress",
+                "Text"
+            ],
+            "year": 2018,
+            "url": "https://github.com/nickyreinert/wordCloud-for-Wordpress",
+            "image": "docs/gfx/screenshots/tool/wordcloud-wordpress.jpg"
+        },
+        {
+            "id": "automated-wordpress-installation",
+            "title": "Automated WordPress Installation",
+            "description": "Shell-Skript, das eine komplette WordPress-Installation samt Datenbank, Nutzer und zufällig generierten Inhalten (Beiträge, Kategorien, Tags, Bilder) automatisiert aufsetzt.",
+            "category": "tool",
+            "tags": [
+                "WordPress",
+                "Entwicklerwerkzeuge"
+            ],
+            "year": 2020,
+            "url": "https://github.com/nickyreinert/AutomatedWordPressInstallation",
+            "image": "docs/gfx/screenshots/tool/automated-wordpress-installation.jpg"
+        },
+        {
+            "id": "wpfakepagegenerator",
+            "title": "WP Fake Page Generator",
+            "description": "WordPress-Plugin zur automatisierten Erzeugung von Platzhalter- und Testseiten für Entwicklungs- und Demo-Umgebungen.",
+            "category": "tool",
+            "tags": [
+                "WordPress",
+                "Entwicklerwerkzeuge"
+            ],
+            "year": 2018,
+            "url": "https://github.com/nickyreinert/WPFakePageGenerator",
+            "image": "docs/gfx/screenshots/tool/wpfakepagegenerator.jpg"
+        },
+        {
+            "id": "completewebserverbackup",
+            "title": "Complete Web Server Backup",
+            "description": "Shell-Skript, das automatisiert alle Datenbanken und virtuellen Hosts eines Apache-Servers verschlüsselt per Duplicity sichert.",
+            "category": "tool",
+            "tags": [
+                "Entwicklerwerkzeuge",
+                "Sicherheit"
+            ],
+            "year": 2018,
+            "url": "https://github.com/nickyreinert/completeWebServerBackup",
+            "image": "docs/gfx/screenshots/tool/completewebserverbackup.jpg"
+        },
+        {
+            "id": "data-heatmap",
+            "title": "data-heatmap",
+            "description": "WordPress-Plugin, das dreispaltige CSV-Daten (x, y, Wert) in eine farblich abgestufte Heatmap-Tabelle umwandelt.",
+            "category": "tool",
+            "tags": [
+                "WordPress",
+                "Daten"
+            ],
+            "year": 2018,
+            "url": "https://github.com/nickyreinert/data-heatmap",
+            "image": "docs/gfx/screenshots/tool/data-heatmap.jpg"
+        },
+        {
+            "id": "csvexportdialogforexcel",
+            "title": "CSV-Export-Dialog für Excel",
+            "description": "VBA-Skript, das einen Dialog zum Export von Excel-Tabellen als CSV bereitstellt – mit wählbarem Trennzeichen und Textbegrenzer.",
+            "category": "tool",
+            "tags": [
+                "VBA"
+            ],
+            "year": 2018,
+            "url": "https://github.com/nickyreinert/csvExportDialogForExcel",
+            "image": "docs/gfx/screenshots/tool/csvexportdialogforexcel.jpg"
+        },
+        {
+            "id": "memcp",
+            "title": "meMCP",
+            "description": "FastAPI-basierter Model-Context-Protocol-Server, der berufliche Profildaten aus GitHub, Medium, LinkedIn und RSS-Feeds bündelt und per LLM-gestützter Anreicherung als REST-API bereitstellt.",
+            "category": "tool",
+            "tags": [
+                "KI",
+                "Entwicklerwerkzeuge"
+            ],
+            "year": 2026,
+            "url": "https://github.com/nickyreinert/meMCP",
+            "image": "docs/gfx/screenshots/tool/memcp.jpg"
+        },
+        {
+            "id": "blunschli",
+            "title": "Blunschli",
+            "description": "Browserbasiertes Risk-artiges Strategiespiel für 2-10 Spieler mit öffentlichen oder privaten Sessions und Telegram-Integration für Zug-Benachrichtigungen.",
+            "category": "tool",
+            "tags": [
+                "Spiel"
+            ],
+            "year": 2026,
+            "url": "https://blunschli.1-1-1.de/",
+            "image": "docs/gfx/screenshots/tool/blunschli.jpg"
+        },
+        {
+            "id": "freds-blitz-bude",
+            "title": "Freds Blitz-Bude",
+            "description": "Browserbasiertes Lernspiel für Kinder: Am eigenen Gemüsestand verkaufen, Wechselgeld berechnen und nebenbei Kopfrechnen üben – mit Schwierigkeitsstufen und Bewertungssystem.",
+            "category": "tool",
+            "tags": [
+                "Spiel"
+            ],
+            "year": 2026,
+            "url": "https://freds-blitz-bude.de/",
+            "image": "docs/gfx/screenshots/tool/freds-blitz-bude.jpg"
+        }
+    ]
+}
