@@ -275,7 +275,7 @@ function restoreStateFromUrl() {
     const tagsParam = params.get('tags');
 
     if (search) {
-        searchQuery = search;
+        searchQuery = search.toLowerCase();
         document.getElementById('searchInput').value = search;
     }
 
