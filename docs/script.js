@@ -185,7 +185,8 @@ function renderProjects() {
             
         if (!matchesSearch || !matchesTags) return;
         
-        const imgSrc = `gfx/screenshots/${project.category}/${project.id}.jpg`;
+        const imgSrc = (project.image || `gfx/screenshots/${project.category}/${project.id}.jpg`)
+            .replace(/^docs\//, '');
 
         const cardHtml = `
             <article class="card">

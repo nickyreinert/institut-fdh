@@ -38,7 +38,7 @@
             ],
             "year": 2026,
             "url": "https://bofh.1-1-1.de/",
-            "image": "docs/gfx/screenshots/tool/2026-bofh.jpg"
+            "image": "gfx/screenshots/tool/2026-bofh.jpg"
         },
         {
             "id": "2023-primes",
@@ -51,7 +51,7 @@
             ],
             "year": 2023,
             "url": "https://primes.nickyreinert.de",
-            "image": "docs/gfx/screenshots/tool/2023-primes.jpg"
+            "image": "gfx/screenshots/tool/2023-primes.jpg"
         },
         {
             "id": "2025-mirror",
@@ -64,7 +64,7 @@
             ],
             "year": 2025,
             "url": "https://9000.1-1-1.de/",
-            "image": "docs/gfx/screenshots/tool/2025-mirror.jpg"
+            "image": "gfx/screenshots/tool/2025-mirror.jpg"
         },
         {
             "id": "2026-text",
@@ -130,7 +130,7 @@
             ],
             "year": 2026,
             "url": "https://9.1-1-1.de/",
-            "image": "docs/gfx/screenshots/tool/2026-nine.jpg"
+            "image": "gfx/screenshots/tool/2026-nine.jpg"
         },
         {
             "id": "2026-confidence-calculator",
@@ -143,7 +143,7 @@
             ],
             "year": 2026,
             "url": "https://confidence.nickyreinert.de",
-            "image": "docs/gfx/screenshots/tool/2026-confidence-calculator.jpg"
+            "image": "gfx/screenshots/tool/2026-confidence-calculator.jpg"
         },
         {
             "id": "2026-f1lo",
@@ -156,7 +156,7 @@
             ],
             "year": 2026,
             "url": "https://f1l0.nickyreinert.de/",
-            "image": "docs/gfx/screenshots/tool/2026-f1lo.jpg"
+            "image": "gfx/screenshots/tool/2026-f1lo.jpg"
         },
         {
             "id": "2026-pictero",
@@ -169,7 +169,7 @@
             ],
             "year": 2026,
             "url": "https://pictero.com",
-            "image": "docs/gfx/screenshots/tool/2026-pictero.jpg"
+            "image": "gfx/screenshots/tool/2026-pictero.jpg"
         },
         {
             "id": "2026-verbote-dashboard",
@@ -183,7 +183,7 @@
             ],
             "year": 2026,
             "url": "https://verbote.nickyreinert.de/",
-            "image": "docs/gfx/screenshots/tool/2026-verbote-dashboard.jpg"
+            "image": "gfx/screenshots/tool/2026-verbote-dashboard.jpg"
         },
         {
             "id": "2025-moneymoney-analyzer",
@@ -197,7 +197,7 @@
             ],
             "year": 2025,
             "url": "https://money.nickyreinert.de/",
-            "image": "docs/gfx/screenshots/tool/2025-moneymoney-analyzer.jpg"
+            "image": "gfx/screenshots/tool/2025-moneymoney-analyzer.jpg"
         },
         {
             "id": "2025-video-orga",
@@ -211,7 +211,7 @@
             ],
             "year": 2025,
             "url": "https://github.com/nickyreinert/videoOrga",
-            "image": "docs/gfx/screenshots/tool/2025-video-orga.jpg"
+            "image": "gfx/screenshots/tool/2025-video-orga.jpg"
         },
         {
             "id": "2024-hidey",
@@ -225,7 +225,7 @@
             ],
             "year": 2024,
             "url": "https://hidey.nickyreinert.de",
-            "image": "docs/gfx/screenshots/tool/2024-hidey.jpg"
+            "image": "gfx/screenshots/tool/2024-hidey.jpg"
         },
         {
             "id": "2023-freecoffee",
@@ -238,7 +238,7 @@
             ],
             "year": 2023,
             "url": "https://freecoffee.de",
-            "image": "docs/gfx/screenshots/tool/2023-freecoffee.jpg"
+            "image": "gfx/screenshots/tool/2023-freecoffee.jpg"
         },
         {
             "id": "2021-maze",
@@ -251,7 +251,7 @@
             ],
             "year": 2021,
             "url": "https://nickyreinert.github.io/maze",
-            "image": "docs/gfx/screenshots/tool/2021-maze.jpg"
+            "image": "gfx/screenshots/tool/2021-maze.jpg"
         },
         {
             "id": "2019-abbreviator",
@@ -264,7 +264,7 @@
             ],
             "year": 2019,
             "url": "https://abbreviator.nickyreinert.de/",
-            "image": "docs/gfx/screenshots/tool/2019-abbreviator.jpg"
+            "image": "gfx/screenshots/tool/2019-abbreviator.jpg"
         },
         {
             "id": "2018-coii",
@@ -277,7 +277,7 @@
             ],
             "year": 2018,
             "url": "https://nickyreinert.de/2018/2018-03-03-coii/",
-            "image": "docs/gfx/screenshots/tool/2018-coii.jpg"
+            "image": "gfx/screenshots/tool/2018-coii.jpg"
         },
         {
             "id": "2017-iso-toleranzen",
@@ -289,7 +289,7 @@
             ],
             "year": 2017,
             "url": "https://nickyreinert.de/2017/2017-09-26-excel-vorlage-fuer-iso-toleranzen/",
-            "image": "docs/gfx/screenshots/tool/2017-iso-toleranzen.jpg"
+            "image": "gfx/screenshots/tool/2017-iso-toleranzen.jpg"
         },
         {
             "id": "2012-wordcloud-powerpoint",
@@ -301,7 +301,7 @@
             ],
             "year": 2012,
             "url": "https://nickyreinert.de/2012/2012-07-23-wordcloud-in-powerpoint/",
-            "image": "docs/gfx/screenshots/tool/2012-wordcloud-powerpoint.jpg"
+            "image": "gfx/screenshots/tool/2012-wordcloud-powerpoint.jpg"
         },
         {
             "id": "wordpress-faq",
@@ -313,7 +313,7 @@
             ],
             "year": 2026,
             "url": "https://wordpress-faq.com/",
-            "image": "docs/gfx/screenshots/tool/wordpress-faq.jpg"
+            "image": "gfx/screenshots/tool/wordpress-faq.jpg"
         },
         {
             "id": "diskaudit",
@@ -325,7 +325,7 @@
             ],
             "year": 2026,
             "url": "https://github.com/nickyreinert/DiskAudit",
-            "image": "docs/gfx/screenshots/tool/diskaudit.jpg"
+            "image": "gfx/screenshots/tool/diskaudit.jpg"
         },
         {
             "id": "flabbi-pyrd",
@@ -338,7 +338,7 @@
             ],
             "year": 2025,
             "url": "https://flabbi-pyrd.1-1-1.de/",
-            "image": "docs/gfx/screenshots/tool/flabbi-pyrd.jpg"
+            "image": "gfx/screenshots/tool/flabbi-pyrd.jpg"
         },
         {
             "id": "dynamictagloader",
@@ -351,7 +351,7 @@
             ],
             "year": 2024,
             "url": "https://github.com/nickyreinert/DynamicTagLoader",
-            "image": "docs/gfx/screenshots/tool/dynamictagloader.jpg"
+            "image": "gfx/screenshots/tool/dynamictagloader.jpg"
         },
         {
             "id": "monitortrackingcoverage",
@@ -364,7 +364,7 @@
             ],
             "year": 2024,
             "url": "https://github.com/nickyreinert/MonitorTrackingCoverage",
-            "image": "docs/gfx/screenshots/tool/monitortrackingcoverage.jpg"
+            "image": "gfx/screenshots/tool/monitortrackingcoverage.jpg"
         },
         {
             "id": "bitnetrtr",
@@ -377,7 +377,7 @@
             ],
             "year": 2026,
             "url": "https://github.com/nickyreinert/bitNetRTR",
-            "image": "docs/gfx/screenshots/tool/bitnetrtr.jpg"
+            "image": "gfx/screenshots/tool/bitnetrtr.jpg"
         },
         {
             "id": "wordcloud-wordpress",
@@ -390,7 +390,7 @@
             ],
             "year": 2018,
             "url": "https://github.com/nickyreinert/wordCloud-for-Wordpress",
-            "image": "docs/gfx/screenshots/tool/wordcloud-wordpress.jpg"
+            "image": "gfx/screenshots/tool/wordcloud-wordpress.jpg"
         },
         {
             "id": "automated-wordpress-installation",
@@ -403,7 +403,7 @@
             ],
             "year": 2020,
             "url": "https://github.com/nickyreinert/AutomatedWordPressInstallation",
-            "image": "docs/gfx/screenshots/tool/automated-wordpress-installation.jpg"
+            "image": "gfx/screenshots/tool/automated-wordpress-installation.jpg"
         },
         {
             "id": "wpfakepagegenerator",
@@ -416,7 +416,7 @@
             ],
             "year": 2018,
             "url": "https://github.com/nickyreinert/WPFakePageGenerator",
-            "image": "docs/gfx/screenshots/tool/wpfakepagegenerator.jpg"
+            "image": "gfx/screenshots/tool/wpfakepagegenerator.jpg"
         },
         {
             "id": "completewebserverbackup",
@@ -429,7 +429,7 @@
             ],
             "year": 2018,
             "url": "https://github.com/nickyreinert/completeWebServerBackup",
-            "image": "docs/gfx/screenshots/tool/completewebserverbackup.jpg"
+            "image": "gfx/screenshots/tool/completewebserverbackup.jpg"
         },
         {
             "id": "data-heatmap",
@@ -442,7 +442,7 @@
             ],
             "year": 2018,
             "url": "https://github.com/nickyreinert/data-heatmap",
-            "image": "docs/gfx/screenshots/tool/data-heatmap.jpg"
+            "image": "gfx/screenshots/tool/data-heatmap.jpg"
         },
         {
             "id": "csvexportdialogforexcel",
@@ -454,7 +454,7 @@
             ],
             "year": 2018,
             "url": "https://github.com/nickyreinert/csvExportDialogForExcel",
-            "image": "docs/gfx/screenshots/tool/csvexportdialogforexcel.jpg"
+            "image": "gfx/screenshots/tool/csvexportdialogforexcel.jpg"
         },
         {
             "id": "memcp",
@@ -467,7 +467,7 @@
             ],
             "year": 2026,
             "url": "https://github.com/nickyreinert/meMCP",
-            "image": "docs/gfx/screenshots/tool/memcp.jpg"
+            "image": "gfx/screenshots/tool/memcp.jpg"
         },
         {
             "id": "blunschli",
@@ -479,7 +479,7 @@
             ],
             "year": 2026,
             "url": "https://blunschli.1-1-1.de/",
-            "image": "docs/gfx/screenshots/tool/blunschli.jpg"
+            "image": "gfx/screenshots/tool/blunschli.jpg"
         },
         {
             "id": "freds-blitz-bude",
@@ -491,7 +491,7 @@
             ],
             "year": 2026,
             "url": "https://freds-blitz-bude.de/",
-            "image": "docs/gfx/screenshots/tool/freds-blitz-bude.jpg"
+            "image": "gfx/screenshots/tool/freds-blitz-bude.jpg"
         }
     ]
 }
