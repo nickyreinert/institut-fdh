@@ -1,6 +1,20 @@
 {
     "projects": [
         {
+            "id": "2026-anim8or",
+            "title": "ANIM8OR",
+            "description": "Verwandelt GPX-Aufzeichnungen von Rad-, Lauf- oder Autotouren in animierte Kartenvideos – als Zeitraffer, mit freier Kamera und individuellem Design",
+            "category": "tool",
+            "tags": [
+                "Video",
+                "GPS",
+                "Sport"
+            ],
+            "year": 2026,
+            "url": "https://a8.1-1-1.de",
+            "image": "gfx/screenshots/tool/2026-anim8or.png"
+        },
+        {
             "id": "2026-dborakel",
             "title": "DB Orakel",
             "description": "Experiment zur Vorhersage der Pünktlichkeit der Deutschen Bahn auf Basis historischer Verspätungsdaten, Kraftstoffpreise, Wetter- und Feiertagssignale.",
@@ -11,7 +25,7 @@
             ],
             "year": 2026,
             "url": "https://db-orakel.de",
-            "image": "gfx/screenshots/2026-db-orakel.png"
+            "image": "gfx/screenshots/tool/2026-db-orakel.png"
         },
         {
             "id": "2026-bofh",
