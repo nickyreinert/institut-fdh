@@ -1,6 +1,90 @@
 {
     "projects": [
         {
+            "id": "2026-purrr",
+            "title": "Purrrfect",
+            "description": "Ein Katzen-Soduko-Klon!",
+            "category": "tool",
+            "tags": [
+                "Spiel",
+                "Zeivertreib",
+                "Web"
+            ],
+            "year": 2026,
+            "url": "https://purrr.nickyreinert.de/",
+            "image": "gfx/screenshots/tool/2026-purrr.png"
+        },
+        {
+            "id": "2026-kgh",
+            "title": "Katze gegen Hund",
+            "description": "Vier Spiele für zwei Spiele, gegen die Langeweile am Handy.",
+            "category": "tool",
+            "tags": [
+                "Spiel",
+                "Zeivertreib",
+                "Web"
+            ],
+            "year": 2026,
+            "url": "https://kgh.nickyreinert.de/",
+            "image": "gfx/screenshots/tool/2026-kgh.png"
+        },
+        {
+            "id": "2026-doggs",
+            "title": "Doggs",
+            "description": "Eine Web-App zur lokalen Dokumentenverwaltung. Dokumente werden mit OCR erkannt und durch ein lokales LLM klassifiziert. Einfaceh Oberfläche mit vielen Such- und Filtermöglichkeiten.",
+            "category": "tool",
+            "tags": [
+                "Produktivität",
+                "Dokumente",
+                "Web"
+            ],
+            "year": 2026,
+            "url": "https://github.com/nickyreinert/doggs",
+            "image": "gfx/screenshots/tool/2026-doggs.png"
+        },
+        {
+            "id": "2026-fxbrowser",
+            "title": "FXBrowser",
+            "description": "Eine Electron-App, mit der sich Audio-Tracks und Effekte einfacher verwalten lassen. FXBrowser liest Audio-Dateien aus Ordnern ein, anaylisiert sie, erlaubt das einfache abspielen und bietet viele Filter-Funktionen. Der Track kann per Drag&Drop z.B. in die DAW oder eine ander App gezogen werden.",
+            "category": "tool",
+            "tags": [
+                "Electron",
+                "App",
+                "Audio"
+            ],
+            "year": 2026,
+            "url": "https://github.com/nickyreinert/fxBrowser",
+            "image": "gfx/screenshots/tool/2026-fxbrowser.png"
+        },
+        {
+            "id": "2026-seven",
+            "title": "7even",
+            "description": "Eine Web-App und Android-App, die die Netzwerkverbindung des Gerätes in regelmäßigen Abständen überprüft und die Ergebnisse in einer übersichtlichen Statistik darstellt. (Noch in der geschlossenen Testphase)",
+            "category": "tool",
+            "tags": [
+                "Android",
+                "Netzwerk",
+                "Web"
+            ],
+            "year": 2026,
+            "url": "https://7.1-1-1.de/",
+            "image": "gfx/screenshots/tool/2026-7even.png"
+        },
+        {
+            "id": "2026-bört",
+            "title": "BÖRT",
+            "description": "Eine Android-App, mit der Anwendungen und Einstellungen blockiert oder versteckt werden können. (Noch in der geschlossenen Testphase)",
+            "category": "tool",
+            "tags": [
+                "Android",
+                "Sicherheit",
+                "Privacy"
+            ],
+            "year": 2026,
+            "url": "https://play.google.com/store/apps/details?id=de.institut_fdh.boert",
+            "image": "gfx/screenshots/tool/2026-boert.png"
+        },
+        {
             "id": "2026-anim8or",
             "title": "ANIM8OR",
             "description": "Verwandelt GPX-Aufzeichnungen von Rad-, Lauf- oder Autotouren in animierte Kartenvideos – als Zeitraffer, mit freier Kamera und individuellem Design",
