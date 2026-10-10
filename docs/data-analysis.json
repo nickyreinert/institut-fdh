@@ -1,6 +1,34 @@
 {
     "projects": [
         {
+            "id": "2026-plenarprotokolle",
+            "title": "Plenarprotokolle (Teil 1)",
+            "description": "Der erste Teil einer umfassenden Auswertung aller Plenarprotokolle seit 1949",
+            "category": "analysis",
+            "tags": [
+                "Politik",
+                "Plenarprotokolle",
+                "Protokolle"
+            ],
+            "year": 2026,
+            "url": "https://nickyreinert.de/2026/2026-10-06-plenar-protokolle-bundestag-teil-1/",
+            "image": "gfx/screenshots/analysis/2026-plenarprotokolle-1.png"
+        },
+        {
+            "id": "2026-uberblogr",
+            "title": "Uberblogr Ring",
+            "description": "Ein kurze und knackige Analyse über die Verknüpfungsqualität des Webrings `Uberblogr`.",
+            "category": "analysis",
+            "tags": [
+                "Webring",
+                "Blogging",
+                "Web"
+            ],
+            "year": 2026,
+            "url": "https://nickyreinert.de/2026/2026-10-05-state-of-the-ring/",
+            "image": "gfx/screenshots/analysis/2026-ubergblogr.png"
+        },
+        {
             "id": "2025-verbotspartei",
             "title": "Verbotspartei",
             "description": "KI-gestützte Analyse der Wahlprogramme der acht größten deutschen Parteien zur Überprüfung der Behauptung einer „Verbotspartei“. Nutzt mehrere KI-Modelle.",

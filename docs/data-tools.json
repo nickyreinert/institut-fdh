@@ -1,6 +1,20 @@
 {
     "projects": [
         {
+            "id": "2026-sysmon",
+            "title": "iTerm2 System Monitor Widget",
+            "description": "Ein Widget mit verschiedenen System Monitoring Funktionen (CPU, RAM, Netzwerk, ...) für iTerm2",
+            "category": "tool",
+            "tags": [
+                "Sysop",
+                "Admin",
+                "Monitoring"
+            ],
+            "year": 2026,
+            "url": "https://github.com/nickyreinert/iTermSysMon",
+            "image": "gfx/screenshots/tool/sysmon.png"
+        },
+        {
             "id": "2026-purrr",
             "title": "Purrrfect",
             "description": "Ein Katzen-Soduko-Klon!",
