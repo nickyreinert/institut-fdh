@@ -73,7 +73,7 @@
         {
             "id": "2026-seven",
             "title": "7even",
-            "description": "Eine Web-App und Android-App, die die Netzwerkverbindung des Gerätes in regelmäßigen Abständen überprüft und die Ergebnisse in einer übersichtlichen Statistik darstellt. (Noch in der geschlossenen Testphase)",
+            "description": "Eine Web-App und Android-App, die die Netzwerkverbindung des Gerätes in regelmäßigen Abständen überprüft und die Ergebnisse in einer übersichtlichen Statistik darstellt.",
             "category": "tool",
             "tags": [
                 "Android",
@@ -87,7 +87,7 @@
         {
             "id": "2026-bört",
             "title": "BÖRT",
-            "description": "Eine Android-App, mit der Anwendungen und Einstellungen blockiert oder versteckt werden können. (Noch in der geschlossenen Testphase)",
+            "description": "Eine Android-App, mit der Anwendungen und Einstellungen blockiert oder versteckt werden können.",
             "category": "tool",
             "tags": [
                 "Android",
