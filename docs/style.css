@@ -65,6 +65,27 @@ a:hover {
 .amts-header-inner {
     max-width: 960px;
     margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.amts-lang-link,
+.amts-lang-link:visited {
+    flex-shrink: 0;
+    font-size: 11px;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    padding: 3px 8px;
+    color: var(--text);
+    white-space: nowrap;
+}
+
+.amts-lang-link:hover {
+    background: var(--active-bg);
+    border-color: var(--border-dark);
 }
 
 .amts-titles h1 {

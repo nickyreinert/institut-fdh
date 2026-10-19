@@ -1,0 +1,141 @@
+{
+    "projects": [
+        {
+            "id": "2026-plenarprotokolle",
+            "title": "Plenary Minutes (Part 1)",
+            "description": "The first part of a comprehensive analysis of all plenary minutes since 1949",
+            "category": "analysis",
+            "tags": [
+                "Politics",
+                "Plenary Minutes",
+                "Minutes"
+            ],
+            "year": 2026,
+            "url": "https://nickyreinert.de/2026/2026-10-06-plenar-protokolle-bundestag-teil-1/",
+            "image": "gfx/screenshots/analysis/2026-plenarprotokolle-1.png"
+        },
+        {
+            "id": "2026-uberblogr",
+            "title": "Uberblogr Ring",
+            "description": "A short and concise analysis of the link quality of the webring `Uberblogr`.",
+            "category": "analysis",
+            "tags": [
+                "Webring",
+                "Blogging",
+                "Web"
+            ],
+            "year": 2026,
+            "url": "https://nickyreinert.de/2026/2026-10-05-state-of-the-ring/",
+            "image": "gfx/screenshots/analysis/2026-ubergblogr.png"
+        },
+        {
+            "id": "2025-verbotspartei",
+            "title": "Ban Party",
+            "description": "AI-based analysis of the election manifestos of the eight largest German parties to test the claim of a „ban party“. Uses several AI models.",
+            "category": "analysis",
+            "tags": [
+                "AI",
+                "Data",
+                "Analysis",
+                "Culture"
+            ],
+            "year": 2025,
+            "url": "https://nickyreinert.de/2025/2025-12-14-verbotsparteien/",
+            "image": "docs/gfx/screenshots/analysis/2025-verbotspartei.jpg"
+        },
+        {
+            "id": "2026-google-maps-reviews",
+            "title": "Google Maps Reviews – A Closer Look at Deletion Practices",
+            "description": "Analysis of over 38,000 Google Maps reviews from 12 Burgermeister branches: 304 deleted reviews over a seven-month period show that even justified criticism is deleted as “collateral damage“.",
+            "category": "analysis",
+            "tags": [
+                "Data",
+                "Analysis"
+            ],
+            "year": 2026,
+            "url": "https://nickyreinert.de/2026/2026-05-28-google-maps-reviews/",
+            "image": "docs/gfx/screenshots/analysis/2026-google-maps-reviews.jpg"
+        },
+        {
+            "id": "2025-aldi-grenze",
+            "title": "Where Is the Aldi Border?",
+            "description": "Analysis of around 70,000 Google Maps supermarket locations in Germany: the Aldi Nord/Süd border runs through the Ruhr area and then almost horizontally east past Frankfurt; Lidl receives the best ratings on average (4.24 stars).",
+            "category": "analysis",
+            "tags": [
+                "Data",
+                "Analysis"
+            ],
+            "year": 2025,
+            "url": "https://nickyreinert.de/2025/2025-10-26-wo-liegt-die-aldi-grenze/",
+            "image": "docs/gfx/screenshots/analysis/2025-aldi-grenze.jpg"
+        },
+        {
+            "id": "2025-fair-parken",
+            "title": "Fair Parken? – A Privacy and Review Analysis",
+            "description": "Investigation of the parking service provider Fair Parken GmbH: dark patterns in the cookie banner, undisclosed tracking technologies, and a striking rating pattern (15,000+ Google reviews with 4.2 stars vs. 2.2 stars on Trustpilot).",
+            "category": "analysis",
+            "tags": [
+                "Privacy",
+                "Data",
+                "Analysis"
+            ],
+            "year": 2025,
+            "url": "https://nickyreinert.de/2025/2025-10-07-fair-parken/",
+            "image": "docs/gfx/screenshots/analysis/2025-fair-parken.jpg"
+        },
+        {
+            "id": "2025-scam-unternehmertum",
+            "title": "A Fine Line: Scam and Entrepreneurship",
+            "description": "Critical analysis of aggressive mobile game marketing using the example of „Dozer Demolish“: dark patterns, questionable advertising aimed at minors, and a lack of transparency about in-app purchases despite a 0-4 age rating.",
+            "category": "analysis",
+            "tags": [
+                "Privacy",
+                "Culture"
+            ],
+            "year": 2025,
+            "url": "https://nickyreinert.de/2025/2025-08-06-schmaler-grat-scam-und-unternehmertum/",
+            "image": "docs/gfx/screenshots/analysis/2025-scam-unternehmertum.jpg"
+        },
+        {
+            "id": "2021-augenblicke",
+            "title": "Augenblicke – Statistical Analysis of the BVG Flirting Portal",
+            "description": "Analysis of 20,108 entries from 240 BVG lines (2006–2021): peak activity in May 2018, U- and S-Bahn lines produce the most entries, and the word „leider“ (“unfortunately”) appears over 6,000 times.",
+            "category": "analysis",
+            "tags": [
+                "Data",
+                "Culture",
+                "Analysis"
+            ],
+            "year": 2021,
+            "url": "https://nickyreinert.de/2021/2021-01-21-augenblicke-eine-statistische-analyse-des-flirt-portals-der-bvg/",
+            "image": "docs/gfx/screenshots/analysis/2021-augenblicke.jpg"
+        },
+        {
+            "id": "2020-db-ticketpreise",
+            "title": "The Ticket Price System of Deutsche Bahn",
+            "description": "Reverse engineering of the undocumented DB price API based on 90 days of price data: prices vary strongly depending on when a ticket is booked, and Sparpreis fares seem almost random – the result is the alternative price search “nickets.de“.",
+            "category": "analysis",
+            "tags": [
+                "Data",
+                "Analysis"
+            ],
+            "year": 2020,
+            "url": "https://nickyreinert.de/2020/2020-09-09-das-ticket-preis-system-der-deutschen-bahn-oder-wie-findest-du-den-optimalen-fahrschein-preis/",
+            "image": "docs/gfx/screenshots/analysis/2020-db-ticketpreise.jpg"
+        },
+        {
+            "id": "2019-fefe-analyse",
+            "title": "Fefe's Blog – An Analysis",
+            "description": "Evaluation of 43,908 blog entries (2005–2019) using Python and Tableau: Der Spiegel is the most linked source, the most active time is Wednesdays around 5 p.m., plus Fefe's notoriously long compound words.",
+            "category": "analysis",
+            "tags": [
+                "Data",
+                "Culture",
+                "Analysis"
+            ],
+            "year": 2019,
+            "url": "https://nickyreinert.de/2019/2019-11-05-fefes-blog-eine-analyse/",
+            "image": "docs/gfx/screenshots/analysis/2019-fefe-analyse.jpg"
+        }
+    ]
+}

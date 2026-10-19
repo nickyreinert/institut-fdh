@@ -9,6 +9,7 @@ on:
       - 'docs/data-*.json'
       - 'docs/seiten/**'
       - 'docs/index.html'
+      - 'docs/en/index.html'
       - 'scripts/build.py'
 
 permissions:

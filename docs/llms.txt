@@ -2,7 +2,7 @@
 
 > Digitale Experimente, Werkzeuge und Projekte rund um Programmierung, KI, Internetkultur und Datenanalyse.
 
-Website: https://institut-fdh.de/
+Website: https://institut-fdh.de/ (English version: https://institut-fdh.de/en/)
 Maintainer: Nicky Reinert (https://nickyreinert.de)
 Content language: German; the interactive tool pages hosted on this site are available in English and German.
 

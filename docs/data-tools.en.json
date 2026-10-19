@@ -1,0 +1,609 @@
+{
+    "projects": [
+        {
+            "id": "2026-cr34te.it",
+            "title": "cr3te.it",
+            "description": "An open website that lets visitors anonymously reshape it with their AI: describe the change you want, paste in the AI result, and modify the site together.",
+            "category": "tool",
+            "tags": [
+                "AI",
+                "Experiment",
+                "Web"
+            ],
+            "year": 2026,
+            "url": "https://cr34te.it",
+            "image": "gfx/screenshots/tool/2026-cr34te.it.png"
+        },
+        {
+            "id": "2026-sysmon",
+            "title": "iTerm2 System Monitor Widget",
+            "description": "A widget with various system monitoring functions (CPU, RAM, network, ...) for iTerm2",
+            "category": "tool",
+            "tags": [
+                "Sysadmin",
+                "Admin",
+                "Monitoring"
+            ],
+            "year": 2026,
+            "url": "https://github.com/nickyreinert/iTermSysMon",
+            "image": "gfx/screenshots/tool/sysmon.png"
+        },
+        {
+            "id": "2026-purrr",
+            "title": "Purrrfect",
+            "description": "A cat Sudoku clone!",
+            "category": "tool",
+            "tags": [
+                "Game",
+                "Pastime",
+                "Web"
+            ],
+            "year": 2026,
+            "url": "https://purrr.nickyreinert.de/",
+            "image": "gfx/screenshots/tool/2026-purrr.png"
+        },
+        {
+            "id": "2026-kgh",
+            "title": "Cat vs. Dog",
+            "description": "Four games for two games, against boredom on the phone.",
+            "category": "tool",
+            "tags": [
+                "Game",
+                "Pastime",
+                "Web"
+            ],
+            "year": 2026,
+            "url": "https://kgh.nickyreinert.de/",
+            "image": "gfx/screenshots/tool/2026-kgh.png"
+        },
+        {
+            "id": "2026-doggs",
+            "title": "Doggs",
+            "description": "A web app for local document management. Documents are recognized with OCR and classified by a local LLM. Simple interface with many search and filter options.",
+            "category": "tool",
+            "tags": [
+                "Productivity",
+                "Documents",
+                "Web"
+            ],
+            "year": 2026,
+            "url": "https://github.com/nickyreinert/doggs",
+            "image": "gfx/screenshots/tool/2026-doggs.png"
+        },
+        {
+            "id": "2026-fxbrowser",
+            "title": "FXBrowser",
+            "description": "An Electron app that makes it easier to manage audio tracks and effects. FXBrowser reads audio files from folders, analyzes them, allows simple playback and offers many filter functions. Tracks can be dragged and dropped into, e.g., a DAW or another app.",
+            "category": "tool",
+            "tags": [
+                "Electron",
+                "App",
+                "Audio"
+            ],
+            "year": 2026,
+            "url": "https://github.com/nickyreinert/fxBrowser",
+            "image": "gfx/screenshots/tool/2026-fxbrowser.png"
+        },
+        {
+            "id": "2026-seven",
+            "title": "7even",
+            "description": "A web app and Android app that checks the device's network connection at regular intervals and displays the results in a clear statistics view.",
+            "category": "tool",
+            "tags": [
+                "Android",
+                "Network",
+                "Web"
+            ],
+            "year": 2026,
+            "url": "https://7.1-1-1.de/",
+            "image": "gfx/screenshots/tool/2026-7even.png"
+        },
+        {
+            "id": "2026-bört",
+            "title": "BÖRT",
+            "description": "An Android app with which applications and settings can be blocked or hidden.",
+            "category": "tool",
+            "tags": [
+                "Android",
+                "Security",
+                "Privacy"
+            ],
+            "year": 2026,
+            "url": "https://play.google.com/store/apps/details?id=de.institut_fdh.boert",
+            "image": "gfx/screenshots/tool/2026-boert.png"
+        },
+        {
+            "id": "2026-anim8or",
+            "title": "ANIM8OR",
+            "description": "Turns GPX recordings of bike, running or car tours into animated map videos – as time-lapses, with a free camera and individual design",
+            "category": "tool",
+            "tags": [
+                "Video",
+                "GPS",
+                "Sports"
+            ],
+            "year": 2026,
+            "url": "https://a8.1-1-1.de",
+            "image": "gfx/screenshots/tool/2026-anim8or.png"
+        },
+        {
+            "id": "2026-dborakel",
+            "title": "DB Orakel",
+            "description": "Experiment to predict the punctuality of Deutsche Bahn based on historical delay data, fuel prices, weather and holiday signals.",
+            "category": "tool",
+            "tags": [
+                "Data",
+                "Analysis"
+            ],
+            "year": 2026,
+            "url": "https://db-orakel.de",
+            "image": "gfx/screenshots/tool/2026-db-orakel.png"
+        },
+        {
+            "id": "2026-bofh",
+            "title": "AI Honeypot – BOFH",
+            "description": "Honeypot for AI crawlers that records bot behavior and tests resilience against prompt injection.",
+            "category": "tool",
+            "tags": [
+                "AI",
+                "Security"
+            ],
+            "year": 2026,
+            "url": "https://bofh.1-1-1.de/",
+            "image": "gfx/screenshots/tool/2026-bofh.jpg"
+        },
+        {
+            "id": "2023-primes",
+            "title": "Prime Number Web App",
+            "description": "Interactive JavaScript visualization of prime numbers on spiral structures. Supports configurable scaling and coloring.",
+            "category": "tool",
+            "tags": [
+                "Data",
+                "Fun"
+            ],
+            "year": 2023,
+            "url": "https://primes.nickyreinert.de",
+            "image": "gfx/screenshots/tool/2023-primes.jpg"
+        },
+        {
+            "id": "2025-mirror",
+            "title": "Header Mirror",
+            "description": "Mirrors the context of HTTP requests for troubleshooting proxy and CDN configurations. Displays technically relevant request data.",
+            "category": "tool",
+            "tags": [
+                "Developer Tools",
+                "Security"
+            ],
+            "year": 2025,
+            "url": "https://9000.1-1-1.de/",
+            "image": "gfx/screenshots/tool/2025-mirror.jpg"
+        },
+        {
+            "id": "2026-text",
+            "title": "Text Transformer",
+            "description": "Browser-based text conversion that runs entirely locally in the browser. Supports fullwidth, flip, strikethrough, small caps and Zalgo.",
+            "category": "tool",
+            "tags": [
+                "Text",
+                "Developer Tools"
+            ],
+            "year": 2026,
+            "url": "seiten/2026-text.html",
+            "image": "gfx/screenshots/tool/2026-text.jpg"
+        },
+        {
+            "id": "2026-faces",
+            "title": "Faces of Joy",
+            "description": "Searchable collection of ASCII and Unicode text faces with a copy function and favorites management.",
+            "category": "tool",
+            "tags": [
+                "Text",
+                "Fun"
+            ],
+            "year": 2026,
+            "url": "seiten/2026-faces.html",
+            "image": "gfx/screenshots/tool/2025-foy.png"
+        },
+        {
+            "id": "2026-osint",
+            "title": "OSINT Tool Directory",
+            "description": "Searchable directory of open-source intelligence tools with categories and descriptions.",
+            "category": "tool",
+            "tags": [
+                "Privacy",
+                "Security",
+                "Data"
+            ],
+            "year": 2026,
+            "url": "seiten/2026-osint.html",
+            "image": "gfx/screenshots/tool/2026-osint.png"
+        },
+        {
+            "id": "2026-aya",
+            "title": "AYA – Are You Anonymous?",
+            "description": "Interactive privacy check in the browser with fingerprinting signals, leak indicators and locally detectable browser properties.",
+            "category": "tool",
+            "tags": [
+                "Privacy",
+                "Security"
+            ],
+            "year": 2026,
+            "url": "https://6.1-1-1.de/",
+            "image": "gfx/screenshots/tool/2026-aya.png"
+        },
+        {
+            "id": "2026-nine",
+            "title": "9 – Text Sharing via WebRTC",
+            "description": "Serverless peer-to-peer tool for securely exchanging text between devices over encrypted WebRTC connections. Pairing via QR code or 6-digit code, no registration required.",
+            "category": "tool",
+            "tags": [
+                "Developer Tools",
+                "Privacy"
+            ],
+            "year": 2026,
+            "url": "https://9.1-1-1.de/",
+            "image": "gfx/screenshots/tool/2026-nine.jpg"
+        },
+        {
+            "id": "2026-confidence-calculator",
+            "title": "The Confidence Calculator",
+            "description": "Web tool for A/B tests: calculates confidence levels, p-values and statistical power for up to 5 variants, including easy-to-understand explanations against p-hacking.",
+            "category": "tool",
+            "tags": [
+                "Data",
+                "Developer Tools"
+            ],
+            "year": 2026,
+            "url": "https://confidence.nickyreinert.de",
+            "image": "gfx/screenshots/tool/2026-confidence-calculator.jpg"
+        },
+        {
+            "id": "2026-f1lo",
+            "title": "F1LO – Fitness Logger",
+            "description": "Self-built, ad-free fitness tracking PWA based on the „Grease the Groove“ method, with device sync via Firebase, gamification and supplement tracking.",
+            "category": "tool",
+            "tags": [
+                "Fitness",
+                "Privacy"
+            ],
+            "year": 2026,
+            "url": "https://f1l0.nickyreinert.de/",
+            "image": "gfx/screenshots/tool/2026-f1lo.jpg"
+        },
+        {
+            "id": "2026-pictero",
+            "title": "Pictero",
+            "description": "Browser-based toolbox for simple image editing: cropping, scaling, color correction, OCR, ASCII conversion and EXIF display in one tool.",
+            "category": "tool",
+            "tags": [
+                "Images",
+                "Developer Tools"
+            ],
+            "year": 2026,
+            "url": "https://pictero.com",
+            "image": "gfx/screenshots/tool/2026-pictero.jpg"
+        },
+        {
+            "id": "2026-verbote-dashboard",
+            "title": "Bans Dashboard",
+            "description": "Interactive visualization that examines the election manifestos of German parties with several AI models for explicit and semantic bans, making the results comparable per model and per party.",
+            "category": "tool",
+            "tags": [
+                "AI",
+                "Data",
+                "Culture"
+            ],
+            "year": 2026,
+            "url": "https://verbote.nickyreinert.de/",
+            "image": "gfx/screenshots/tool/2026-verbote-dashboard.jpg"
+        },
+        {
+            "id": "2025-moneymoney-analyzer",
+            "title": "MoneyMoney Dashboard",
+            "description": "Browser-based analysis tool for MoneyMoney account exports: shows income/expense trends, recurring costs and a filterable account ledger – all locally, without any data transfer to a server.",
+            "category": "tool",
+            "tags": [
+                "Finance",
+                "Privacy",
+                "Data"
+            ],
+            "year": 2025,
+            "url": "https://money.nickyreinert.de/",
+            "image": "gfx/screenshots/tool/2025-moneymoney-analyzer.jpg"
+        },
+        {
+            "id": "2025-video-orga",
+            "title": "VideoOrga",
+            "description": "Automatic analysis and tagging of your own video collection with AI models running locally on the GPU. All metadata is stored in an SQLite database with preview images and audio transcription. Includes a web frontend for browsing the database.",
+            "category": "tool",
+            "tags": [
+                "Multimedia",
+                "AI",
+                "Productivity"
+            ],
+            "year": 2025,
+            "url": "https://github.com/nickyreinert/videoOrga",
+            "image": "gfx/screenshots/tool/2025-video-orga.jpg"
+        },
+        {
+            "id": "2024-hidey",
+            "title": "Hidey",
+            "description": "JavaScript steganography tool that encodes hidden messages as binary code in invisible characters within text.",
+            "category": "tool",
+            "tags": [
+                "Text",
+                "Security",
+                "Developer Tools"
+            ],
+            "year": 2024,
+            "url": "https://hidey.nickyreinert.de",
+            "image": "gfx/screenshots/tool/2024-hidey.jpg"
+        },
+        {
+            "id": "2023-freecoffee",
+            "title": "Freecoffee – The Open Sandwich Generator",
+            "description": "JavaScript web app that generates random topping combinations for open sandwiches when you can't decide.",
+            "category": "tool",
+            "tags": [
+                "Game",
+                "Developer Tools"
+            ],
+            "year": 2023,
+            "url": "https://freecoffee.de",
+            "image": "gfx/screenshots/tool/2023-freecoffee.jpg"
+        },
+        {
+            "id": "2021-maze",
+            "title": "Maze!",
+            "description": "JavaScript browser game in which a maze has to be solved in as short a time as possible. Configurable parameters and an export function for generated mazes.",
+            "category": "tool",
+            "tags": [
+                "Game",
+                "Developer Tools"
+            ],
+            "year": 2021,
+            "url": "https://nickyreinert.github.io/maze",
+            "image": "gfx/screenshots/tool/2021-maze.jpg"
+        },
+        {
+            "id": "2019-abbreviator",
+            "title": "AbbreViator (tm)",
+            "description": "Automatically shortens long texts by replacing words with abbreviations, including an abbreviation directory – handy for wordy technical texts.",
+            "category": "tool",
+            "tags": [
+                "Text",
+                "Developer Tools"
+            ],
+            "year": 2019,
+            "url": "https://abbreviator.nickyreinert.de/",
+            "image": "gfx/screenshots/tool/2019-abbreviator.jpg"
+        },
+        {
+            "id": "2018-coii",
+            "title": "COII – Cookie Opt-In Interface",
+            "description": "WordPress plugin that asks visitors for consent before loading tracking scripts such as Google Analytics and stores the decision in a cookie.",
+            "category": "tool",
+            "tags": [
+                "WordPress",
+                "Privacy"
+            ],
+            "year": 2018,
+            "url": "https://nickyreinert.de/2018/2018-03-03-coii/",
+            "image": "gfx/screenshots/tool/2018-coii.jpg"
+        },
+        {
+            "id": "2017-iso-toleranzen",
+            "title": "Excel Template for ISO Tolerances",
+            "description": "Automatically calculates the fit type (clearance, transition or interference fit) between shaft and bore based on nominal dimensions and tolerance values.",
+            "category": "tool",
+            "tags": [
+                "VBA"
+            ],
+            "year": 2017,
+            "url": "https://nickyreinert.de/2017/2017-09-26-excel-vorlage-fuer-iso-toleranzen/",
+            "image": "gfx/screenshots/tool/2017-iso-toleranzen.jpg"
+        },
+        {
+            "id": "2012-wordcloud-powerpoint",
+            "title": "WordCloud Excel Template for PowerPoint",
+            "description": "VBA script that splits any text into individual words, counts and sorts them, and creates a PowerPoint slide with a size-scaled word cloud from them.",
+            "category": "tool",
+            "tags": [
+                "VBA"
+            ],
+            "year": 2012,
+            "url": "https://nickyreinert.de/2012/2012-07-23-wordcloud-in-powerpoint/",
+            "image": "gfx/screenshots/tool/2012-wordcloud-powerpoint.jpg"
+        },
+        {
+            "id": "wordpress-faq",
+            "title": "WordPress FAQ",
+            "description": "Community knowledge base with news, guides, compatibility troubleshooting and plugin comparisons around WordPress, largely compiled from Reddit discussions.",
+            "category": "tool",
+            "tags": [
+                "WordPress"
+            ],
+            "year": 2026,
+            "url": "https://wordpress-faq.com/",
+            "image": "gfx/screenshots/tool/wordpress-faq.jpg"
+        },
+        {
+            "id": "diskaudit",
+            "title": "DiskAudit",
+            "description": "macOS app that scans the hard drive and visualizes large files and folders – by size, file type or folder structure.",
+            "category": "tool",
+            "tags": [
+                "Developer Tools"
+            ],
+            "year": 2026,
+            "url": "https://github.com/nickyreinert/DiskAudit",
+            "image": "gfx/screenshots/tool/diskaudit.jpg"
+        },
+        {
+            "id": "flabbi-pyrd",
+            "title": "flabbi-pyrd",
+            "description": "Containerized JavaScript web app; according to the repo description, a clone of a well-known game concept – including Docker setup.",
+            "category": "tool",
+            "tags": [
+                "Game",
+                "Developer Tools"
+            ],
+            "year": 2025,
+            "url": "https://flabbi-pyrd.1-1-1.de/",
+            "image": "gfx/screenshots/tool/flabbi-pyrd.jpg"
+        },
+        {
+            "id": "dynamictagloader",
+            "title": "DynamicTagLoader",
+            "description": "Debugging interface that loads tag manager scripts such as Adobe Launch and makes outgoing requests (XHR, tracking pixels, fetch) including GET parameters visible in the frontend.",
+            "category": "tool",
+            "tags": [
+                "Developer Tools",
+                "Privacy"
+            ],
+            "year": 2024,
+            "url": "https://github.com/nickyreinert/DynamicTagLoader",
+            "image": "gfx/screenshots/tool/dynamictagloader.jpg"
+        },
+        {
+            "id": "monitortrackingcoverage",
+            "title": "MonitorTrackingCoverage",
+            "description": "Python script using Selenium/headless Chrome that compares two tracking setups for a list of URLs to check whether changes to Adobe Data Collection implementations break existing tracking.",
+            "category": "tool",
+            "tags": [
+                "Developer Tools",
+                "Data"
+            ],
+            "year": 2024,
+            "url": "https://github.com/nickyreinert/MonitorTrackingCoverage",
+            "image": "gfx/screenshots/tool/monitortrackingcoverage.jpg"
+        },
+        {
+            "id": "bitnetrtr",
+            "title": "bitNetRTR",
+            "description": "Web interface around Microsoft's BitNet framework, which makes it possible to run 1-bit language models even on weak hardware such as NAS systems.",
+            "category": "tool",
+            "tags": [
+                "AI",
+                "Developer Tools"
+            ],
+            "year": 2026,
+            "url": "https://github.com/nickyreinert/bitNetRTR",
+            "image": "gfx/screenshots/tool/bitnetrtr.jpg"
+        },
+        {
+            "id": "wordcloud-wordpress",
+            "title": "WordCloud for WordPress",
+            "description": "WordPress plugin that generates word clouds from URLs, database queries, custom fields or via image OCR, based on wordcloud2.js.",
+            "category": "tool",
+            "tags": [
+                "WordPress",
+                "Text"
+            ],
+            "year": 2018,
+            "url": "https://github.com/nickyreinert/wordCloud-for-Wordpress",
+            "image": "gfx/screenshots/tool/wordcloud-wordpress.jpg"
+        },
+        {
+            "id": "automated-wordpress-installation",
+            "title": "Automated WordPress Installation",
+            "description": "Shell script that automatically sets up a complete WordPress installation, including database, user and randomly generated content (posts, categories, tags, images).",
+            "category": "tool",
+            "tags": [
+                "WordPress",
+                "Developer Tools"
+            ],
+            "year": 2020,
+            "url": "https://github.com/nickyreinert/AutomatedWordPressInstallation",
+            "image": "gfx/screenshots/tool/automated-wordpress-installation.jpg"
+        },
+        {
+            "id": "wpfakepagegenerator",
+            "title": "WP Fake Page Generator",
+            "description": "WordPress plugin for automatically generating placeholder and test pages for development and demo environments.",
+            "category": "tool",
+            "tags": [
+                "WordPress",
+                "Developer Tools"
+            ],
+            "year": 2018,
+            "url": "https://github.com/nickyreinert/WPFakePageGenerator",
+            "image": "gfx/screenshots/tool/wpfakepagegenerator.jpg"
+        },
+        {
+            "id": "completewebserverbackup",
+            "title": "Complete Web Server Backup",
+            "description": "Shell script that automatically backs up all databases and virtual hosts of an Apache server, encrypted with Duplicity.",
+            "category": "tool",
+            "tags": [
+                "Developer Tools",
+                "Security"
+            ],
+            "year": 2018,
+            "url": "https://github.com/nickyreinert/completeWebServerBackup",
+            "image": "gfx/screenshots/tool/completewebserverbackup.jpg"
+        },
+        {
+            "id": "data-heatmap",
+            "title": "data-heatmap",
+            "description": "WordPress plugin that converts three-column CSV data (x, y, value) into a color-graded heatmap table.",
+            "category": "tool",
+            "tags": [
+                "WordPress",
+                "Data"
+            ],
+            "year": 2018,
+            "url": "https://github.com/nickyreinert/data-heatmap",
+            "image": "gfx/screenshots/tool/data-heatmap.jpg"
+        },
+        {
+            "id": "csvexportdialogforexcel",
+            "title": "CSV Export Dialog for Excel",
+            "description": "VBA script that provides a dialog for exporting Excel tables as CSV – with a selectable delimiter and text qualifier.",
+            "category": "tool",
+            "tags": [
+                "VBA"
+            ],
+            "year": 2018,
+            "url": "https://github.com/nickyreinert/csvExportDialogForExcel",
+            "image": "gfx/screenshots/tool/csvexportdialogforexcel.jpg"
+        },
+        {
+            "id": "memcp",
+            "title": "meMCP",
+            "description": "FastAPI-based Model Context Protocol server that bundles professional profile data from GitHub, Medium, LinkedIn and RSS feeds and provides it as a REST API with LLM-based enrichment.",
+            "category": "tool",
+            "tags": [
+                "AI",
+                "Developer Tools"
+            ],
+            "year": 2026,
+            "url": "https://github.com/nickyreinert/meMCP",
+            "image": "gfx/screenshots/tool/memcp.jpg"
+        },
+        {
+            "id": "blunschli",
+            "title": "Blunschli",
+            "description": "Browser-based Risk-style strategy game for 2–10 players with public or private sessions and Telegram integration for turn notifications.",
+            "category": "tool",
+            "tags": [
+                "Game"
+            ],
+            "year": 2026,
+            "url": "https://blunschli.1-1-1.de/",
+            "image": "gfx/screenshots/tool/blunschli.jpg"
+        },
+        {
+            "id": "freds-blitz-bude",
+            "title": "Fred's Quick Stall",
+            "description": "Browser-based learning game for children: sell at your own vegetable stand, calculate change and practice mental arithmetic on the side – with difficulty levels and a scoring system.",
+            "category": "tool",
+            "tags": [
+                "Game"
+            ],
+            "year": 2026,
+            "url": "https://freds-blitz-bude.de/",
+            "image": "gfx/screenshots/tool/freds-blitz-bude.jpg"
+        }
+    ]
+}

@@ -5,6 +5,13 @@ let activeTags = new Set();
 let searchQuery = '';
 let currentSection = 'analysisSection';
 
+// Keep in sync with LOCALES in scripts/build.py.
+function getLocale() {
+    return document.documentElement.lang === 'en'
+        ? { suffix: '.en', prefix: '/', all: 'All', empty: 'No entries.', ministerium: 'The Ministry' }
+        : { suffix: '', prefix: '', all: 'Alle', empty: 'Keine Einträge.', ministerium: 'Das Ministerium' };
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('currentYear').textContent = new Date().getFullYear();
 
@@ -19,11 +26,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function fetchProjects() {
     try {
+        const { prefix, suffix } = getLocale();
         const [site, analysis, tools, nerdenz] = await Promise.all([
-            fetch('data-site.json').then((r) => r.json()),
-            fetch('data-analysis.json').then((r) => r.json()),
-            fetch('data-tools.json').then((r) => r.json()),
-            fetch('data-nerdenz.json').then((r) => r.json()),
+            fetch(`${prefix}data-site${suffix}.json`).then((r) => r.json()),
+            fetch(`${prefix}data-analysis${suffix}.json`).then((r) => r.json()),
+            fetch(`${prefix}data-tools${suffix}.json`).then((r) => r.json()),
+            fetch(`${prefix}data-nerdenz${suffix}.json`).then((r) => r.json()),
         ]);
 
         projectsData = [...analysis.projects, ...tools.projects, ...nerdenz.projects];
@@ -128,7 +136,7 @@ function renderTags(tags) {
 
     const allBtn = document.createElement('button');
     allBtn.className = 'tag-btn active';
-    allBtn.textContent = 'Alle';
+    allBtn.textContent = getLocale().all;
     allBtn.dataset.tag = ALL_TAG;
     allBtn.type = 'button';
     allBtn.addEventListener('click', handleAllClick);
@@ -153,7 +161,7 @@ function renderSocialLinks(socials) {
         container.innerHTML += `<a href="${socials.blog}" target="_blank" rel="noopener noreferrer">Blog</a>`;
     }
     if (socials.ministerium) {
-        container.innerHTML += `<a href="${socials.ministerium}" target="_blank" rel="noopener noreferrer">Das Ministerium</a>`;
+        container.innerHTML += `<a href="${socials.ministerium}" target="_blank" rel="noopener noreferrer">${getLocale().ministerium}</a>`;
     }
     if (socials.github) {
         container.innerHTML += `<a href="${socials.github}" target="_blank" rel="noopener noreferrer">GitHub</a>`;
@@ -187,14 +195,16 @@ function renderProjects() {
         
         const imgSrc = (project.image || `gfx/screenshots/${project.category}/${project.id}.jpg`)
             .replace(/^docs\//, '');
+        const { prefix } = getLocale();
+        const href = /^https?:/.test(project.url) ? project.url : prefix + project.url;
 
         const cardHtml = `
             <article class="card">
-                <a href="${project.url}" target="_blank" rel="noopener noreferrer" class="card-link" aria-label="Open: ${project.title}">${project.title}</a>
+                <a href="${href}" target="_blank" rel="noopener noreferrer" class="card-link" aria-label="Open: ${project.title}">${project.title}</a>
                 
                 <!-- 2. Image Wrapper -->
                 <div class="card-img-wrapper">
-                    <img src="${imgSrc}" alt="${project.title}" class="card-img" loading="${project.category.toLowerCase() === 'analysis' && analysisCount < 3 ? 'eager' : 'lazy'}" 
+                    <img src="${prefix}${imgSrc}" alt="${project.title}" class="card-img" loading="${project.category.toLowerCase() === 'analysis' && analysisCount < 3 ? 'eager' : 'lazy'}" 
                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     
                     <!-- 3. Fallback placeholder (hidden by default, shown if image fails) -->
@@ -228,13 +238,13 @@ function renderProjects() {
     });
     
     if (analysisCount === 0) {
-        analysisGrid.innerHTML = '<p class="text-secondary">Keine Einträge.</p>';
+        analysisGrid.innerHTML = `<p class="text-secondary">${getLocale().empty}</p>`;
     }
     if (toolsCount === 0) {
-        toolsGrid.innerHTML = '<p class="text-secondary">Keine Einträge.</p>';
+        toolsGrid.innerHTML = `<p class="text-secondary">${getLocale().empty}</p>`;
     }
     if (nerdenzCount === 0) {
-        nerdenzGrid.innerHTML = '<p class="text-secondary">Keine Einträge.</p>';
+        nerdenzGrid.innerHTML = `<p class="text-secondary">${getLocale().empty}</p>`;
     }
 
     updateCountFor('analysis', analysisCount);
