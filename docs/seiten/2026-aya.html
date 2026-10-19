@@ -326,8 +326,8 @@
     <div id="search-bar">
       <input id="search-input" type="search" placeholder="Filter cards, values, or categories..." autocomplete="off" spellcheck="false">
       <span id="match-count"></span>
-      <button class="ctrl-btn" id="btn-expand-all">[+] all</button>
-      <button class="ctrl-btn" id="btn-collapse-all">[-] all</button>
+      <button class="ctrl-btn" id="btn-expand-all">[+] alle</button>
+      <button class="ctrl-btn" id="btn-collapse-all">[-] alle</button>
       <button class="ctrl-btn" id="btn-run-all">&#9654; run</button>
     </div>
   </section>
@@ -336,7 +336,7 @@
     <h2 id="aya-report-title">Fingerprint-Bericht</h2>
     <p id="aya-report-desc">Kategorien und Karten öffnen, um beobachtete Signale im Detail zu prüfen.</p>
     <div id="main">
-    <div id="no-results">No matching data points found.</div>
+    <div id="no-results">Keine passenden Datenpunkte gefunden.</div>
     </div>
   </section>
 </div>
@@ -445,12 +445,12 @@ const CATEGORIES = [
 
   // ────────────────────────────────────────────────
   {
-    id: 'network', icon: '🌐', title: 'Network & IP',
-    desc: 'IP addresses, DNS, WebRTC leaks, connection info',
+    id: 'network', icon: '🌐', title: 'Netzwerk & IP',
+    desc: 'IP-Adressen, DNS, WebRTC-Lecks, Verbindungsinformationen',
     items: [
       {
         id: 'webrtc-local',
-        label: 'WebRTC Local IP Leak',
+        label: 'WebRTC-Leck der lokalen IP',
         risk: 'high',
         collect: async () => {
           return new Promise(resolve => {
@@ -478,7 +478,7 @@ const CATEGORIES = [
       },
       {
         id: 'connection-type',
-        label: 'Connection Type',
+        label: 'Verbindungstyp',
         risk: 'med',
         collect: () => {
           const c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
@@ -499,14 +499,14 @@ const CATEGORIES = [
       },
       {
         id: 'online-status',
-        label: 'Online Status',
+        label: 'Online-Status',
         risk: 'info',
         collect: () => navigator.onLine ? 'Online' : 'Offline',
         detail: () => ({ 'navigator.onLine': String(navigator.onLine) })
       },
       {
         id: 'dns-prefetch',
-        label: 'DNS Prefetch',
+        label: 'DNS-Prefetch',
         risk: 'info',
         collect: () => {
           const el = document.createElement('link');
@@ -516,7 +516,7 @@ const CATEGORIES = [
       },
       {
         id: 'ipv6-webrtc',
-        label: 'IPv6 Leak (WebRTC)',
+        label: 'IPv6-Leck (WebRTC)',
         risk: 'high',
         collect: async () => {
           return new Promise(resolve => {
@@ -553,7 +553,7 @@ const CATEGORIES = [
       },
       {
         id: 'http-headers-visible',
-        label: 'JS-Visible Request Context',
+        label: 'Für JS sichtbarer Anfragekontext',
         risk: 'med',
         collect: () => {
           const perf = performance?.getEntriesByType?.('navigation')?.[0];
@@ -574,12 +574,12 @@ const CATEGORIES = [
 
   // ────────────────────────────────────────────────
   {
-    id: 'browser', icon: '🌍', title: 'Browser Identity',
-    desc: 'User-Agent, headers, vendor, build info, language',
+    id: 'browser', icon: '🌍', title: 'Browser-Identität',
+    desc: 'User-Agent, Header, Hersteller, Build-Informationen, Sprache',
     items: [
       {
         id: 'user-agent',
-        label: 'User-Agent String',
+        label: 'User-Agent-String',
         risk: 'high',
         collect: () => navigator.userAgent,
         detail: () => {
@@ -632,7 +632,7 @@ const CATEGORIES = [
       },
       {
         id: 'language',
-        label: 'Language & Locale',
+        label: 'Sprache & Gebietsschema',
         risk: 'med',
         collect: () => navigator.language || 'unknown',
         detail: () => ({
@@ -660,7 +660,7 @@ const CATEGORIES = [
       },
       {
         id: 'referrer',
-        label: 'Document Referrer',
+        label: 'Dokument-Referrer',
         risk: 'med',
         collect: () => document.referrer || '(empty)',
         detail: () => ({
@@ -670,7 +670,7 @@ const CATEGORIES = [
       },
       {
         id: 'navigator-extra',
-        label: 'Navigator Extended Properties',
+        label: 'Erweiterte Navigator-Eigenschaften',
         risk: 'med',
         collect: () => {
           const parts = [];
@@ -692,7 +692,7 @@ const CATEGORIES = [
       },
       {
         id: 'accept-headers',
-        label: 'Accept Headers (server-visible)',
+        label: 'Accept-Header (serverseitig sichtbar)',
         risk: 'high',
         collect: () => 'Server-readable – not exposed to JS',
         detail: () => ({
@@ -708,11 +708,11 @@ const CATEGORIES = [
   // ────────────────────────────────────────────────
   {
     id: 'system', icon: '💻', title: 'System & Hardware',
-    desc: 'CPU, memory, screen, OS, device capabilities',
+    desc: 'CPU, Arbeitsspeicher, Bildschirm, Betriebssystem, Gerätefunktionen',
     items: [
       {
         id: 'screen',
-        label: 'Screen Resolution',
+        label: 'Bildschirmauflösung',
         risk: 'high',
         collect: () => `${screen.width}×${screen.height} @ ${screen.colorDepth}bit`,
         detail: () => ({
@@ -730,7 +730,7 @@ const CATEGORIES = [
       },
       {
         id: 'cpu',
-        label: 'CPU / Logical Cores',
+        label: 'CPU / logische Kerne',
         risk: 'med',
         collect: () => navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency} cores` : 'unavailable',
         detail: () => ({
@@ -741,7 +741,7 @@ const CATEGORIES = [
       },
       {
         id: 'memory',
-        label: 'Device Memory',
+        label: 'Gerätespeicher',
         risk: 'med',
         collect: () => navigator.deviceMemory ? `${navigator.deviceMemory} GB (hint)` : 'unavailable',
         detail: () => ({
@@ -751,7 +751,7 @@ const CATEGORIES = [
       },
       {
         id: 'touch',
-        label: 'Touch / Pointer Support',
+        label: 'Touch- / Zeigerunterstützung',
         risk: 'med',
         collect: () => {
           const pts = navigator.maxTouchPoints;
@@ -792,7 +792,7 @@ const CATEGORIES = [
       },
       {
         id: 'timezone',
-        label: 'Timezone',
+        label: 'Zeitzone',
         risk: 'high',
         collect: () => Intl.DateTimeFormat().resolvedOptions().timeZone || new Date().getTimezoneOffset() + ' min offset',
         detail: () => {
@@ -807,7 +807,7 @@ const CATEGORIES = [
       },
       {
         id: 'media-devices',
-        label: 'Media Devices',
+        label: 'Medien-Geräte',
         risk: 'high',
         collect: async () => {
           if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) return 'API unavailable';
@@ -835,12 +835,12 @@ const CATEGORIES = [
 
   // ────────────────────────────────────────────────
   {
-    id: 'fingerprint', icon: '🔍', title: 'Browser Fingerprinting',
-    desc: 'Canvas, WebGL, Audio, Font – unique identifiers',
+    id: 'fingerprint', icon: '🔍', title: 'Browser-Fingerprinting',
+    desc: 'Canvas, WebGL, Audio, Schriften – eindeutige Kennungen',
     items: [
       {
         id: 'canvas-fp',
-        label: 'Canvas Fingerprint',
+        label: 'Canvas-Fingerprint',
         risk: 'high',
         collect: () => {
           try {
@@ -872,7 +872,7 @@ const CATEGORIES = [
       },
       {
         id: 'webgl-fp',
-        label: 'WebGL Fingerprint',
+        label: 'WebGL-Fingerprint',
         risk: 'high',
         collect: () => {
           try {
@@ -907,7 +907,7 @@ const CATEGORIES = [
       },
       {
         id: 'audio-fp',
-        label: 'Audio Fingerprint',
+        label: 'Audio-Fingerprint',
         risk: 'high',
         collect: async () => {
           try {
@@ -943,7 +943,7 @@ const CATEGORIES = [
       },
       {
         id: 'font-fp',
-        label: 'Font Fingerprinting',
+        label: 'Schrift-Fingerprinting',
         risk: 'high',
         collect: () => {
           const testFonts = [
@@ -986,7 +986,7 @@ const CATEGORIES = [
       },
       {
         id: 'client-rects',
-        label: 'ClientRects Fingerprint',
+        label: 'ClientRects-Fingerprint',
         risk: 'med',
         collect: () => {
           try {
@@ -1022,12 +1022,12 @@ const CATEGORIES = [
 
   // ────────────────────────────────────────────────
   {
-    id: 'privacy', icon: '🛡️', title: 'Privacy & Tracking',
-    desc: 'Cookies, storage, permissions, ad-blocker detection',
+    id: 'privacy', icon: '🛡️', title: 'Datenschutz & Tracking',
+    desc: 'Cookies, Speicher, Berechtigungen, Erkennung von Werbeblockern',
     items: [
       {
         id: 'cookies',
-        label: 'Cookies Enabled',
+        label: 'Cookies aktiviert',
         risk: 'high',
         collect: () => navigator.cookieEnabled ? 'Enabled' : 'Disabled',
         detail: () => ({
@@ -1077,7 +1077,7 @@ const CATEGORIES = [
       },
       {
         id: 'adblock',
-        label: 'Ad Blocker Detection',
+        label: 'Erkennung von Werbeblockern',
         risk: 'info',
         collect: async () => {
           try {
@@ -1110,7 +1110,7 @@ const CATEGORIES = [
       },
       {
         id: 'permissions',
-        label: 'Browser Permissions',
+        label: 'Browser-Berechtigungen',
         risk: 'high',
         collect: async () => {
           if (!navigator.permissions) return 'Permissions API unavailable';
@@ -1144,7 +1144,7 @@ const CATEGORIES = [
       },
       {
         id: 'storage-quota',
-        label: 'Storage Quota',
+        label: 'Speicherkontingent',
         risk: 'med',
         collect: async () => {
           if (!navigator.storage || !navigator.storage.estimate) return 'API unavailable';
@@ -1172,12 +1172,12 @@ const CATEGORIES = [
 
   // ────────────────────────────────────────────────
   {
-    id: 'graphics', icon: '🎮', title: 'Graphics & Media',
-    desc: 'WebGL, WebGPU, CSS media queries, display info',
+    id: 'graphics', icon: '🎮', title: 'Grafik & Medien',
+    desc: 'WebGL, WebGPU, CSS-Media-Queries, Anzeigeinformationen',
     items: [
       {
         id: 'webgl2',
-        label: 'WebGL 2 Support',
+        label: 'WebGL-2-Unterstützung',
         risk: 'med',
         collect: () => {
           const c = document.createElement('canvas');
@@ -1198,7 +1198,7 @@ const CATEGORIES = [
       },
       {
         id: 'webgpu',
-        label: 'WebGPU Support',
+        label: 'WebGPU-Unterstützung',
         risk: 'high',
         collect: async () => {
           if (!navigator.gpu) return 'Not supported';
@@ -1225,7 +1225,7 @@ const CATEGORIES = [
       },
       {
         id: 'color-scheme',
-        label: 'Color Scheme / Dark Mode',
+        label: 'Farbschema / Dunkelmodus',
         risk: 'info',
         collect: () => {
           if (window.matchMedia('(prefers-color-scheme: dark)').matches) return 'Dark mode';
@@ -1244,7 +1244,7 @@ const CATEGORIES = [
       },
       {
         id: 'video-formats',
-        label: 'Video Format Support',
+        label: 'Unterstützung von Videoformaten',
         risk: 'med',
         collect: () => {
           const v = document.createElement('video');
@@ -1274,12 +1274,12 @@ const CATEGORIES = [
 
   // ────────────────────────────────────────────────
   {
-    id: 'protocols', icon: '🔐', title: 'Protocols & Security',
+    id: 'protocols', icon: '🔐', title: 'Protokolle & Sicherheit',
     desc: 'TLS, HTTP/2, QUIC, Mixed Content, HTTPS',
     items: [
       {
         id: 'https',
-        label: 'HTTPS / Protocol',
+        label: 'HTTPS / Protokoll',
         risk: 'info',
         collect: () => location.protocol + '//' + location.host,
         detail: () => ({
@@ -1292,7 +1292,7 @@ const CATEGORIES = [
       },
       {
         id: 'service-worker-support',
-        label: 'Secure Context APIs',
+        label: 'APIs für sichere Kontexte',
         risk: 'info',
         collect: () => window.isSecureContext ? 'Secure context' : '⚠ Insecure context',
         detail: () => ({
@@ -1304,7 +1304,7 @@ const CATEGORIES = [
       },
       {
         id: 'webrtc-support',
-        label: 'WebRTC Support',
+        label: 'WebRTC-Unterstützung',
         risk: 'high',
         collect: () => typeof RTCPeerConnection !== 'undefined' ? 'Supported' : 'Not supported',
         detail: () => ({
@@ -1316,7 +1316,7 @@ const CATEGORIES = [
       },
       {
         id: 'content-security',
-        label: 'Security Headers (JS-visible)',
+        label: 'Sicherheits-Header (für JS sichtbar)',
         risk: 'info',
         collect: () => {
           const checks = [
@@ -1336,12 +1336,12 @@ const CATEGORIES = [
 
   // ────────────────────────────────────────────────
   {
-    id: 'features', icon: '⚡', title: 'Browser Features',
-    desc: 'HTML5, APIs, JavaScript engine capabilities',
+    id: 'features', icon: '⚡', title: 'Browser-Funktionen',
+    desc: 'HTML5, APIs, Fähigkeiten der JavaScript-Engine',
     items: [
       {
         id: 'plugins',
-        label: 'Browser Plugins',
+        label: 'Browser-Plugins',
         risk: 'med',
         collect: () => {
           const p = navigator.plugins;
@@ -1360,7 +1360,7 @@ const CATEGORIES = [
       },
       {
         id: 'speech-synthesis',
-        label: 'Speech Synthesis Voices',
+        label: 'Stimmen der Sprachsynthese',
         risk: 'med',
         collect: () => {
           if (!window.speechSynthesis) return 'API unavailable';
@@ -1379,7 +1379,7 @@ const CATEGORIES = [
       },
       {
         id: 'js-features',
-        label: 'JavaScript Engine',
+        label: 'JavaScript-Engine',
         risk: 'med',
         collect: () => {
           const features = [];
@@ -1455,12 +1455,12 @@ const CATEGORIES = [
 
   // ────────────────────────────────────────────────
   {
-    id: 'content-filters', icon: '🚧', title: 'Content Filters & Proxies',
-    desc: 'Tor, VPN, proxy detection signals',
+    id: 'content-filters', icon: '🚧', title: 'Inhaltsfilter & Proxys',
+    desc: 'Signale zur Erkennung von Tor, VPN und Proxys',
     items: [
       {
         id: 'tor-check',
-        label: 'Tor Browser Signals',
+        label: 'Tor-Browser-Signale',
         risk: 'info',
         collect: () => {
           const signals = [];
@@ -1478,7 +1478,7 @@ const CATEGORIES = [
       },
       {
         id: 'proxy-headers',
-        label: 'Proxy / Anonymizer Signals (JS)',
+        label: 'Proxy- / Anonymisierer-Signale (JS)',
         risk: 'info',
         collect: () => {
           const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -1493,7 +1493,7 @@ const CATEGORIES = [
       },
       {
         id: 'adblock-detail',
-        label: 'Ad/Tracker Blocker Detection',
+        label: 'Erkennung von Werbe- und Tracker-Blockern',
         risk: 'info',
         collect: async () => {
           const checks = [
@@ -1528,12 +1528,12 @@ const CATEGORIES = [
 
   // ────────────────────────────────────────────────
   {
-    id: 'tls-http', icon: '🔒', title: 'TLS & HTTP Protocols',
-    desc: 'HTTP/2, QUIC/HTTP3, TLS fingerprint, mixed content, protocol detection',
+    id: 'tls-http', icon: '🔒', title: 'TLS- & HTTP-Protokolle',
+    desc: 'HTTP/2, QUIC/HTTP3, TLS-Fingerprint, Mixed Content, Protokollerkennung',
     items: [
       {
         id: 'nav-protocol',
-        label: 'HTTP Protocol Version',
+        label: 'HTTP-Protokollversion',
         risk: 'med',
         collect: () => {
           const nav = performance?.getEntriesByType?.('navigation')?.[0];
@@ -1554,7 +1554,7 @@ const CATEGORIES = [
       },
       {
         id: 'http2-detection',
-        label: 'HTTP/2 Detection',
+        label: 'HTTP/2-Erkennung',
         risk: 'info',
         collect: () => {
           const nav = performance?.getEntriesByType?.('navigation')?.[0];
@@ -1575,7 +1575,7 @@ const CATEGORIES = [
       },
       {
         id: 'quic-detection',
-        label: 'QUIC / HTTP3 Support',
+        label: 'QUIC- / HTTP/3-Unterstützung',
         risk: 'info',
         collect: () => {
           const nav = performance?.getEntriesByType?.('navigation')?.[0];
@@ -1591,7 +1591,7 @@ const CATEGORIES = [
       },
       {
         id: 'tls-fingerprint',
-        label: 'TLS Fingerprint (JA3/JA4)',
+        label: 'TLS-Fingerprint (JA3/JA4)',
         risk: 'high',
         collect: () => 'Server-side only – JS cannot read TLS ClientHello',
         detail: () => ({
@@ -1603,7 +1603,7 @@ const CATEGORIES = [
       },
       {
         id: 'tcp-fingerprint',
-        label: 'TCP/IP Fingerprint (JA4T)',
+        label: 'TCP/IP-Fingerprint (JA4T)',
         risk: 'high',
         collect: () => 'Server-side only – JS cannot read TCP headers',
         detail: () => ({
@@ -1614,7 +1614,7 @@ const CATEGORIES = [
       },
       {
         id: 'secure-context',
-        label: 'Secure Context / HTTPS',
+        label: 'Sicherer Kontext / HTTPS',
         risk: 'info',
         collect: () => `${window.isSecureContext ? 'Secure' : '⚠ Insecure'} – ${location.protocol}`,
         detail: () => ({
@@ -1645,12 +1645,12 @@ const CATEGORIES = [
 
   // ────────────────────────────────────────────────
   {
-    id: 'css-media', icon: '🎨', title: 'CSS Media Queries',
-    desc: 'Display, color, motion, environment – detectable via matchMedia()',
+    id: 'css-media', icon: '🎨', title: 'CSS-Media-Queries',
+    desc: 'Anzeige, Farbe, Bewegung, Umgebung – erkennbar über matchMedia()',
     items: [
       {
         id: 'color-gamut',
-        label: 'Color Gamut',
+        label: 'Farbraum',
         risk: 'med',
         collect: () => {
           if (window.matchMedia('(color-gamut: rec2020)').matches) return 'rec2020 (wide, HDR)';
@@ -1666,7 +1666,7 @@ const CATEGORIES = [
       },
       {
         id: 'display-mode',
-        label: 'Display Mode (PWA)',
+        label: 'Anzeigemodus (PWA)',
         risk: 'med',
         collect: () => {
           for (const m of ['fullscreen','standalone','minimal-ui','browser']) {
@@ -1683,7 +1683,7 @@ const CATEGORIES = [
       },
       {
         id: 'prefers-reduced-motion',
-        label: 'Reduced Motion Preference',
+        label: 'Präferenz für reduzierte Bewegung',
         risk: 'info',
         collect: () => window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'Reduce motion' : 'No preference',
         detail: () => ({
@@ -1693,7 +1693,7 @@ const CATEGORIES = [
       },
       {
         id: 'prefers-contrast',
-        label: 'Contrast Preference',
+        label: 'Kontrastpräferenz',
         risk: 'info',
         collect: () => {
           if (window.matchMedia('(prefers-contrast: more)').matches) return 'More contrast';
@@ -1710,7 +1710,7 @@ const CATEGORIES = [
       },
       {
         id: 'hdr-display',
-        label: 'HDR / Dynamic Range',
+        label: 'HDR / Dynamikumfang',
         risk: 'med',
         collect: () => window.matchMedia('(dynamic-range: high)').matches ? 'HDR display' : 'Standard dynamic range',
         detail: () => ({
@@ -1721,7 +1721,7 @@ const CATEGORIES = [
       },
       {
         id: 'orientation-mq',
-        label: 'Orientation & Aspect Ratio',
+        label: 'Ausrichtung & Seitenverhältnis',
         risk: 'info',
         collect: () => {
           const land = window.matchMedia('(orientation: landscape)').matches;
@@ -1738,7 +1738,7 @@ const CATEGORIES = [
       },
       {
         id: 'resolution-mq',
-        label: 'Resolution / DPI',
+        label: 'Auflösung / DPI',
         risk: 'med',
         collect: () => {
           if (window.matchMedia('(min-resolution: 192dpi)').matches) return '≥192 dpi (HiDPI/Retina)';
@@ -1756,7 +1756,7 @@ const CATEGORIES = [
       },
       {
         id: 'scripting-mq',
-        label: 'Scripting MQ',
+        label: 'Scripting-MQ',
         risk: 'info',
         collect: () => {
           if (window.matchMedia('(scripting: enabled)').matches) return 'enabled';
@@ -1771,7 +1771,7 @@ const CATEGORIES = [
       },
       {
         id: 'update-mq',
-        label: 'Update Frequency (e-ink?)',
+        label: 'Aktualisierungsfrequenz (E-Ink?)',
         risk: 'info',
         collect: () => {
           if (window.matchMedia('(update: none)').matches) return 'none (e-ink/print)';
@@ -1788,7 +1788,7 @@ const CATEGORIES = [
       },
       {
         id: 'prefers-data',
-        label: 'Data Saver / Reduced Data',
+        label: 'Datensparmodus / reduzierter Datenverbrauch',
         risk: 'info',
         collect: () => window.matchMedia('(prefers-reduced-data: reduce)').matches ? 'Reduce data mode' : 'No preference / unsupported',
         detail: () => ({
@@ -1798,7 +1798,7 @@ const CATEGORIES = [
       },
       {
         id: 'print-mq',
-        label: 'Print Media Detection',
+        label: 'Erkennung des Druckmediums',
         risk: 'info',
         collect: () => window.matchMedia('print').matches ? 'Print mode active' : 'Screen mode',
         detail: () => ({
@@ -1812,12 +1812,12 @@ const CATEGORIES = [
 
   // ────────────────────────────────────────────────
   {
-    id: 'sensors', icon: '📡', title: 'Sensors & Device APIs',
-    desc: 'Motion, orientation, Bluetooth, USB, NFC, MIDI, HID, Serial',
+    id: 'sensors', icon: '📡', title: 'Sensoren & Geräte-APIs',
+    desc: 'Bewegung, Ausrichtung, Bluetooth, USB, NFC, MIDI, HID, seriell',
     items: [
       {
         id: 'device-motion',
-        label: 'DeviceMotion / Accelerometer',
+        label: 'DeviceMotion / Beschleunigungssensor',
         risk: 'high',
         collect: () => {
           if (typeof DeviceMotionEvent === 'undefined') return 'Not supported';
@@ -1832,7 +1832,7 @@ const CATEGORIES = [
       },
       {
         id: 'device-orientation',
-        label: 'DeviceOrientation / Gyroscope',
+        label: 'DeviceOrientation / Gyroskop',
         risk: 'high',
         collect: () => {
           if (typeof DeviceOrientationEvent === 'undefined') return 'Not supported';
@@ -1852,7 +1852,7 @@ const CATEGORIES = [
       },
       {
         id: 'ambient-light',
-        label: 'Ambient Light Sensor',
+        label: 'Umgebungslichtsensor',
         risk: 'med',
         collect: () => typeof AmbientLightSensor !== 'undefined' ? 'Supported' : 'Not supported',
         detail: () => ({
@@ -1968,8 +1968,8 @@ const CATEGORIES = [
 
   // ────────────────────────────────────────────────
   {
-    id: 'performance-timing', icon: '⏱️', title: 'Performance & Timing',
-    desc: 'Navigation timing, resource timing, memory, timer precision',
+    id: 'performance-timing', icon: '⏱️', title: 'Leistung & Timing',
+    desc: 'Navigation Timing, Ressourcen-Timing, Speicher, Timer-Genauigkeit',
     items: [
       {
         id: 'nav-timing',
@@ -1998,7 +1998,7 @@ const CATEGORIES = [
       },
       {
         id: 'perf-memory',
-        label: 'JS Heap Memory (Chrome)',
+        label: 'JS-Heap-Speicher (Chrome)',
         risk: 'med',
         collect: () => {
           const m = performance?.memory;
@@ -2017,7 +2017,7 @@ const CATEGORIES = [
       },
       {
         id: 'timer-precision',
-        label: 'High-Resolution Timer Precision',
+        label: 'Genauigkeit hochauflösender Timer',
         risk: 'high',
         collect: () => {
           const samples = [];
@@ -2041,7 +2041,7 @@ const CATEGORIES = [
       },
       {
         id: 'raf-timing',
-        label: 'requestAnimationFrame Rate',
+        label: 'requestAnimationFrame-Rate',
         risk: 'info',
         collect: async () => {
           return new Promise(resolve => {
@@ -2071,7 +2071,7 @@ const CATEGORIES = [
       },
       {
         id: 'resource-timing',
-        label: 'Resource Timing Entries',
+        label: 'Einträge für Resource Timing',
         risk: 'info',
         collect: () => {
           const entries = performance?.getEntriesByType?.('resource') || [];
@@ -2090,8 +2090,8 @@ const CATEGORIES = [
 
   // ────────────────────────────────────────────────
   {
-    id: 'extension-detection', icon: '🧩', title: 'Extension Detection',
-    desc: 'Chrome/Firefox extension detection via web-accessible resources',
+    id: 'extension-detection', icon: '🧩', title: 'Erkennung von Erweiterungen',
+    desc: 'Erkennung von Chrome-/Firefox-Erweiterungen über web-zugängliche Ressourcen',
     items: [
       {
         id: 'ext-ublockorigin',
@@ -2140,7 +2140,7 @@ const CATEGORIES = [
       },
       {
         id: 'ext-password-manager',
-        label: 'Password Manager Signals',
+        label: 'Signale von Passwortmanagern',
         risk: 'info',
         collect: () => {
           const signals = [];
@@ -2158,7 +2158,7 @@ const CATEGORIES = [
       },
       {
         id: 'ext-browser-type',
-        label: 'Browser-Specific Extension APIs',
+        label: 'Browserspezifische Erweiterungs-APIs',
         risk: 'med',
         collect: () => {
           const apis = [];
@@ -2184,8 +2184,8 @@ const CATEGORIES = [
 
   // ────────────────────────────────────────────────
   {
-    id: 'legacy', icon: '💀', title: 'Legacy & Deprecated',
-    desc: 'Flash, Silverlight, Java, ActiveX – fingerprintable by presence or absence',
+    id: 'legacy', icon: '💀', title: 'Veraltet & abgekündigt',
+    desc: 'Flash, Silverlight, Java, ActiveX – anhand von Vorhandensein oder Fehlen identifizierbar',
     items: [
       {
         id: 'flash',
@@ -2225,7 +2225,7 @@ const CATEGORIES = [
       },
       {
         id: 'java',
-        label: 'Java Applet',
+        label: 'Java-Applet',
         risk: 'high',
         collect: () => {
           for (let i = 0; i < navigator.plugins.length; i++) {
@@ -2259,7 +2259,7 @@ const CATEGORIES = [
       },
       {
         id: 'vbscript',
-        label: 'VBScript / Netscape APIs',
+        label: 'VBScript / Netscape-APIs',
         risk: 'med',
         collect: () => {
           const vb = typeof window.execScript !== 'undefined';
@@ -2275,7 +2275,7 @@ const CATEGORIES = [
       },
       {
         id: 'webrtc-legacy',
-        label: 'WebRTC Legacy APIs',
+        label: 'WebRTC-Legacy-APIs',
         risk: 'info',
         collect: () => {
           const apis = [];
@@ -2293,7 +2293,7 @@ const CATEGORIES = [
       },
       {
         id: 'firefox-resources',
-        label: 'Firefox Resource URLs',
+        label: 'Firefox-Ressourcen-URLs',
         risk: 'med',
         collect: () => {
           const isFirefox = navigator.userAgent.includes('Firefox');
@@ -2317,12 +2317,12 @@ const CATEGORIES = [
 
   // ────────────────────────────────────────────────
   {
-    id: 'advanced-fp', icon: '🧬', title: 'Advanced Fingerprinting',
-    desc: 'AudioContext, WebGL extensions, CSS hacks, iframe sandboxing, entropy scoring',
+    id: 'advanced-fp', icon: '🧬', title: 'Erweitertes Fingerprinting',
+    desc: 'AudioContext, WebGL-Erweiterungen, CSS-Hacks, iframe-Sandboxing, Entropie-Bewertung',
     items: [
       {
         id: 'audiocontext-fp',
-        label: 'AudioContext Full Fingerprint',
+        label: 'Vollständiger AudioContext-Fingerprint',
         risk: 'high',
         collect: async () => {
           try {
@@ -2370,7 +2370,7 @@ const CATEGORIES = [
       },
       {
         id: 'webgl-extensions-fp',
-        label: 'WebGL Extensions List',
+        label: 'Liste der WebGL-Erweiterungen',
         risk: 'high',
         collect: () => {
           try {
@@ -2396,7 +2396,7 @@ const CATEGORIES = [
       },
       {
         id: 'css-injection-test',
-        label: 'CSS Computed Style Fingerprint',
+        label: 'CSS-Computed-Style-Fingerprint',
         risk: 'med',
         collect: () => {
           try {
@@ -2429,7 +2429,7 @@ const CATEGORIES = [
       },
       {
         id: 'math-fingerprint',
-        label: 'Math / FPU Fingerprint',
+        label: 'Math- / FPU-Fingerprint',
         risk: 'high',
         collect: () => {
           // Math functions produce slightly different results across CPU/JS engines
@@ -2457,7 +2457,7 @@ const CATEGORIES = [
       },
       {
         id: 'iframe-sandbox',
-        label: 'iframe Sandbox Escape Detection',
+        label: 'Erkennung von iframe-Sandbox-Ausbruch',
         risk: 'med',
         collect: () => {
           // Detect if we're running inside a sandboxed iframe
@@ -2477,7 +2477,7 @@ const CATEGORIES = [
       },
       {
         id: 'entropy-score',
-        label: 'Estimated Fingerprint Entropy',
+        label: 'Geschätzte Fingerprint-Entropie',
         risk: 'high',
         collect: () => {
           // Rough entropy estimate based on available data
@@ -2583,7 +2583,7 @@ CATEGORIES.forEach(cat => {
 
     const detailEl = document.createElement('div');
     detailEl.className = 'card-detail';
-    detailEl.innerHTML = '<span style="color:#333">Click to load details…</span>';
+    detailEl.innerHTML = '<span style="color:#333">Klicken, um Details zu laden…</span>';
 
     let detailLoaded = false;
 
@@ -2592,7 +2592,7 @@ CATEGORIES.forEach(cat => {
       cardHeader.classList.toggle('expanded', expanded);
       if (expanded && !detailLoaded) {
         detailLoaded = true;
-        detailEl.innerHTML = '<span style="color:#333">Loading…</span>';
+        detailEl.innerHTML = '<span style="color:#333">Lädt…</span>';
         try {
           const data = await Promise.resolve(item.detail());
           renderDetail(detailEl, data);
@@ -2637,15 +2637,15 @@ async function runAllChecks() {
       valueEl.textContent = String(result).substring(0, 80);
       valueEl.className = 'card-value';
     } catch(e) {
-      valueEl.textContent = 'Error';
+      valueEl.textContent = 'Fehler';
       valueEl.className = 'card-value na';
     }
   }));
-  document.getElementById('btn-run-all').textContent = '✔ Done';
+  document.getElementById('btn-run-all').textContent = '✔ Fertig';
 }
 
 document.getElementById('btn-run-all').addEventListener('click', () => {
-  document.getElementById('btn-run-all').textContent = '⏳ Running…';
+  document.getElementById('btn-run-all').textContent = '⏳ Läuft…';
   runAllChecks();
 });
 
@@ -2678,7 +2678,7 @@ function filterCards(q) {
     catEl.classList.toggle('hidden', count === 0);
   });
 
-  matchCount.textContent = q ? `${visible} match${visible !== 1 ? 'es' : ''}` : '';
+  matchCount.textContent = q ? `${visible} Treffer` : '';
   noResults.style.display = visible === 0 ? 'block' : 'none';
 }
 

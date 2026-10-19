@@ -358,6 +358,28 @@ def lint_page(docs, path, text, info, seen, errors):
     lint_links(docs, path, text, errors)
 
 
+def localize_strings(text, page, stem, errors):
+    def js_value(german):
+        return re.sub(r"(?<!\\)'", r"\\'", german)
+
+    strings = page.get('js_strings')
+    if strings:
+        def translate(m):
+            if m[2] not in strings:
+                errors.append(f'{stem}: no German translation for {m[1]}: {m[2]!r}')
+                return m[0]
+            return f"{m[1]}: '{js_value(strings[m[2]])}'"
+        text = re.sub(r"\b(title|desc|label): '((?:[^'\\]|\\.)*)'", translate, text)
+    cells = page.get('td_cells')
+    if cells:
+        text = re.sub(r'(<td>)(.*?)(</td>)', lambda m: m[1] + cells.get(m[2], m[2]) + m[3], text, flags=re.S)
+    for old, new in page.get('literals', []):
+        if old not in text:
+            errors.append(f'{stem}: literal not found: {old!r}')
+        text = text.replace(old, new)
+    return text
+
+
 def render_tool_page(src, lang, stem, i18n, errors):
     locale = LOCALES[lang]
     other = i18n['ui'][lang]['switch_lang']
@@ -378,6 +400,9 @@ def render_tool_page(src, lang, stem, i18n, errors):
                 errors.append(f'{stem}: i18n id "{element_id}" not found')
                 continue
             text = pattern.sub(lambda m: m[1] + (content if '<' in content else esc(content)) + m[3], text, count=1)
+
+    if page:
+        text = localize_strings(text, page, stem, errors)
 
     def localize_jsonld(m):
         node = json.loads(m[1])
