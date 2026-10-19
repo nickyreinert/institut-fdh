@@ -1,6 +1,21 @@
 {
     "projects": [
         {
+            "id": "2026-cr34te.it",
+            "title": "cr3te.it",
+            "description": "Eine offene Website, die Besucher:innen mithilfe ihrer KI anonym weitergestalten: Änderungswunsch beschreiben, KI-Ergebnis einfügen und die Seite gemeinsam verändern.",
+            "category": "tool",
+            "tags": [
+                "KI",
+                "Experiment",
+                "Web"
+            ],
+            "year": 2026,
+            "url": "https://cr34te.it",
+            "image": "gfx/screenshots/tool/2026-cr34te.it.png"
+
+        },
+        {
             "id": "2026-sysmon",
             "title": "iTerm2 System Monitor Widget",
             "description": "Ein Widget mit verschiedenen System Monitoring Funktionen (CPU, RAM, Netzwerk, ...) für iTerm2",
