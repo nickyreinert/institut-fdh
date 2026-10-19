@@ -1,4 +1,28 @@
+# Crawler policy for institut-fdh.de
+#
+# All public content may be crawled by all bots (unchanged from the previous
+# robots.txt, which allowed everything). The OpenAI user agents are listed
+# separately so that each can be changed on its own:
+#
+#   OAI-SearchBot  crawls for ChatGPT search results
+#   GPTBot         crawls content that may be used to train OpenAI models
+#   ChatGPT-User   fetches pages when a ChatGPT user asks for them; OpenAI
+#                  states robots.txt rules may not apply to these requests
+#
+# Reference: https://platform.openai.com/docs/bots
+# To opt out of training only, change the GPTBot group to "Disallow: /".
+# Being allowed to crawl does not guarantee indexing or citation.
+
 User-agent: *
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
 Allow: /
 
 Sitemap: https://institut-fdh.de/sitemap.xml
