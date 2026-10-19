@@ -63,7 +63,10 @@ a:visited {
     flex-wrap: wrap;
 }
 
-.amts-titles h1 {
+.amts-titles .amts-site-title {
+    font-family: var(--font-heading);
+    font-weight: bold;
+    line-height: 1.3;
     font-size: 22px;
     margin-bottom: 0.25rem;
 }
@@ -71,6 +74,29 @@ a:visited {
 .amts-motto {
     font-size: 13px;
     color: var(--text-muted);
+}
+
+.amts-header-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.amts-lang-link,
+.amts-lang-link:visited {
+    flex-shrink: 0;
+    font-size: 11px;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    padding: 3px 8px;
+    color: var(--text);
+    white-space: nowrap;
+}
+
+.amts-lang-link:hover {
+    background: var(--active-bg);
+    border-color: var(--border-dark);
 }
 
 .amts-back-link {

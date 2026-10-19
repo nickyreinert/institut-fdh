@@ -65,6 +65,27 @@ a:hover {
 .amts-header-inner {
     max-width: 960px;
     margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.amts-lang-link,
+.amts-lang-link:visited {
+    flex-shrink: 0;
+    font-size: 11px;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    padding: 3px 8px;
+    color: var(--text);
+    white-space: nowrap;
+}
+
+.amts-lang-link:hover {
+    background: var(--active-bg);
+    border-color: var(--border-dark);
 }
 
 .amts-titles h1 {
@@ -75,6 +96,18 @@ a:hover {
 .amts-motto {
     font-size: 13px;
     color: var(--text-muted);
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 /* Nav bar */
@@ -352,6 +385,7 @@ a:hover {
     font-size: 14px;
     font-weight: bold;
     line-height: 1.3;
+    overflow-wrap: anywhere;
 }
 
 .card-year {
@@ -368,6 +402,7 @@ a:hover {
     font-size: 12px;
     margin-bottom: 0.75rem;
     flex: 1;
+    overflow-wrap: anywhere;
 }
 
 .card-tags {

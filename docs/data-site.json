@@ -6,6 +6,15 @@
       "ministerium": "https://ministerium-für-digitale-herausforderungen.de"
     }
   },
+  "organization": {
+    "name": "Institut für digitale Herausforderungen",
+    "alternateName": "FdH",
+    "logo": "gfx/logo.png",
+    "author": {
+      "name": "Nicky Reinert",
+      "url": "https://nickyreinert.de"
+    }
+  },
   "tags": [
     "KI",
     "Daten",
