@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Generates the crawler-facing parts of the site from docs/data-*.json and docs/seiten/*.html.
+Generates the crawler-facing parts of the site from docs/data-*.json and the tool page templates in
+src/seiten/*.html (translations in src/seiten/i18n.json).
 Standard library only.
 
   python3 scripts/build.py          write generated files
@@ -9,8 +10,11 @@ Standard library only.
 Generated:
   docs/index.html       pre-rendered tag filters, cards, counts, social links (between <!-- build:NAME --> markers)
                         and the SEO head block (between <!-- seo:begin --> / <!-- seo:end -->)
-  docs/seiten/*.html    SEO head block (canonical, Open Graph, Twitter card, JSON-LD WebPage/BreadcrumbList)
-  docs/sitemap.xml      index + every indexable page in docs/seiten
+  docs/en/index.html    same for the English homepage
+  docs/seiten/*.html    German tool pages rendered from src/seiten, with SEO head block (canonical, hreflang,
+                        Open Graph, Twitter card, JSON-LD WebPage/BreadcrumbList)
+  docs/en/seiten/*.html English tool pages rendered from src/seiten
+  docs/sitemap.xml      homepages + every indexable tool page, with hreflang alternates
   docs/llms.txt         overview of all public entries
 
 Lint (fails the run): missing/duplicate title or description, not exactly one <h1>, title not containing
@@ -33,8 +37,8 @@ EAGER_CARDS = 3
 
 # Keep in sync with getLocale() in script.js.
 LOCALES = {
-    'de': {'suffix': '', 'prefix': '', 'all': 'Alle', 'empty': 'Keine Einträge.', 'ministerium': 'Das Ministerium', 'page': 'index.html'},
-    'en': {'suffix': '.en', 'prefix': '/', 'all': 'All', 'empty': 'No entries.', 'ministerium': 'The Ministry', 'page': 'en/index.html'},
+    'de': {'suffix': '', 'prefix': '', 'all': 'Alle', 'empty': 'Keine Einträge.', 'ministerium': 'Das Ministerium', 'page': 'index.html', 'internal': '', 'home': '/', 'out': 'seiten'},
+    'en': {'suffix': '.en', 'prefix': '/', 'all': 'All', 'empty': 'No entries.', 'ministerium': 'The Ministry', 'page': 'en/index.html', 'internal': '/en/', 'home': '/en/', 'out': 'en/seiten'},
 }
 
 
@@ -73,7 +77,7 @@ def card_image(project):
 
 
 def card_url(project, locale):
-    return project['url'] if project['url'].startswith('http') else locale['prefix'] + project['url']
+    return project['url'] if project['url'].startswith('http') else locale['internal'] + project['url']
 
 
 def card_html(project, eager, locale):
@@ -214,7 +218,8 @@ def seo_block(site, url, info, image, software_id, alternates=()):
         'publisher': {'@id': f'{BASE_URL}/#organization'},
     }
     graph = organization_nodes(site)
-    if url not in (f'{BASE_URL}/', f'{BASE_URL}/en/'):
+    home = f"{BASE_URL}{LOCALES[site.lang]['home']}"
+    if url != home:
         page['breadcrumb'] = {'@id': f'{url}#breadcrumb'}
         if software_id:
             page['mainEntity'] = {'@id': software_id}
@@ -223,7 +228,7 @@ def seo_block(site, url, info, image, software_id, alternates=()):
             '@type': 'BreadcrumbList',
             '@id': f'{url}#breadcrumb',
             'itemListElement': [
-                {'@type': 'ListItem', 'position': 1, 'name': site.meta['organization']['name'], 'item': f'{BASE_URL}/'},
+                {'@type': 'ListItem', 'position': 1, 'name': site.meta['organization']['name'], 'item': home},
                 {'@type': 'ListItem', 'position': 2, 'name': info['h1s'][0], 'item': url},
             ],
         })
@@ -353,14 +358,52 @@ def lint_page(docs, path, text, info, seen, errors):
     lint_links(docs, path, text, errors)
 
 
+def render_tool_page(src, lang, stem, i18n, errors):
+    locale = LOCALES[lang]
+    other = i18n['ui'][lang]['switch_lang']
+    ui = {**i18n['ui'][lang], 'lang': lang, 'home': locale['home'], 'switch_href': f"/{LOCALES[other]['out']}/{stem}.html"}
+    text = src
+    for key, value in ui.items():
+        text = text.replace('{{' + key + '}}', esc(value))
+    page = i18n['de'].get(stem) if lang == 'de' else None
+    url = f"{BASE_URL}/{locale['out']}/{stem}.html"
+    if page:
+        text = re.sub(r'(<h1>).*?(</h1>)', lambda m: m[1] + esc(page['h1']) + m[2], text, count=1, flags=re.S)
+        title = page.get('title') or page['h1']
+        text = re.sub(r'<title>.*?</title>', lambda m: f"<title>{esc(title)} – {esc(i18n['org'])}</title>", text, count=1, flags=re.S)
+        text = re.sub(r'(<meta\s+name="description"\s+content=")[^"]*(")', lambda m: m[1] + esc(page['description']) + m[2], text, count=1)
+        for element_id, content in page['ids'].items():
+            pattern = re.compile(rf'(<(?P<tag>\w+)\b[^>]*\bid="{re.escape(element_id)}"[^>]*>).*?(</(?P=tag)>)', re.S)
+            if not pattern.search(text):
+                errors.append(f'{stem}: i18n id "{element_id}" not found')
+                continue
+            text = pattern.sub(lambda m: m[1] + (content if '<' in content else esc(content)) + m[3], text, count=1)
+
+    def localize_jsonld(m):
+        node = json.loads(m[1])
+        if node.get('@type') == 'SoftwareApplication':
+            node['@id'] = f'{url}#software'
+            node['url'] = url
+            node['inLanguage'] = lang
+            if page:
+                node['name'] = page['h1']
+                node['description'] = page['software_description']
+        body = json.dumps(node, ensure_ascii=False, indent=2).replace('</', '<\\/')
+        return '<script type="application/ld+json">\n' + '\n'.join('    ' + line for line in body.splitlines()) + '\n    </script>'
+
+    text = re.sub(r'<script type="application/ld\+json">(.*?)</script>', localize_jsonld, text, flags=re.S)
+    return text, url
+
+
 def indexable(text):
     return not re.search(r'<meta\s+name="robots"\s+content="[^"]*noindex', text, re.I)
 
 
 def build_all(docs):
+    root = docs.parent
     site = load_site(docs, 'de')
     errors = []
-    seen = {'title': {}, 'description': {}}
+    seen = {lang: {'title': {}, 'description': {}} for lang in LOCALES}
     outputs = {}
     sitemap_entries = []
     tool_by_id = {p['id']: p for p in site.tools}
@@ -374,7 +417,7 @@ def build_all(docs):
         page_path = docs / locale['page']
         text = render_index(lang_site, page_path.read_text(encoding='utf-8'))
         info = page_info(text)
-        lint_page(docs, page_path, text, info, seen, errors)
+        lint_page(docs, page_path, text, info, seen[lang], errors)
         if info['description'] != lang_site.meta['site']['description']:
             errors.append(f'{locale["page"]}: meta description must equal site.description in data-site{locale["suffix"]}.json')
         if info['lang'] != lang:
@@ -383,29 +426,37 @@ def build_all(docs):
         sitemap_entries.append((url, git_date(docs, sorted(docs.glob('data-*.json'))), alternates))
 
     hosted = []
-    for path in sorted((docs / 'seiten').glob('*.html')):
-        text = path.read_text(encoding='utf-8')
-        if not indexable(text):
-            outputs[path] = text
-            continue
-        info = page_info(text)
-        lint_page(docs, path, text, info, seen, errors)
-        nodes = hand_written_jsonld(text, errors, str(path.relative_to(docs)))
-        apps = [n for n in nodes if n.get('@type') == 'SoftwareApplication']
-        url = f'{BASE_URL}/seiten/{path.name}'
-        software_id = apps[0].get('@id') if apps else None
-        if apps and not software_id:
-            errors.append(f'{path.name}: SoftwareApplication JSON-LD needs an "@id"')
-        if apps and apps[0].get('url') != url:
-            errors.append(f'{path.name}: SoftwareApplication url does not match {url}')
-        entry = tool_by_id.get(path.stem)
-        image = card_image(entry) if entry and (docs / card_image(entry)).exists() else default_image
-        if not info['h1s']:
-            continue
-        outputs[path] = apply_seo_block(text, seo_block(site, url, info, image, software_id))
-        sitemap_entries.append((url, git_date(docs, [path]), ()))
-        if entry:
-            hosted.append({**entry, 'url': url})
+    i18n = json.loads((root / 'src' / 'seiten' / 'i18n.json').read_text(encoding='utf-8'))
+    i18n['org'] = site.meta['organization']['name']
+    sites = {lang: load_site(docs, lang) for lang in LOCALES}
+    for src_path in sorted((root / 'src' / 'seiten').glob('*.html')):
+        src = src_path.read_text(encoding='utf-8')
+        stem = src_path.stem
+        variants = {}
+        for lang, locale in LOCALES.items():
+            text, url = render_tool_page(src, lang, stem, i18n, errors)
+            variants[lang] = (docs / locale['out'] / src_path.name, text, url)
+        alternates = [(lang, url) for lang, (_, _, url) in variants.items()]
+        alternates.append(('x-default', variants['de'][2]))
+        for lang, (path, text, url) in variants.items():
+            if not indexable(text):
+                outputs[path] = text
+                continue
+            info = page_info(text)
+            lint_page(docs, path, text, info, seen[lang], errors)
+            nodes = hand_written_jsonld(text, errors, str(path.relative_to(docs)))
+            apps = [n for n in nodes if n.get('@type') == 'SoftwareApplication']
+            if not apps:
+                errors.append(f'{path.relative_to(docs)}: no SoftwareApplication JSON-LD')
+            if not info['h1s']:
+                continue
+            entry = {p['id']: p for p in sites[lang].tools}.get(stem)
+            image = card_image(entry) if entry and (docs / card_image(entry)).exists() else default_image
+            software_id = apps[0].get('@id') if apps else None
+            outputs[path] = apply_seo_block(text, seo_block(sites[lang], url, info, image, software_id, alternates))
+            sitemap_entries.append((url, git_date(root, [src_path, src_path.parent / 'i18n.json']), alternates))
+            if lang == 'de' and entry:
+                hosted.append({**entry, 'url': url})
 
     outputs[docs / 'sitemap.xml'] = build_sitemap(sitemap_entries)
     outputs[docs / 'llms.txt'] = build_llms(site, hosted)
@@ -419,7 +470,7 @@ def build_all(docs):
 def main():
     docs = Path(__file__).resolve().parent.parent / 'docs'
     outputs, errors = build_all(docs)
-    stale = [p for p, content in outputs.items() if p.read_text(encoding='utf-8') != content]
+    stale = [p for p, content in outputs.items() if not p.exists() or p.read_text(encoding='utf-8') != content]
     for error in errors:
         print(f'ERROR {error}', file=sys.stderr)
     if '--check' in sys.argv:
@@ -427,6 +478,7 @@ def main():
             print(f'STALE {p.relative_to(docs)}', file=sys.stderr)
         sys.exit(1 if errors or stale else 0)
     for p in stale:
+        p.parent.mkdir(parents=True, exist_ok=True)
         p.write_text(outputs[p], encoding='utf-8')
         print(f'wrote {p.relative_to(docs)}')
     sys.exit(1 if errors else 0)

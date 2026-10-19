@@ -8,8 +8,8 @@ let currentSection = 'analysisSection';
 // Keep in sync with LOCALES in scripts/build.py.
 function getLocale() {
     return document.documentElement.lang === 'en'
-        ? { suffix: '.en', prefix: '/', all: 'All', empty: 'No entries.', ministerium: 'The Ministry' }
-        : { suffix: '', prefix: '', all: 'Alle', empty: 'Keine Einträge.', ministerium: 'Das Ministerium' };
+        ? { suffix: '.en', prefix: '/', internal: '/en/', all: 'All', empty: 'No entries.', ministerium: 'The Ministry' }
+        : { suffix: '', prefix: '', internal: '', all: 'Alle', empty: 'Keine Einträge.', ministerium: 'Das Ministerium' };
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -195,8 +195,8 @@ function renderProjects() {
         
         const imgSrc = (project.image || `gfx/screenshots/${project.category}/${project.id}.jpg`)
             .replace(/^docs\//, '');
-        const { prefix } = getLocale();
-        const href = /^https?:/.test(project.url) ? project.url : prefix + project.url;
+        const { prefix, internal } = getLocale();
+        const href = /^https?:/.test(project.url) ? project.url : internal + project.url;
 
         const cardHtml = `
             <article class="card">

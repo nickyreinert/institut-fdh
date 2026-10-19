@@ -1,0 +1,56 @@
+{
+    "ui": {
+        "de": {"back_label": "Zur Übersicht", "ministerium": "Das Ministerium", "motto": "Tools und Analysen", "switch_label": "English", "switch_lang": "en"},
+        "en": {"back_label": "Back to overview", "ministerium": "The Ministry", "motto": "Tools and analyses", "switch_label": "Deutsch", "switch_lang": "de"}
+    },
+    "de": {
+        "2026-text": {
+            "h1": "Text Transformer",
+            "description": "Browserbasiertes Tool für clientseitige Textverarbeitung und -transformation ohne Server-Backend.",
+            "software_description": "Clientseitiges Werkzeug zur Umwandlung von Text in verschiedene Stile wie Fullwidth, Flip, Strikethrough, Small Caps und Zalgo.",
+            "ids": {
+                "text-desc-1": "Text Transformer ist ein browserbasiertes Tool für clientseitige Textumwandlungen ohne Server-Backend.",
+                "text-desc-2": "Unterstützt werden unter anderem Strikethrough, Fullwidth, Flip, Small Caps, Checkbox-Formate und Zalgo-Varianten."
+            }
+        },
+        "2026-faces": {
+            "h1": "Faces of Joy",
+            "description": "Durchsuchbares Tool für ASCII- und Unicode-Faces mit Kopier- und Favoritenfunktionen.",
+            "software_description": "Werkzeug zum Sammeln, Ordnen und Wiederverwenden von ASCII- und Unicode-Textgesichtern, mit Favoriten und Kopierfunktion.",
+            "ids": {
+                "faces-desc-1": "Faces of Joy ist ein Verzeichnis für ASCII- und Unicode-Faces mit Fokus auf schnelles Finden, Kopieren und Wiederverwenden.",
+                "faces-desc-2": "Ich empfehle Espanso und eine angepasste <a href=\"https://gist.github.com/nickyreinert/91e67a7d054878338d1f1dc9fc592ae5\" target=\"_blank\" rel=\"noopener noreferrer\">base.yaml</a>, damit du Faces per Text-Expansion schnell einfügen kannst.",
+                "faces-font-label": "Face-Schrift:",
+                "faces-favorites-title": "Favoriten",
+                "faces-all-title": "Alle Faces"
+            }
+        },
+        "2026-osint": {
+            "h1": "OSINT-Werkzeugverzeichnis",
+            "description": "Durchsuchbares Verzeichnis von OSINT-Tools mit Kategorien, Beschreibungen und schneller Filterung.",
+            "software_description": "Durchsuchbares Verzeichnis von Open-Source-Intelligence-Werkzeugen, nach Kategorien gruppiert und mit praxisnahen Beschreibungen.",
+            "ids": {
+                "osint-desc-1": "Ein durchsuchbares Verzeichnis für Open-Source-Intelligence-Tools mit Kategorien, Kurzbeschreibungen und Direktlinks.",
+                "osint-desc-2": "Die Seite dient als schneller Einstieg in Recherche-, Infrastruktur- und Sicherheitswerkzeuge für OSINT-Workflows."
+            }
+        },
+        "2026-aya": {
+            "title": "AYA – Bist du anonym?",
+            "h1": "AYA – Bist du anonym?",
+            "description": "Interaktiver Browser-Privacy-Check mit Fingerprinting-Signalen, Leak-Indikatoren und lokal auslesbaren Browsermerkmalen.",
+            "software_description": "Interaktive Datenschutzprüfung, die lokal auslesbare Browser- und Umgebungsmerkmale analysiert und Fingerprinting- und Leak-Risiken aufzeigt.",
+            "ids": {
+                "aya-kicker": "Privacy-Diagnose-Tool",
+                "aya-desc-1": "Diese Browser-Diagnose zeigt, welche Browser- und Umgebungsmerkmale lokal auslesbar sind und wie sie zum Fingerprinting beitragen können.",
+                "aya-desc-2": "Die Seite bleibt im 90er-Terminal-Look, liest sich aber wie ein Bericht: erst Kategorien scannen, dann Karten im Detail öffnen.",
+                "aya-read-title": "So liest du diesen Bericht",
+                "aya-read-list": "<li>Jede Kategorie gruppiert zusammenhängende Signale (Netzwerk, Browser, Gerät, Storage und Verhalten).</li><li>Jede Karte zeigt einen aktuellen Wert und ein Risiko-Label.</li><li>Karten aufklappen, um Rohdaten und Kontext-Hinweise zu sehen.</li><li>Mit run aktualisierst du asynchrone oder umgebungsabhängige Checks.</li>",
+                "aya-risk-title": "Risiko-Legende",
+                "aya-risk-list": "<li><span class=\"risk risk-high\">HIGH</span> Starke Fingerprinting- oder Leckage-Fläche.</li><li><span class=\"risk risk-med\">MED</span> Potenziell identifizierend, kontextabhängig.</li><li><span class=\"risk risk-low\">LOW</span> Für sich genommen begrenzt eindeutig.</li><li><span class=\"risk risk-info\">INFO</span> Nur diagnostischer Kontext.</li>",
+                "aya-controls-title": "Steuerung",
+                "aya-report-title": "Fingerprint-Bericht",
+                "aya-report-desc": "Kategorien und Karten öffnen, um beobachtete Signale im Detail zu prüfen."
+            }
+        }
+    }
+}

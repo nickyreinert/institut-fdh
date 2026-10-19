@@ -7,7 +7,7 @@ on:
     branches: [main]
     paths:
       - 'docs/data-*.json'
-      - 'docs/seiten/**'
+      - 'src/**'
       - 'docs/index.html'
       - 'docs/en/index.html'
       - 'scripts/build.py'

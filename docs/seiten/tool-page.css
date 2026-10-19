@@ -76,6 +76,29 @@ a:visited {
     color: var(--text-muted);
 }
 
+.amts-header-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.amts-lang-link,
+.amts-lang-link:visited {
+    flex-shrink: 0;
+    font-size: 11px;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    padding: 3px 8px;
+    color: var(--text);
+    white-space: nowrap;
+}
+
+.amts-lang-link:hover {
+    background: var(--active-bg);
+    border-color: var(--border-dark);
+}
+
 .amts-back-link {
     flex-shrink: 0;
     font-size: 11px;
