@@ -63,7 +63,10 @@ a:visited {
     flex-wrap: wrap;
 }
 
-.amts-titles h1 {
+.amts-titles .amts-site-title {
+    font-family: var(--font-heading);
+    font-weight: bold;
+    line-height: 1.3;
     font-size: 22px;
     margin-bottom: 0.25rem;
 }

@@ -190,11 +190,11 @@ function renderProjects() {
 
         const cardHtml = `
             <article class="card">
-                <a href="${project.url}" target="_blank" rel="noopener noreferrer" class="card-link" aria-label="Open: ${project.title}">Open</a>
+                <a href="${project.url}" target="_blank" rel="noopener noreferrer" class="card-link" aria-label="Open: ${project.title}">${project.title}</a>
                 
                 <!-- 2. Image Wrapper -->
                 <div class="card-img-wrapper">
-                    <img src="${imgSrc}" alt="${project.title}" class="card-img" loading="lazy" 
+                    <img src="${imgSrc}" alt="${project.title}" class="card-img" loading="${project.category.toLowerCase() === 'analysis' && analysisCount < 3 ? 'eager' : 'lazy'}" 
                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     
                     <!-- 3. Fallback placeholder (hidden by default, shown if image fails) -->

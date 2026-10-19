@@ -77,6 +77,18 @@ a:hover {
     color: var(--text-muted);
 }
 
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 /* Nav bar */
 .register-nav {
     background: var(--bg-nav);
@@ -352,6 +364,7 @@ a:hover {
     font-size: 14px;
     font-weight: bold;
     line-height: 1.3;
+    overflow-wrap: anywhere;
 }
 
 .card-year {
@@ -368,6 +381,7 @@ a:hover {
     font-size: 12px;
     margin-bottom: 0.75rem;
     flex: 1;
+    overflow-wrap: anywhere;
 }
 
 .card-tags {
